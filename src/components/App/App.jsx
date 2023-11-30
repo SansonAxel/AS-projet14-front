@@ -1,9 +1,7 @@
-import logo from '../../assets/logo.svg';
-
 import './App.scss';
 
-function App() {
+const App = () => {
   return <div className="App">Front</div>;
-}
+};
 
 export default App;
