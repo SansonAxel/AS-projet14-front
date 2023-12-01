@@ -1,5 +1,22 @@
 @use 'src/styles/variables' as v;
 
 .Header {
-  // Styles for Header
+  height: 50px;
+  background-color: aqua;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+
+  .Header__Link {
+    display: block;
+    background-color: grey;
+    padding: 10px;
+  }
+
+  .Header__Link:hover,
+  .Header__Link:active {
+    cursor: pointer;
+    background-color: white;
+  }
 }
