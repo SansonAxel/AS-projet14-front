@@ -2,6 +2,53 @@
 
 .Homepage {
   margin: 0 auto;
-  .Homepage__Section {
+
+  &__Section {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__Features {
+      text-align: center;
+      width: 30%;
+    }
+
+    &__Team {
+      text-align: center;
+    }
+  }
+
+  &__Section:first-of-type {
+    // background: url(https://dummyimage.com/400x800/a3a3a3/fff) no-repeat center
+    //   center;
+    background-color: grey;
+    height: 700px;
+    color: white;
+    font-weight: bold;
+  }
+
+  &__Section:nth-of-type(2),
+  &__Section:nth-of-type(3) {
+    gap: 80px;
+    flex-wrap: wrap;
+
+    img {
+      border-radius: 50%;
+    }
+  }
+
+  &__Section:nth-of-type(3) {
+    flex-wrap: wrap;
+    margin-block-start: 2rem;
+
+    .Homepage__Section__Team__Member {
+      margin-block-start: 1rem;
+      font-weight: v.$bold;
+      span {
+        font-weight: v.$regular;
+        color: v.$dark-grey;
+      }
+    }
   }
 }
