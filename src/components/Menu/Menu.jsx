@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import './Menu.scss';
 
+// TODO à dynamiser et mieux styliser
+
 const Menu = () => {
   return (
     <nav className="Menu">

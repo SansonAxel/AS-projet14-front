@@ -38,6 +38,13 @@ const Homepage = () => {
 
   const [selectedForm, setSelectedForm] = useState('default');
 
+  const ref = useRef(null);
+
+  const handleScroll = () => {
+    ref.current.scrollIntoView({
+      behavior: 'smooth',
+    });
+  };
   const defaultSelectedValue = useMemo(() => {
     setSelectedForm(formOptionsSelector[0]);
 
@@ -59,7 +66,9 @@ const Homepage = () => {
           intuitive et centralisée pour vous et vos antennes associatives.
         </p>
         <div className="Homepage__Section__Presentation__Buttons">
-          <button type="button">Contactez-nous</button>
+          <button type="button" onClick={handleScroll}>
+            Contactez-nous
+          </button>
           <button type="button">Inscrivez-vous</button>
         </div>
       </section>
@@ -70,28 +79,25 @@ const Homepage = () => {
             src="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
             alt="temp"
           />
-          <p>Lorem ipsum dolor sit amet.</p>
+          <p>Un affichage épuré</p>
         </div>
         <div className="Homepage__Section__Features">
           <img
             src="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
             alt="temp"
           />
-          <p>Lorem ipsum dolor sit amet.</p>
+          <p>Une solution intuitive</p>
+        </div>
+        <div className="Homepage__Section__Features">
+          <FontAwesomeIcon icon={faGear} />
+          <p>Une gestion efficace</p>
         </div>
         <div className="Homepage__Section__Features">
           <img
             src="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
             alt="temp"
           />
-          <p>Lorem ipsum dolor sit amet.</p>
-        </div>
-        <div className="Homepage__Section__Features">
-          <img
-            src="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
-            alt="temp"
-          />
-          <p>Lorem ipsum dolor sit amet.</p>
+          <p>Des données centralisées</p>
         </div>
       </section>
       {/* Features */}
@@ -147,17 +153,8 @@ const Homepage = () => {
           </p>
         </div>
       </section>
-      <section className="Homepage__Section">
+      <section className="Homepage__Section" ref={ref}>
         <h2>Vous souhaitez :</h2>
-        {/* <select
-          ref={ref}
-          value={selectedForm}
-          onChange={(e) => setSelectedForm(e.target.value)}
-        >
-          <option value="default">Choisissez</option>
-          <option value="informations">Des informations</option>
-          <option value="registration">Vous inscrire</option>
-        </select> */}
         <Select
           defaultValue={defaultSelectedValue}
           value={selectedForm}
@@ -188,8 +185,8 @@ const Homepage = () => {
               changeInfoField={handleChange}
             />
           ))}
-        <Footer />
       </section>
+      <Footer />
     </div>
   );
 };
