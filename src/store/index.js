@@ -1,19 +1,15 @@
 import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 
-/* on importe le reducer principal */
+/* Main reducer */
 import reducer from '../reducers';
 
-import recipesMiddleware from '../middlewares/homeformMiddleware';
 import userMiddleware from '../middlewares/userMiddleware';
+import homeformMiddleware from '../middlewares/homeformMiddleware';
 
-// on combine devTools avec les middlewares
+// devtools + middlewares combined
 const enhancers = composeWithDevTools(
-  applyMiddleware(
-    recipesMiddleware,
-    userMiddleware
-    // ... d'autres middlewares
-  )
+  applyMiddleware(homeformMiddleware, userMiddleware)
 );
 
 const store = createStore(

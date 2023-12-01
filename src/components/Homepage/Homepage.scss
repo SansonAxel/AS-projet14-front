@@ -9,6 +9,36 @@
     justify-content: center;
     align-items: center;
 
+    &__Presentation {
+      color: v.$white;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: v.$light;
+      text-shadow: 1px 1px 3px v.$dark-grey;
+      background: rgba(0, 0, 0, 0.3);
+      span {
+        display: block;
+        font-size: 1.5rem;
+        margin-block-end: 1rem;
+        font-weight: v.$regular;
+      }
+      &__Buttons {
+        margin-block-start: 2rem;
+        text-align: center;
+        width: 80%;
+        button {
+          text-transform: uppercase;
+          width: 100%;
+          height: 2rem;
+          margin-block-end: 1rem;
+          background: none;
+          border: 2px solid v.$white;
+          color: v.$white;
+          background: rgba(0, 0, 0, 0.3);
+        }
+      }
+    }
+
     &__Features {
       text-align: center;
       width: 30%;
@@ -19,13 +49,14 @@
     }
   }
 
-  &__Section:first-of-type {
-    // background: url(https://dummyimage.com/400x800/a3a3a3/fff) no-repeat center
-    //   center;
-    background-color: grey;
-    height: 700px;
-    color: white;
-    font-weight: bold;
+  &__Section:nth-of-type(1) {
+    flex-direction: column;
+    background-image: url(../../assets/home-bg.png);
+    background-position: center;
+    background-size: cover;
+    padding: 2em;
+    text-align: center;
+    height: 350px;
   }
 
   &__Section:nth-of-type(2),
@@ -48,6 +79,29 @@
       span {
         font-weight: v.$regular;
         color: v.$dark-grey;
+      }
+    }
+  }
+
+  &__Section:nth-of-type(4) {
+    flex-direction: column;
+
+    h2 {
+      text-align: center;
+      font-weight: v.$bold;
+      font-size: 1.5rem;
+      margin-block-end: 1rem;
+    }
+
+    select {
+      display: block;
+      margin: auto;
+      text-align: center;
+      border: none;
+      font-size: 1.2em;
+
+      option {
+        font-size: 60px;
       }
     }
   }

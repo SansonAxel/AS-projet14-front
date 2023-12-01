@@ -1,22 +1,52 @@
 import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import './Homepage.scss';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
 import InformationForm from './InformationForm/InformationForm';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
 
+import { changeInfoField } from '../../actions/homeform';
+
 const Homepage = () => {
+  const firstname = useSelector((state) => state.homeform.firstname);
+  const lastname = useSelector((state) => state.homeform.lastname);
+  const organizationName = useSelector(
+    (state) => state.homeform.organizationName
+  );
+  const email = useSelector((state) => state.homeform.email);
+  const phoneNumber = useSelector((state) => state.homeform.phoneNumber);
+  const address = useSelector((state) => state.homeform.address);
+  const siren = useSelector((state) => state.homeform.siren);
+  const message = useSelector((state) => state.homeform.message);
+
+  const dispatch = useDispatch();
+
+  const handleChange = (newValue, identifier) => {
+    dispatch(changeInfoField(newValue, identifier));
+  };
+
+  const [selectedForm, setSelectedForm] = useState('default');
+
   return (
     <div className="Homepage">
       <Header />
       {/* intro */}
       <section className="Homepage__Section">
         <p className="Homepage__Section__Presentation">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur
-          laboriosam nihil maxime animi est!
+          <span>
+            Projet 14, un outil pour les associations d'aide alimentaire
+          </span>
+          <br />
+          Nous vous proposons une solution de gestion de stocks, claire,
+          intuitive et centralisée pour vous et vos antennes associatives.
         </p>
+        <div className="Homepage__Section__Presentation__Buttons">
+          <button type="button">Contactez-nous</button>
+          <button type="button">Inscrivez-vous</button>
+        </div>
       </section>
-
       {/* Features */}
       <section className="Homepage__Section">
         <div className="Homepage__Section__Features">
@@ -48,7 +78,6 @@ const Homepage = () => {
           <p>Lorem ipsum dolor sit amet.</p>
         </div>
       </section>
-
       {/* Features */}
       <section className="Homepage__Section">
         <div className="Homepage__Section__Team">
@@ -102,9 +131,41 @@ const Homepage = () => {
           </p>
         </div>
       </section>
-      <InformationForm />
-      <RegistrationForm />
-      <Footer />
+      <section className="Homepage__Section">
+        <h2>Vous souhaitez :</h2>
+        <select
+          value={selectedForm}
+          onChange={(e) => setSelectedForm(e.target.value)}
+        >
+          <option value="default">Choisissez</option>
+          <option value="informations">Des informations</option>
+          <option value="registration">Vous inscrire</option>
+        </select>
+        {selectedForm !== 'default' &&
+          (selectedForm === 'informations' ? (
+            <InformationForm
+              firstname={firstname}
+              lastname={lastname}
+              organizationName={organizationName}
+              email={email}
+              phoneNumber={phoneNumber}
+              message={message}
+              changeInfoField={handleChange}
+            />
+          ) : (
+            <RegistrationForm
+              firstname={firstname}
+              lastname={lastname}
+              organizationName={organizationName}
+              email={email}
+              phoneNumber={phoneNumber}
+              address={address}
+              siren={siren}
+              changeInfoField={handleChange}
+            />
+          ))}
+        <Footer />
+      </section>
     </div>
   );
 };

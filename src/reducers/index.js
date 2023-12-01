@@ -4,7 +4,7 @@ import homeformReducer from './homeform';
 import userReducer from './user';
 
 const rootReducer = combineReducers({
-  recipes: homeformReducer,
+  homeform: homeformReducer,
   user: userReducer,
 });
 
