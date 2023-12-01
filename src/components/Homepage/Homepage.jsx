@@ -1,6 +1,9 @@
+/* eslint-disable react/no-unescaped-entities */
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Select from 'react-select';
+
 import './Homepage.scss';
 import Header from './Header/Header';
 import Footer from './Footer/Footer';
@@ -23,11 +26,24 @@ const Homepage = () => {
 
   const dispatch = useDispatch();
 
+  const formOptionsSelector = [
+    { value: 'default', label: 'Choisissez' },
+    { value: 'informations', label: 'Des informations' },
+    { value: 'registration', label: 'Vous inscrire' },
+  ];
+
   const handleChange = (newValue, identifier) => {
     dispatch(changeInfoField(newValue, identifier));
   };
 
   const [selectedForm, setSelectedForm] = useState('default');
+
+  const defaultSelectedValue = useMemo(() => {
+    setSelectedForm(formOptionsSelector[0]);
+
+    return formOptionsSelector[0];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="Homepage">
@@ -133,16 +149,24 @@ const Homepage = () => {
       </section>
       <section className="Homepage__Section">
         <h2>Vous souhaitez :</h2>
-        <select
+        {/* <select
+          ref={ref}
           value={selectedForm}
           onChange={(e) => setSelectedForm(e.target.value)}
         >
           <option value="default">Choisissez</option>
           <option value="informations">Des informations</option>
           <option value="registration">Vous inscrire</option>
-        </select>
-        {selectedForm !== 'default' &&
-          (selectedForm === 'informations' ? (
+        </select> */}
+        <Select
+          defaultValue={defaultSelectedValue}
+          value={selectedForm}
+          onChange={(value) => setSelectedForm(value)}
+          name="Select"
+          options={formOptionsSelector}
+        />
+        {selectedForm.value !== 'default' &&
+          (selectedForm.value === 'informations' ? (
             <InformationForm
               firstname={firstname}
               lastname={lastname}
