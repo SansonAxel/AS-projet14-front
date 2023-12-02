@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faGear,
+  faSun,
+  faThumbsUp,
+  faCircleDot,
+} from '@fortawesome/free-solid-svg-icons';
 
 import './Homepage.scss';
 import Header from './Header/Header';
@@ -18,6 +25,9 @@ const Homepage = () => {
   const organizationName = useSelector(
     (state) => state.homeform.organizationName
   );
+  const organizationType = useSelector(
+    (state) => state.homeform.organizationType
+  );
   const email = useSelector((state) => state.homeform.email);
   const phoneNumber = useSelector((state) => state.homeform.phoneNumber);
   const address = useSelector((state) => state.homeform.address);
@@ -26,31 +36,25 @@ const Homepage = () => {
 
   const dispatch = useDispatch();
 
-  const formOptionsSelector = [
-    { value: 'default', label: 'Choisissez' },
-    { value: 'informations', label: 'Des informations' },
-    { value: 'registration', label: 'Vous inscrire' },
-  ];
-
   const handleChange = (newValue, identifier) => {
     dispatch(changeInfoField(newValue, identifier));
   };
 
-  const [selectedForm, setSelectedForm] = useState('default');
+  const informationFormRef = useRef(null);
+  const registrationFormRef = useRef(null);
 
-  const ref = useRef(null);
+  const handleInformationScroll = () => {
+    informationFormRef.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  };
 
-  const handleScroll = () => {
-    ref.current.scrollIntoView({
+  const handleRegistrationScroll = () => {
+    registrationFormRef.current.scrollIntoView({
       behavior: 'smooth',
     });
   };
-  const defaultSelectedValue = useMemo(() => {
-    setSelectedForm(formOptionsSelector[0]);
-
-    return formOptionsSelector[0];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="Homepage">
@@ -66,36 +70,41 @@ const Homepage = () => {
           intuitive et centralisée pour vous et vos antennes associatives.
         </p>
         <div className="Homepage__Section__Presentation__Buttons">
-          <button type="button" onClick={handleScroll}>
+          <button type="button" onClick={handleInformationScroll}>
             Contactez-nous
           </button>
-          <button type="button">Inscrivez-vous</button>
+          <button type="button" onClick={handleRegistrationScroll}>
+            Inscrivez-vous
+          </button>
         </div>
       </section>
       {/* Features */}
       <section className="Homepage__Section">
         <div className="Homepage__Section__Features">
-          <img
-            src="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
-            alt="temp"
+          <FontAwesomeIcon
+            icon={faThumbsUp}
+            className="Homepage__Section__Features__Icon"
           />
           <p>Un affichage épuré</p>
         </div>
         <div className="Homepage__Section__Features">
-          <img
-            src="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
-            alt="temp"
+          <FontAwesomeIcon
+            icon={faSun}
+            className="Homepage__Section__Features__Icon"
           />
           <p>Une solution intuitive</p>
         </div>
         <div className="Homepage__Section__Features">
-          <FontAwesomeIcon icon={faGear} />
+          <FontAwesomeIcon
+            icon={faGear}
+            className="Homepage__Section__Features__Icon"
+          />
           <p>Une gestion efficace</p>
         </div>
         <div className="Homepage__Section__Features">
-          <img
-            src="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
-            alt="temp"
+          <FontAwesomeIcon
+            icon={faCircleDot}
+            className="Homepage__Section__Features__Icon"
           />
           <p>Des données centralisées</p>
         </div>
@@ -153,39 +162,34 @@ const Homepage = () => {
           </p>
         </div>
       </section>
-      <section className="Homepage__Section" ref={ref}>
-        <h2>Vous souhaitez :</h2>
-        <Select
-          defaultValue={defaultSelectedValue}
-          value={selectedForm}
-          onChange={(value) => setSelectedForm(value)}
-          name="Select"
-          options={formOptionsSelector}
+      <section className="Homepage__Section" ref={informationFormRef}>
+        <h2>Contactez-nous !</h2>
+        <InformationForm
+          firstname={firstname}
+          lastname={lastname}
+          organizationName={organizationName}
+          email={email}
+          phoneNumber={phoneNumber}
+          message={message}
+          changeInfoField={handleChange}
         />
-        {selectedForm.value !== 'default' &&
-          (selectedForm.value === 'informations' ? (
-            <InformationForm
-              firstname={firstname}
-              lastname={lastname}
-              organizationName={organizationName}
-              email={email}
-              phoneNumber={phoneNumber}
-              message={message}
-              changeInfoField={handleChange}
-            />
-          ) : (
-            <RegistrationForm
-              firstname={firstname}
-              lastname={lastname}
-              organizationName={organizationName}
-              email={email}
-              phoneNumber={phoneNumber}
-              address={address}
-              siren={siren}
-              changeInfoField={handleChange}
-            />
-          ))}
       </section>
+
+      <section className="Homepage__Section" ref={registrationFormRef}>
+        <h2>Inscrivez-vous !</h2>
+        <RegistrationForm
+          firstname={firstname}
+          lastname={lastname}
+          organizationName={organizationName}
+          organizationType={organizationType}
+          email={email}
+          phoneNumber={phoneNumber}
+          address={address}
+          siren={siren}
+          changeInfoField={handleChange}
+        />
+      </section>
+
       <Footer />
     </div>
   );

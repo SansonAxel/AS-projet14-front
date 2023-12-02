@@ -6,6 +6,7 @@ const RegistrationForm = ({
   firstname,
   lastname,
   organizationName,
+  organizationType,
   email,
   phoneNumber,
   address,
@@ -31,6 +32,12 @@ const RegistrationForm = ({
           name="organizationName"
           placeholder="Association"
           value={organizationName}
+          onChange={changeInfoField}
+        />
+        <Field
+          name="organizationType"
+          placeholder="Statut de l'association"
+          value={organizationType}
           onChange={changeInfoField}
         />
         <Field
@@ -73,6 +80,7 @@ RegistrationForm.propTypes = {
   firstname: PropTypes.string.isRequired,
   lastname: PropTypes.string.isRequired,
   organizationName: PropTypes.string.isRequired,
+  organizationType: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phoneNumber: PropTypes.string.isRequired,
   address: PropTypes.string.isRequired,

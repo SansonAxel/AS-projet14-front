@@ -6,6 +6,7 @@ export const initialState = {
   lastname: '',
   email: '',
   organizationName: '',
+  organizationType: '',
   phoneNumber: '',
   address: '',
   siren: '',
