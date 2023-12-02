@@ -1,0 +1,15 @@
+@use 'src/styles/variables' as v;
+
+.Homepage__Section__Team {
+  text-align: center;
+  &__Member {
+    margin-block-start: 1rem;
+    font-weight: v.$bold;
+    color: v.$mid-purple;
+
+    span {
+      font-weight: v.$regular;
+      color: v.$purple;
+    }
+  }
+}

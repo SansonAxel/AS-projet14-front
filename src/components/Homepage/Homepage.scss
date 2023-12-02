@@ -8,13 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    h2 {
-      text-align: center;
-      font-weight: v.$bold;
-      font-size: 1.5rem;
-      margin-block-end: 1rem;
-    }
+    margin-block-start: 1rem;
 
     &__Presentation {
       color: v.$white;
@@ -49,21 +43,19 @@
       }
     }
 
-    &__Features {
+    h2 {
       text-align: center;
-      width: 30%;
-      color: v.$mid-purple;
       font-weight: v.$bold;
-
-      &__Icon:nth-of-type(odd) {
-        color: v.$orange;
-        font-size: 4rem;
-        margin-block-end: 1rem;
-      }
+      font-size: 1.5rem;
+      margin-block-end: 1rem;
     }
 
-    &__Team {
+    select {
+      display: block;
+      margin: auto;
       text-align: center;
+      border: none;
+      font-size: 1.2em;
     }
   }
 
@@ -74,28 +66,13 @@
     background-size: cover;
     padding: 2em;
     text-align: center;
-    height: 350px;
+    height: 400px;
   }
 
   &__Section:nth-of-type(2),
   &__Section:nth-of-type(3) {
     gap: 80px;
     flex-wrap: wrap;
-  }
-
-  &__Section:nth-of-type(3) {
-    margin-block-start: 2rem;
-
-    .Homepage__Section__Team__Member {
-      margin-block-start: 1rem;
-      font-weight: v.$bold;
-      color: v.$mid-purple;
-
-      span {
-        font-weight: v.$regular;
-        color: v.$purple;
-      }
-    }
   }
 
   &__Section:nth-of-type(4),

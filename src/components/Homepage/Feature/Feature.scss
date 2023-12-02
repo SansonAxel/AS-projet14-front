@@ -1,0 +1,14 @@
+@use 'src/styles/variables' as v;
+
+.Homepage__Section__Features {
+  text-align: center;
+  width: 30%;
+  color: v.$mid-purple;
+  font-weight: v.$bold;
+
+  &__Icon:nth-of-type(odd) {
+    color: v.$orange;
+    font-size: 4rem;
+    margin-block-end: 1rem;
+  }
+}

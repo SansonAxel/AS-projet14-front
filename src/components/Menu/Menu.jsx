@@ -5,8 +5,8 @@ import './Menu.scss';
 
 const Menu = () => {
   return (
-    <div className="Menu">
-      <button type="button" to="/" className="closebtn" onClick="closeNav()">
+    <nav className="Menu">
+      <button type="button" to="/" className="closebtn">
         &times;
       </button>
 
@@ -33,7 +33,7 @@ const Menu = () => {
       <a className="Menu__Item" to="/">
         Mentions légales
       </a>
-    </div>
+    </nav>
   );
 };
 
