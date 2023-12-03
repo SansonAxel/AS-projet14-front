@@ -1,15 +1,64 @@
 @use 'src/styles/variables' as v;
 
 .Homepage__Section__Team {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  width: 70%;
+  margin: auto;
+  gap: 1rem;
+
+  img {
+    border-radius: 50%;
+  }
   &__Member {
-    margin-block-start: 1rem;
     font-weight: v.$bold;
     color: v.$mid-purple;
 
     span {
       font-weight: v.$regular;
       color: v.$purple;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .Homepage__Section__Team {
+    width: 50%;
+    flex-direction: column;
+    text-align: center;
+    margin: 0;
+
+    img {
+      border-radius: 50%;
+      width: 125px;
+      height: 125px;
+    }
+
+    &__Member {
+      font-weight: v.$bold;
+      color: v.$mid-purple;
+      font-size: 1.2rem;
+
+      span {
+        font-weight: v.$regular;
+        color: v.$purple;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .Homepage__Section__Team {
+    width: 18%;
+    flex-direction: column;
+    text-align: center;
+
+    &__Member {
+      span {
+        word-wrap: break-word;
+      }
     }
   }
 }

@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-block-start: 1rem;
+    position: relative;
 
     &__Presentation {
       color: v.$white;
@@ -48,6 +48,7 @@
       font-weight: v.$bold;
       font-size: 1.5rem;
       margin-block-end: 1rem;
+      width: 100%;
     }
 
     select {
@@ -66,17 +67,95 @@
     background-size: cover;
     padding: 2em;
     text-align: center;
-    height: 400px;
+    height: 100vh;
   }
 
-  &__Section:nth-of-type(2),
-  &__Section:nth-of-type(3) {
-    gap: 80px;
+  &__Section:nth-of-type(2) {
+    height: 100vh;
     flex-wrap: wrap;
+    flex-direction: column;
+    gap: 2rem;
+    h2 {
+      text-align: center;
+      width: 100%;
+    }
   }
 
-  &__Section:nth-of-type(4),
-  &__Section:nth-of-type(5) {
+  &__Section:nth-of-type(3) {
+    height: 100vh;
     flex-direction: column;
+  }
+
+  &__Section:nth-of-type(4) {
+    flex-direction: column;
+    padding-block-start: 80px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .Homepage {
+    h2 {
+      font-size: 2rem;
+    }
+
+    &__Section {
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+    }
+
+    &__Section__Presentation {
+      font-size: 1.2rem;
+
+      span {
+        font-size: 1.8rem;
+      }
+
+      &__Buttons {
+        width: 30%;
+        button {
+          display: block;
+          height: 3rem;
+          font-size: 1.1rem;
+          margin-block-end: 1rem;
+        }
+      }
+    }
+
+    &__Section:nth-of-type(2) {
+      height: 50vh;
+      flex-wrap: wrap;
+      flex-direction: row;
+      font-size: 1.2rem;
+    }
+
+    &__Section:nth-of-type(3) {
+      height: 100vh;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .Homepage {
+    h2 {
+      margin-block-end: 3rem;
+    }
+    &__Section {
+      padding: 2rem;
+      display: flex;
+    }
+
+    &__Section:nth-of-type(1),
+    &__Section:nth-of-type(2),
+    &__Section:nth-of-type(3) {
+      height: fit-content;
+      margin-block-end: 2rem;
+      justify-content: center;
+    }
+
+    &__Section:nth-of-type(1) {
+      height: 100vh;
+    }
   }
 }

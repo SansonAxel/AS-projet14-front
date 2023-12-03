@@ -139,6 +139,7 @@ const Homepage = () => {
       </section>
       {/* Features */}
       <section className="Homepage__Section">
+        <h2>Nos atouts</h2>
         <Feature icon={faThumbsUp} content="Un affichage épuré" />
         <Feature icon={faSun} content="Une solution intuitive" />
         <Feature icon={faGear} content="Une gestion efficace" />
@@ -146,34 +147,35 @@ const Homepage = () => {
       </section>
       {/* Features */}
       <section className="Homepage__Section">
+        <h2>Notre équipe</h2>
         <TeamMember
-          imgUrl="https://dummyimage.com/150x150/a3a3a3/fff&text=illustration"
+          imgUrl="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
           name="Axel Sanson"
           teamRole="Product Owner - Dev backend"
         />
         <TeamMember
-          imgUrl="https://dummyimage.com/150x150/a3a3a3/fff&text=illustration"
+          imgUrl="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
           name="Nabila Abdallah"
           teamRole="Scrum Master - Dev backend"
         />
         <TeamMember
-          imgUrl="https://dummyimage.com/150x150/a3a3a3/fff&text=illustration"
+          imgUrl="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
           name="Jérémy Le Goff"
           teamRole="Lead dev backend"
         />
         <TeamMember
-          imgUrl="https://dummyimage.com/150x150/a3a3a3/fff&text=illustration"
+          imgUrl="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
           name="Louis Le Croller"
           teamRole="Lead dev frontend"
         />
         <TeamMember
-          imgUrl="https://dummyimage.com/150x150/a3a3a3/fff&text=illustration"
+          imgUrl="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
           name="Jacques André"
           teamRole="Git Master - Dev frontend"
         />
       </section>
-      <section className="Homepage__Section" id="test">
-        <h2 ref={ref}>Vous souhaitez :</h2>
+      <section className="Homepage__Section" id="test" ref={ref}>
+        <h2>Vous souhaitez :</h2>
         <select
           value={selectedForm}
           onChange={handleFormToDisplay}
@@ -210,7 +212,6 @@ const Homepage = () => {
             />
           ))}
       </section>
-
       <Footer />
     </div>
   );

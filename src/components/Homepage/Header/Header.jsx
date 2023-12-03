@@ -4,12 +4,12 @@ import Menu from '../../Menu/Menu';
 
 const Header = () => {
   return (
-    <div className="Header">
+    <header className="Header">
       <Menu />
       <a className="Header__Link" to="/">
         Tableau de bord
       </a>
-    </div>
+    </header>
   );
 };
 

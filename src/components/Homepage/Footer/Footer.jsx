@@ -3,11 +3,11 @@ import './Footer.scss';
 
 const Footer = () => {
   return (
-    <div className="Footer">
+    <footer className="Footer">
       <a className="Footer__Link" to="/">
         Mentions légales
       </a>
-    </div>
+    </footer>
   );
 };
 

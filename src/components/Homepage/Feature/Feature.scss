@@ -1,14 +1,48 @@
 @use 'src/styles/variables' as v;
 
 .Homepage__Section__Features {
+  display: flex;
+  flex-direction: column;
   text-align: center;
-  width: 30%;
+  width: 100%;
   color: v.$mid-purple;
   font-weight: v.$bold;
 
-  &__Icon:nth-of-type(odd) {
+  &__Icon {
+    margin-block-start: 2rem;
     color: v.$orange;
     font-size: 4rem;
     margin-block-end: 1rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .Homepage__Section__Features {
+    display: flex;
+    text-align: center;
+    width: 40%;
+    color: v.$mid-purple;
+    font-weight: v.$bold;
+
+    &__Icon {
+      margin-block-start: 2rem;
+      color: v.$orange;
+      font-size: 4rem;
+      margin-block-end: 1rem;
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .Homepage__Section__Features {
+    display: flex;
+    text-align: center;
+    color: v.$mid-purple;
+    font-weight: v.$bold;
+    width: 20%;
+
+    &__Icon {
+      margin-block-start: 0;
+    }
   }
 }
