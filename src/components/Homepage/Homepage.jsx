@@ -1,25 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
-import PropTypes from 'prop-types';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Select from 'react-select';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faGear,
-  faSun,
-  faThumbsUp,
-  faCircleDot,
-} from '@fortawesome/free-solid-svg-icons';
 
-import './Homepage.scss';
 import Header from './Header/Header';
-import Footer from './Footer/Footer';
+import Presentation from './Presentation/Presentation';
+import Features from './Features/Features';
+import TeamMembers from './TeamMembers/TeamMembers';
 import InformationForm from './InformationForm/InformationForm';
 import RegistrationForm from './RegistrationForm/RegistrationForm';
+import Footer from './Footer/Footer';
+
+import './Homepage.scss';
 
 import { changeInfoField } from '../../actions/homeform';
-import Feature from './Feature/Feature';
-import TeamMember from './TeamMember/TeamMember';
+
+import { featuresData, membersData, formOptions } from '../../homedatas';
 
 const Homepage = () => {
   const firstname = useSelector((state) => state.homeform.firstname);
@@ -42,29 +37,22 @@ const Homepage = () => {
     dispatch(changeInfoField(newValue, identifier));
   };
 
-  /* Options details for the form selector */
-  const formOptions = [
-    { value: 'default', label: 'Choisissez' },
-    { value: 'informations', label: 'Des informations' },
-    { value: 'registration', label: 'Vous inscrire' },
-  ];
-
   const [selectedForm, setSelectedForm] = useState('default');
   const [formLoaded, setFormLoaded] = useState(false);
 
   const ref = useRef(null);
   const formRef = useRef();
 
-  /* Used to make sure that the form to display is loaded and that the form height is higher than 50px, which is not initially */
+  /* Used to make sure that the form to display is loaded and 
+  that the form height is higher than 50px, 
+  which is not the case initially */
   useEffect(() => {
     if (formRef.current && formRef.current.clientHeight > 50) {
       setFormLoaded(true);
     }
   }, []);
 
-  /* Handle scoll on informations form */
-  const handleScrollOnInformations = () => {
-    // Scroll into view only if the form is loaded
+  const handleScroll = (formType) => {
     if (formLoaded) {
       ref.current.scrollIntoView({
         block: 'start',
@@ -79,29 +67,17 @@ const Homepage = () => {
         });
       }, 200);
     }
-    /* Changes the state that defines the selected form */
-    setSelectedForm('informations');
+    setSelectedForm(formType);
+  };
+
+  /* Handle scoll on informations form */
+  const handleScrollOnInformations = () => {
+    handleScroll('informations');
   };
 
   /* Handle scoll on registration form */
   const handleScrollOnRegistration = () => {
-    // Scroll into view only if the form is loaded
-    if (formLoaded) {
-      ref.current.scrollIntoView({
-        block: 'start',
-        behavior: 'smooth',
-      });
-    } else {
-      // If form is not loaded, wait for a short time and then scroll
-      setTimeout(() => {
-        ref.current.scrollIntoView({
-          block: 'start',
-          behavior: 'smooth',
-        });
-      }, 200);
-    }
-    /* Changes the state that defines the selected form */
-    setSelectedForm('registration');
+    handleScroll('registration');
   };
 
   /* Changes the state that defines the selected form in the selector */
@@ -113,68 +89,20 @@ const Homepage = () => {
     <div className="Homepage">
       <Header />
       {/* intro */}
-      <section className="Homepage__Section">
-        <p className="Homepage__Section__Presentation">
-          <span>
-            Projet 14, un outil pour les associations d'aide alimentaire
-          </span>
-          <br />
-          Nous vous proposons une solution de gestion de stocks, claire,
-          intuitive et centralisée pour vous et vos antennes associatives.
-        </p>
-        <div className="Homepage__Section__Presentation__Buttons">
-          <button
-            type="button"
-            onClick={() => handleScrollOnInformations('informations')}
-          >
-            Contactez-nous
-          </button>
-          <button
-            type="button"
-            onClick={() => handleScrollOnRegistration('registration')}
-          >
-            Inscrivez-vous
-          </button>
-        </div>
-      </section>
+      <Presentation
+        onScrollInformations={() => handleScrollOnInformations('informations')}
+        onScrollRegistration={() => handleScrollOnRegistration('registration')}
+      />
+
       {/* Features */}
-      <section className="Homepage__Section">
-        <h2>Nos atouts</h2>
-        <Feature icon={faThumbsUp} content="Un affichage épuré" />
-        <Feature icon={faSun} content="Une solution intuitive" />
-        <Feature icon={faGear} content="Une gestion efficace" />
-        <Feature icon={faCircleDot} content="Des données centralisées" />
-      </section>
+
+      <Features featuresData={featuresData} />
+
       {/* Features */}
-      <section className="Homepage__Section">
-        <h2>Notre équipe</h2>
-        <TeamMember
-          imgUrl="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
-          name="Axel Sanson"
-          teamRole="Product Owner - Dev backend"
-        />
-        <TeamMember
-          imgUrl="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
-          name="Nabila Abdallah"
-          teamRole="Scrum Master - Dev backend"
-        />
-        <TeamMember
-          imgUrl="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
-          name="Jérémy Le Goff"
-          teamRole="Lead dev backend"
-        />
-        <TeamMember
-          imgUrl="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
-          name="Louis Le Croller"
-          teamRole="Lead dev frontend"
-        />
-        <TeamMember
-          imgUrl="https://dummyimage.com/100x100/a3a3a3/fff&text=illustration"
-          name="Jacques André"
-          teamRole="Git Master - Dev frontend"
-        />
-      </section>
-      <section className="Homepage__Section" id="test" ref={ref}>
+
+      <TeamMembers membersData={membersData} />
+
+      <section className="Homepage__Section" ref={ref}>
         <h2>Vous souhaitez :</h2>
         <select
           value={selectedForm}
@@ -217,5 +145,4 @@ const Homepage = () => {
   );
 };
 
-Homepage.propTypes = {};
 export default Homepage;

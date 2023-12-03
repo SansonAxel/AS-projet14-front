@@ -1,6 +1,6 @@
 @use 'src/styles/variables' as v;
 
-.Homepage__Section__Features {
+.Homepage__Section__Feature {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -17,7 +17,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  .Homepage__Section__Features {
+  .Homepage__Section__Feature {
     display: flex;
     text-align: center;
     width: 40%;
@@ -34,7 +34,7 @@
 }
 
 @media screen and (min-width: 992px) {
-  .Homepage__Section__Features {
+  .Homepage__Section__Feature {
     display: flex;
     text-align: center;
     color: v.$mid-purple;

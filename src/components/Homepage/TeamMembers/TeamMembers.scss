@@ -1,6 +1,6 @@
 @use 'src/styles/variables' as v;
 
-.Homepage__Section__Team {
+.Homepage__Section__Member {
   display: flex;
   align-items: center;
   width: 70%;
@@ -10,7 +10,7 @@
   img {
     border-radius: 50%;
   }
-  &__Member {
+  &__Member__Details {
     font-weight: v.$bold;
     color: v.$mid-purple;
 
@@ -23,7 +23,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  .Homepage__Section__Team {
+  .Homepage__Section__Member {
     width: 50%;
     flex-direction: column;
     text-align: center;
@@ -35,7 +35,7 @@
       height: 125px;
     }
 
-    &__Member {
+    &__Member__Details {
       font-weight: v.$bold;
       color: v.$mid-purple;
       font-size: 1.2rem;
@@ -50,12 +50,12 @@
 }
 
 @media screen and (min-width: 992px) {
-  .Homepage__Section__Team {
-    width: 18%;
+  .Homepage__Section__Member {
+    width: 20%;
     flex-direction: column;
     text-align: center;
 
-    &__Member {
+    &__Member__Details {
       span {
         word-wrap: break-word;
       }
