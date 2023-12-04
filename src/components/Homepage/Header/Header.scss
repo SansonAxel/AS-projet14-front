@@ -22,7 +22,9 @@
   .Header__Link:hover,
   .Header__Link:active {
     cursor: pointer;
-    background-color: v.$white;
+    background-color: v.$mid-purple;
+    color: v.$orange;
+    font-weight: v.$bold;
   }
 }
 

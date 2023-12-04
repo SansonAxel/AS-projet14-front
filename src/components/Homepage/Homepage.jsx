@@ -15,6 +15,7 @@ import './Homepage.scss';
 import { changeInfoField } from '../../actions/homeform';
 
 import { featuresData, membersData, formOptions } from '../../homedatas';
+import LegalNotice from './LegalNotice/LegalNotice';
 
 const Homepage = () => {
   const firstname = useSelector((state) => state.homeform.firstname);
@@ -39,6 +40,7 @@ const Homepage = () => {
 
   const [selectedForm, setSelectedForm] = useState('default');
   const [formLoaded, setFormLoaded] = useState(false);
+  const [displayState, setDisplayState] = useState('none');
 
   const selectRef = useRef(null);
   const formRef = useRef();
@@ -85,11 +87,20 @@ const Homepage = () => {
     setSelectedForm(event.target.value);
   };
 
+  const handleDisplayLegalNotice = () => {
+    setDisplayState('block');
+  };
+
+  const handleHideOverlay = () => {
+    setDisplayState('none');
+  };
+
   return (
     <div className="Homepage">
       <Header
         onScrollInformations={() => handleScrollOnInformations('informations')}
         onScrollRegistration={() => handleScrollOnRegistration('registration')}
+        handleDisplayLegalNotice={handleDisplayLegalNotice}
       />
       {/* intro */}
       <Presentation
@@ -141,7 +152,11 @@ const Homepage = () => {
             />
           ))}
       </section>
-      <Footer />
+      <LegalNotice
+        displayState={displayState}
+        handleHideOverlay={handleHideOverlay}
+      />
+      <Footer handleDisplayLegalNotice={handleDisplayLegalNotice} />
     </div>
   );
 };

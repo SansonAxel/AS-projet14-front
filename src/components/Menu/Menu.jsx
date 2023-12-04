@@ -4,7 +4,11 @@ import './Menu.scss';
 
 import { HashLink } from 'react-router-hash-link';
 
-const Menu = ({ onScrollInformations, onScrollRegistration }) => {
+const Menu = ({
+  onScrollInformations,
+  onScrollRegistration,
+  handleDisplayLegalNotice,
+}) => {
   const [navWidth, setNavWidth] = useState('0');
 
   const handleOpenNav = () => {
@@ -14,6 +18,7 @@ const Menu = ({ onScrollInformations, onScrollRegistration }) => {
   const handleCloseNav = () => {
     setNavWidth('0');
   };
+
   return (
     <>
       <button type="button" className="Open" onClick={handleOpenNav}>
@@ -79,7 +84,11 @@ const Menu = ({ onScrollInformations, onScrollRegistration }) => {
           Inscrivez-vous
         </HashLink>
 
-        <HashLink className="Menu__Item" to="/">
+        <HashLink
+          className="Menu__Item"
+          to="/#legal-notice"
+          onClick={handleDisplayLegalNotice}
+        >
           Mentions légales
         </HashLink>
       </nav>
@@ -90,5 +99,6 @@ const Menu = ({ onScrollInformations, onScrollRegistration }) => {
 Menu.propTypes = {
   onScrollInformations: PropTypes.func.isRequired,
   onScrollRegistration: PropTypes.func.isRequired,
+  handleDisplayLegalNotice: PropTypes.func.isRequired,
 };
 export default Menu;

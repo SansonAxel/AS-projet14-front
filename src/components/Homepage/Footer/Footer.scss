@@ -4,4 +4,9 @@
   height: 3rem;
   text-align: center;
   margin-block-start: 3rem;
+
+  &__Link {
+    background: none;
+    border: none;
+  }
 }

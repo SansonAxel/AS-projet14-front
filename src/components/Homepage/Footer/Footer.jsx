@@ -1,15 +1,21 @@
 import PropTypes from 'prop-types';
 import './Footer.scss';
 
-const Footer = () => {
+const Footer = ({ handleDisplayLegalNotice }) => {
   return (
     <footer className="Footer">
-      <a className="Footer__Link" to="/">
+      <button
+        type="button"
+        className="Footer__Link"
+        onClick={handleDisplayLegalNotice}
+      >
         Mentions légales
-      </a>
+      </button>
     </footer>
   );
 };
 
-Footer.propTypes = {};
+Footer.propTypes = {
+  handleDisplayLegalNotice: PropTypes.func.isRequired,
+};
 export default Footer;
