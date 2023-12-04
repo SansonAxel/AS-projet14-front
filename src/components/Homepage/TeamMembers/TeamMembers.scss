@@ -2,21 +2,26 @@
 
 .Homepage__Section__Member {
   display: flex;
+  justify-content: center;
   align-items: center;
   width: 70%;
   margin: auto;
   gap: 1rem;
 
-  img {
-    border-radius: 50%;
-  }
   &__Member__Details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
     font-weight: v.$bold;
-    color: v.$mid-purple;
+    color: v.$orange;
+    border: 3px solid v.$mid-purple;
+    height: 100px;
+    width: 80%;
+    padding: 1rem;
 
     span {
       font-weight: v.$regular;
-      color: v.$purple;
       font-size: 0.8rem;
     }
   }
@@ -29,20 +34,12 @@
     text-align: center;
     margin: 0;
 
-    img {
-      border-radius: 50%;
-      width: 125px;
-      height: 125px;
-    }
-
     &__Member__Details {
       font-weight: v.$bold;
-      color: v.$mid-purple;
       font-size: 1.2rem;
 
       span {
         font-weight: v.$regular;
-        color: v.$purple;
         font-size: 1rem;
       }
     }

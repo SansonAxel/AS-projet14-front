@@ -2,19 +2,19 @@
 
 .Homepage {
   margin: auto;
+  max-width: 100%;
 
   &__Section {
     padding: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
 
     h2 {
       text-align: center;
       font-weight: v.$bold;
       font-size: 1.5rem;
-      margin-block-end: 1rem;
+      margin-block-end: 3rem;
       width: 100%;
     }
 
@@ -38,17 +38,13 @@
   }
 
   &__Section:nth-of-type(2) {
-    height: 100vh;
-    flex-wrap: wrap;
+    margin-block-start: 2rem;
     flex-direction: column;
     gap: 2rem;
-    h2 {
-      text-align: center;
-      width: 100%;
-    }
   }
 
   &__Section:nth-of-type(3) {
+    margin-block-start: 2rem;
     height: 100vh;
     flex-direction: column;
   }

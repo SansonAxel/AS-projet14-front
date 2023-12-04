@@ -7,7 +7,6 @@ const TeamMember = ({ membersData }) => {
       <h2>Notre équipe</h2>
       {membersData.map((member) => (
         <div className="Homepage__Section__Member" key={member.key}>
-          <img src={member.imgUrl} alt={member.name} />
           <p className="Homepage__Section__Member__Member__Details">
             {member.name} <br />
             <span>{member.teamRole}</span>
