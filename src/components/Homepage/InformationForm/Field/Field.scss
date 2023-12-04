@@ -1,5 +1,37 @@
 @use 'src/styles/variables' as v;
 
 .Field {
-  // Styles for Field
+  &__Input {
+    width: 100%;
+    padding: 0.7em;
+    font-size: 1em;
+    border: 1px solid v.$orange;
+    border-radius: 0.3em;
+    height: 2.5em;
+
+    &:focus {
+      border-color: v.$purple;
+    }
+  }
+
+  &__Textarea {
+    min-height: 4rem;
+  }
+
+  &__Label {
+    color: v.$black;
+    font-size: 1em;
+    animation: labelSlideUpAndShow 0.3s;
+  }
+}
+
+@keyframes labelSlideUpAndShow {
+  0% {
+    transform: translateY(1em);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0em);
+    opacity: 1;
+  }
 }
