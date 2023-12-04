@@ -27,11 +27,6 @@ export const membersData = [
     teamRole: 'Lead dev frontend',
     key: 4,
   },
-  {
-    name: 'Jacques André',
-    teamRole: 'Git Master - Dev frontend',
-    key: 5,
-  },
 ];
 
 /* Features datas */

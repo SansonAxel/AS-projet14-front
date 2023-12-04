@@ -38,13 +38,13 @@
   }
 
   &__Section:nth-of-type(2) {
-    margin-block-start: 2rem;
+    padding-block-start: 80px;
     flex-direction: column;
     gap: 2rem;
   }
 
   &__Section:nth-of-type(3) {
-    margin-block-start: 2rem;
+    padding-block-start: 80px;
     height: 100vh;
     flex-direction: column;
   }
