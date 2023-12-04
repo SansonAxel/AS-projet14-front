@@ -87,7 +87,10 @@ const Homepage = () => {
 
   return (
     <div className="Homepage">
-      <Header />
+      <Header
+        onScrollInformations={() => handleScrollOnInformations('informations')}
+        onScrollRegistration={() => handleScrollOnRegistration('registration')}
+      />
       {/* intro */}
       <Presentation
         onScrollInformations={() => handleScrollOnInformations('informations')}

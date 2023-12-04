@@ -2,10 +2,13 @@ import PropTypes from 'prop-types';
 import './Header.scss';
 import Menu from '../../Menu/Menu';
 
-const Header = () => {
+const Header = ({ onScrollInformations, onScrollRegistration }) => {
   return (
     <header className="Header">
-      <Menu />
+      <Menu
+        onScrollInformations={onScrollInformations}
+        onScrollRegistration={onScrollRegistration}
+      />
       <a className="Header__Link" to="/">
         Tableau de bord
       </a>
@@ -13,5 +16,8 @@ const Header = () => {
   );
 };
 
-Header.propTypes = {};
+Header.propTypes = {
+  onScrollInformations: PropTypes.func.isRequired,
+  onScrollRegistration: PropTypes.func.isRequired,
+};
 export default Header;

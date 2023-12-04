@@ -10,31 +10,26 @@ export const membersData = [
   {
     name: 'Axel Sanson',
     teamRole: 'Product Owner - Dev backend',
-    imgUrl: 'https://dummyimage.com/100x100/a3a3a3/fff&text=illustration',
     key: 1,
   },
   {
     name: 'Nabila Abdallah',
     teamRole: 'Scrum Master - Dev backend',
-    imgUrl: 'https://dummyimage.com/100x100/a3a3a3/fff&text=illustration',
     key: 2,
   },
   {
     name: 'Jérémy Le Goff',
     teamRole: 'Lead dev backend',
-    imgUrl: 'https://dummyimage.com/100x100/a3a3a3/fff&text=illustration',
     key: 3,
   },
   {
     name: 'Louis Le Croller',
     teamRole: 'Lead dev frontend',
-    imgUrl: 'https://dummyimage.com/100x100/a3a3a3/fff&text=illustration',
     key: 4,
   },
   {
     name: 'Jacques André',
     teamRole: 'Git Master - Dev frontend',
-    imgUrl: 'https://dummyimage.com/100x100/a3a3a3/fff&text=illustration',
     key: 5,
   },
 ];

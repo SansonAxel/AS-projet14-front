@@ -3,7 +3,7 @@ import './TeamMembers.scss';
 
 const TeamMember = ({ membersData }) => {
   return (
-    <section className="Homepage__Section">
+    <section className="Homepage__Section" id="team">
       <h2>Notre équipe</h2>
       {membersData.map((member) => (
         <div className="Homepage__Section__Member" key={member.key}>
@@ -22,7 +22,6 @@ TeamMember.propTypes = {
     PropTypes.shape({
       name: PropTypes.string.isRequired,
       teamRole: PropTypes.string.isRequired,
-      imgUrl: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired,
 };

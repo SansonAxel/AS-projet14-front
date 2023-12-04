@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Feature = ({ featuresData }) => {
   return (
-    <section className="Homepage__Section">
+    <section className="Homepage__Section" id="features">
       <h2>Nos atouts</h2>
 
       {featuresData.map((feature) => (

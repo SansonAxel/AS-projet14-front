@@ -2,7 +2,9 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Menu.scss';
 
-const Menu = () => {
+import { HashLink } from 'react-router-hash-link';
+
+const Menu = ({ onScrollInformations, onScrollRegistration }) => {
   const [navWidth, setNavWidth] = useState('0');
 
   const handleOpenNav = () => {
@@ -26,33 +28,67 @@ const Menu = () => {
           &times;
         </button>
 
-        <a className="Menu__Item" to="/">
+        <HashLink
+          className="Menu__Item"
+          smooth
+          to="/#presentation"
+          onClick={handleCloseNav}
+        >
           À propos
-        </a>
+        </HashLink>
 
-        <a className="Menu__Item" to="/">
+        <HashLink
+          className="Menu__Item"
+          smooth
+          to="/#features"
+          onClick={handleCloseNav}
+        >
           Notre application
-        </a>
+        </HashLink>
 
-        <a className="Menu__Item" to="/">
+        <HashLink
+          className="Menu__Item"
+          smooth
+          to="/#team"
+          onClick={handleCloseNav}
+        >
           Notre équipe
-        </a>
+        </HashLink>
 
-        <a className="Menu__Item" to="/">
+        <HashLink
+          className="Menu__Item"
+          smooth
+          to="/#informations"
+          onClick={() => {
+            onScrollInformations();
+            handleCloseNav();
+          }}
+        >
           Informez-vous
-        </a>
+        </HashLink>
 
-        <a className="Menu__Item" to="/">
+        <HashLink
+          className="Menu__Item"
+          smooth
+          to="/#registration"
+          onClick={() => {
+            onScrollRegistration();
+            handleCloseNav();
+          }}
+        >
           Inscrivez-vous
-        </a>
+        </HashLink>
 
-        <a className="Menu__Item" to="/">
+        <HashLink className="Menu__Item" to="/">
           Mentions légales
-        </a>
+        </HashLink>
       </nav>
     </>
   );
 };
 
-Menu.propTypes = {};
+Menu.propTypes = {
+  onScrollInformations: PropTypes.func.isRequired,
+  onScrollRegistration: PropTypes.func.isRequired,
+};
 export default Menu;

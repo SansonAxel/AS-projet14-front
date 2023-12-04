@@ -4,7 +4,7 @@ import './Presentation.scss';
 
 const Presentation = ({ onScrollInformations, onScrollRegistration }) => {
   return (
-    <section className="Homepage__Section">
+    <section className="Homepage__Section" id="presentation">
       <p className="Homepage__Section__Presentation">
         <span>
           Projet 14, un outil pour les associations d'aide alimentaire
