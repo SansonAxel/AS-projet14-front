@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './Header.scss';
 import Menu from '../../Menu/Menu';
@@ -14,9 +15,9 @@ const Header = ({
         onScrollRegistration={onScrollRegistration}
         handleDisplayLegalNotice={handleDisplayLegalNotice}
       />
-      <a className="Header__Link" to="/">
+      <Link className="Header__Link" to="/login">
         Tableau de bord
-      </a>
+      </Link>
     </header>
   );
 };
