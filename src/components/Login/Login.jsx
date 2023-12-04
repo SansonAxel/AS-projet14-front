@@ -1,4 +1,7 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useDispatch, useSelector } from 'react-redux';
+import { HashLink } from 'react-router-hash-link';
+
 import PropTypes from 'prop-types';
 import './Login.scss';
 import Field from './Field/Field';
@@ -15,7 +18,8 @@ const Login = () => {
 
   return (
     <div className="Login">
-      <form autoComplete="off" className="login-form-element">
+      <h2>Accès à votre tableau de bord</h2>
+      <form autoComplete="off" className="Login__Form">
         <Field
           name="email"
           type="email"
@@ -30,10 +34,13 @@ const Login = () => {
           onChange={handleChange}
           value={password}
         />
-        <button type="submit" className="login-form-button">
+        <button type="submit" className="Login__Form__Button">
           Se connecter
         </button>
       </form>
+      <HashLink smooth to="/">
+        Retour à l'accueil
+      </HashLink>
     </div>
   );
 };
