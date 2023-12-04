@@ -40,7 +40,7 @@ const Homepage = () => {
   const [selectedForm, setSelectedForm] = useState('default');
   const [formLoaded, setFormLoaded] = useState(false);
 
-  const ref = useRef(null);
+  const selectRef = useRef(null);
   const formRef = useRef();
 
   /* Used to make sure that the form to display is loaded and 
@@ -52,16 +52,16 @@ const Homepage = () => {
     }
   }, []);
 
-  const handleScroll = (formType) => {
+  const handleScrollOnForm = (formType) => {
     if (formLoaded) {
-      ref.current.scrollIntoView({
+      selectRef.current.scrollIntoView({
         block: 'start',
         behavior: 'smooth',
       });
     } else {
       // If form is not loaded, wait for a short time and then scroll
       setTimeout(() => {
-        ref.current.scrollIntoView({
+        selectRef.current.scrollIntoView({
           block: 'start',
           behavior: 'smooth',
         });
@@ -72,12 +72,12 @@ const Homepage = () => {
 
   /* Handle scoll on informations form */
   const handleScrollOnInformations = () => {
-    handleScroll('informations');
+    handleScrollOnForm('informations');
   };
 
   /* Handle scoll on registration form */
   const handleScrollOnRegistration = () => {
-    handleScroll('registration');
+    handleScrollOnForm('registration');
   };
 
   /* Changes the state that defines the selected form in the selector */
@@ -95,14 +95,12 @@ const Homepage = () => {
       />
 
       {/* Features */}
-
       <Features featuresData={featuresData} />
 
-      {/* Features */}
-
+      {/* Team */}
       <TeamMembers membersData={membersData} />
 
-      <section className="Homepage__Section" ref={ref}>
+      <section className="Homepage__Section" ref={selectRef}>
         <h2>Vous souhaitez :</h2>
         <select
           value={selectedForm}
