@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { HashLink } from 'react-router-hash-link';
 
-import PropTypes from 'prop-types';
 import './Login.scss';
 import FormTemplate from '../FormTemplate/FormTemplate';
 import { formFieldsLogin } from '../../datas/formFieldsConfig';
@@ -18,5 +17,4 @@ const Login = () => {
   );
 };
 
-Login.propTypes = {};
 export default Login;
