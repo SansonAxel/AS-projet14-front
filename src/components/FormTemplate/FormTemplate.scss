@@ -1,6 +1,89 @@
 @use 'src/styles/variables' as v;
 
 .Form {
+  padding: 1rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+  &__Element {
+    &__Input,
+    &__Textarea {
+      width: 100%;
+      padding: 0.7em;
+      font-size: 1em;
+      border: 1px solid v.$purple;
+      border-radius: 0.3em;
+      height: 2.5em;
+
+      &:focus {
+        border-color: v.$orange;
+      }
+    }
+
+    &__Textarea {
+      height: 6rem;
+    }
+
+    &__Label {
+      color: v.$black;
+      font-size: 1em;
+      margin-block-end: 15px;
+      animation: labelSlideUpAndShow 0.3s;
+    }
+
+    &__Error {
+      color: v.$purple;
+      text-align: right;
+      margin-block-start: 5px;
+      font-size: 0.8rem;
+    }
+  }
+  @keyframes labelSlideUpAndShow {
+    0% {
+      transform: translateY(1em);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0em);
+      opacity: 1;
+    }
+  }
+
+  &__Info {
+    font-style: italic;
+    text-align: center;
+    color: v.$mid-grey;
+  }
+
+  &__Submit {
+    font-size: 1em;
+    color: v.$mid-purple;
+    background-color: v.$orange;
+    font-weight: v.$bold;
+    border-radius: 0.3em;
+    border: 0;
+    padding: 0.7em;
+    height: 2.5em;
+
+    &:active {
+      color: v.$orange;
+      background-color: v.$mid-purple;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .Form {
+    width: 60%;
+
+    &__Submit {
+      width: 30%;
+      margin: auto;
+      &:hover {
+        color: v.$orange;
+        background-color: v.$mid-purple;
+      }
+    }
+  }
 }

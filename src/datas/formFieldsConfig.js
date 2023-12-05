@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 export const formFieldsInformations = [
   {
     name: 'firstName',
-    label: 'Prénom',
+    label: 'Prénom*',
     type: 'text',
     initialValue: '',
     validation: Yup.string()
@@ -12,7 +12,7 @@ export const formFieldsInformations = [
   },
   {
     name: 'lastName',
-    label: 'Nom',
+    label: 'Nom*',
     type: 'text',
     initialValue: '',
     validation: Yup.string()
@@ -21,7 +21,7 @@ export const formFieldsInformations = [
   },
   {
     name: 'email',
-    label: 'Adresse email',
+    label: 'Adresse email*',
     type: 'email',
     initialValue: '',
     validation: Yup.string()
@@ -31,8 +31,8 @@ export const formFieldsInformations = [
   },
   {
     name: 'message',
-    label: 'Votre message',
-    type: 'text',
+    label: 'Votre message*',
+    type: 'textarea',
     initialValue: '',
     validation: Yup.string()
       .max(1000, 'Message limité à 1000 caractères')
@@ -43,7 +43,7 @@ export const formFieldsInformations = [
 export const formFieldsRegistration = [
   {
     name: 'firstName',
-    label: 'Prénom',
+    label: 'Prénom*',
     type: 'text',
     initialValue: '',
     validation: Yup.string()
@@ -52,7 +52,7 @@ export const formFieldsRegistration = [
   },
   {
     name: 'lastName',
-    label: 'Nom',
+    label: 'Nom*',
     type: 'text',
     initialValue: '',
     validation: Yup.string()
@@ -61,7 +61,7 @@ export const formFieldsRegistration = [
   },
   {
     name: 'organizationName',
-    label: "Nom de l'association",
+    label: "Nom de l'association*",
     type: 'text',
     initialValue: '',
     validation: Yup.string()
@@ -70,7 +70,7 @@ export const formFieldsRegistration = [
   },
   {
     name: 'organizationType',
-    label: 'Statut juridique',
+    label: 'Statut juridique*',
     type: 'text',
     initialValue: '',
     validation: Yup.string()
@@ -79,7 +79,7 @@ export const formFieldsRegistration = [
   },
   {
     name: 'email',
-    label: 'Adresse email',
+    label: 'Adresse email*',
     type: 'email',
     initialValue: '',
     validation: Yup.string()
@@ -92,13 +92,11 @@ export const formFieldsRegistration = [
     label: 'Numéro de téléphone',
     type: 'text',
     initialValue: '',
-    validation: Yup.string()
-      .max(20, 'Ne doit pas dépasser 20 caractères')
-      .required('Champ requis'),
+    validation: Yup.string().max(20, 'Ne doit pas dépasser 20 caractères'),
   },
   {
     name: 'address',
-    label: 'Adresse postale',
+    label: 'Adresse postale*',
     type: 'text',
     initialValue: '',
     validation: Yup.string()
@@ -107,7 +105,7 @@ export const formFieldsRegistration = [
   },
   {
     name: 'siren',
-    label: 'Numéro de SIREN',
+    label: 'Numéro de SIREN*',
     type: 'text',
     initialValue: '',
     validation: Yup.string()

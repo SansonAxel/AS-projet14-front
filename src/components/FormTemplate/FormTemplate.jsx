@@ -1,7 +1,10 @@
+/* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
+
+import './FormTemplate.scss';
 
 const FormTemplate = ({ formFields, buttonText }) => {
   // Create a validation schema using Yup based on formFields
@@ -30,38 +33,57 @@ const FormTemplate = ({ formFields, buttonText }) => {
 
   return (
     // Render the form with input fields and validation messages
-    <form onSubmit={formik.handleSubmit}>
-      {formFields.map((field) => (
-        // Map over each form field and create corresponding input elements
-        <div key={field.name}>
-          <label htmlFor={field.name}>{field.label}</label>
-          {/* Use a checkbox input for 'checkbox' type, otherwise use a text input */}
-          {field.type === 'checkbox' ? (
-            <input
-              type="checkbox"
-              id={field.name}
-              name={field.name}
-              checked={formik.values[field.name]}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-          ) : (
-            <input
-              type={field.type || 'text'} // Use provided type or default to 'text'
-              id={field.name}
-              name={field.name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values[field.name]}
-            />
-          )}
-          {/* Display validation error if the field has been touched and there's an error */}
-          {formik.touched[field.name] && formik.errors[field.name] ? (
-            <div className="error">{formik.errors[field.name]}</div>
-          ) : null}
-        </div>
-      ))}
-      <button type="submit">{buttonText}</button>
+    <form onSubmit={formik.handleSubmit} className="Form">
+      {formFields.map((field) => {
+        const commonProps = {
+          id: field.name,
+          name: field.name,
+          onChange: formik.handleChange,
+          onBlur: formik.handleBlur,
+        };
+        return (
+          // Map over each form field and create corresponding input elements
+          <div key={field.name} className="Form__Element">
+            <label htmlFor={field.name} className="Form__Element__Label">
+              {field.label}
+            </label>
+            {/* Use a checkbox input for 'checkbox' type, otherwise use a text input */}
+            {field.type === 'checkbox' && (
+              <input
+                {...commonProps}
+                className="Form__Element__Checkbox"
+                type="checkbox"
+                checked={formik.values[field.name]}
+              />
+            )}
+            {field.type === 'textarea' && (
+              <textarea
+                {...commonProps}
+                className="Form__Element__Textarea"
+                value={formik.values[field.name]}
+              />
+            )}
+            {field.type !== 'checkbox' && field.type !== 'textarea' && (
+              <input
+                {...commonProps}
+                className="Form__Element__Input"
+                type={field.type || 'text'}
+                value={formik.values[field.name]}
+              />
+            )}
+            {/* Display validation error if the field has been touched and there's an error */}
+            {formik.touched[field.name] && formik.errors[field.name] && (
+              <div className="Form__Element__Error">
+                {formik.errors[field.name]}
+              </div>
+            )}
+          </div>
+        );
+      })}
+      <p className="Form__Info">Les champs marqués d'un * sont obligatoires</p>
+      <button type="submit" className="Form__Submit">
+        {buttonText}
+      </button>
     </form>
   );
 };
