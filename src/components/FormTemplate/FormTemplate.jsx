@@ -67,7 +67,7 @@ const FormTemplate = ({ formFields, buttonText }) => {
               <input
                 {...commonProps}
                 className="Form__Element__Input"
-                type={field.type || 'text'}
+                type={field.type}
                 value={formik.values[field.name]}
               />
             )}

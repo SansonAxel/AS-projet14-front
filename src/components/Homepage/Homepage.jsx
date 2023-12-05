@@ -109,30 +109,6 @@ const Homepage = () => {
             </option>
           ))}
         </select>
-        {/* {selectedForm !== 'default' &&
-          (selectedForm === 'informations' ? (
-            <InformationForm
-              firstname={firstname}
-              lastname={lastname}
-              organizationName={organizationName}
-              email={email}
-              phoneNumber={phoneNumber}
-              message={message}
-              changeInfoField={handleChange}
-            />
-          ) : (
-            <RegistrationForm
-              firstname={firstname}
-              lastname={lastname}
-              organizationName={organizationName}
-              organizationType={organizationType}
-              email={email}
-              phoneNumber={phoneNumber}
-              address={address}
-              siren={siren}
-              changeInfoField={handleChange}
-            />
-          ))} */}
         {selectedForm !== 'default' && (
           <FormTemplate
             formFields={
