@@ -9,7 +9,7 @@ import Footer from './Footer/Footer';
 
 import './Homepage.scss';
 
-import { featuresData, membersData, formOptions } from '../../datas/homedatas';
+import { featuresData, membersData, formOptions } from '../../homedatas';
 import {
   formFieldsInformations,
   formFieldsRegistration,
