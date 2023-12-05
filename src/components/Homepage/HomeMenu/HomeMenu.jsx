@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import './Menu.scss';
+import './HomeMenu.scss';
 
 import { HashLink } from 'react-router-hash-link';
 

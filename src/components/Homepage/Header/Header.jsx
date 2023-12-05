@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import './Header.scss';
-import Menu from '../../Menu/Menu';
+import HomeMenu from '../HomeMenu/HomeMenu';
 
 const Header = ({
   onScrollInformations,
@@ -10,7 +10,7 @@ const Header = ({
 }) => {
   return (
     <header className="Header">
-      <Menu
+      <HomeMenu
         onScrollInformations={onScrollInformations}
         onScrollRegistration={onScrollRegistration}
         handleDisplayLegalNotice={handleDisplayLegalNotice}
