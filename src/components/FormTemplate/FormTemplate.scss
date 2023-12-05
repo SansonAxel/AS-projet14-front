@@ -78,7 +78,27 @@
     width: 60%;
 
     &__Submit {
-      width: 30%;
+      width: 50%;
+      margin: auto;
+      &:hover {
+        color: v.$orange;
+        background-color: v.$mid-purple;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .Form {
+    width: 40%;
+
+    &__Element {
+      width: 80%;
+      margin: auto;
+    }
+
+    &__Submit {
+      width: 40%;
       margin: auto;
       &:hover {
         color: v.$orange;

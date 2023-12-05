@@ -1,5 +1,8 @@
 import * as Yup from 'yup';
 
+// ====================================================
+//                      *CONTACT
+// ====================================================
 export const formFieldsInformations = [
   {
     name: 'firstName',
@@ -7,7 +10,7 @@ export const formFieldsInformations = [
     type: 'text',
     initialValue: '',
     validation: Yup.string()
-      .max(30, 'Ne doit pas dépasser 100 caractères')
+      .max(100, 'Ne doit pas dépasser 100 caractères')
       .required('Champ requis'),
   },
   {
@@ -40,6 +43,10 @@ export const formFieldsInformations = [
   },
 ];
 
+// ====================================================
+//                      *INSCRIPTION
+// ====================================================
+
 export const formFieldsRegistration = [
   {
     name: 'firstName',
@@ -47,7 +54,7 @@ export const formFieldsRegistration = [
     type: 'text',
     initialValue: '',
     validation: Yup.string()
-      .max(30, 'Ne doit pas dépasser 100 caractères')
+      .max(100, 'Ne doit pas dépasser 100 caractères')
       .required('Champ requis'),
   },
   {
@@ -110,6 +117,31 @@ export const formFieldsRegistration = [
     initialValue: '',
     validation: Yup.string()
       .max(9, 'Ne doit pas dépasser 9 caractères')
+      .required('Champ requis'),
+  },
+];
+
+// ====================================================
+//                      *LOGIN
+// ====================================================
+
+export const formFieldsLogin = [
+  {
+    name: 'email',
+    label: 'Adresse email',
+    type: 'email',
+    initialValue: '',
+    validation: Yup.string()
+      .max(320, 'Ne doit pas dépasser 320 caractères')
+      .required('Champ requis'),
+  },
+  {
+    name: 'password',
+    label: 'Mot de passe',
+    type: 'password',
+    initialValue: '',
+    validation: Yup.string()
+      .max(255, 'Ne doit pas dépasser 255 caractères')
       .required('Champ requis'),
   },
 ];
