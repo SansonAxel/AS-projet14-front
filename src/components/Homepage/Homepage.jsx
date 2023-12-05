@@ -14,30 +14,16 @@ import './Homepage.scss';
 
 import { changeInfoField } from '../../actions/homeform';
 
-import { featuresData, membersData, formOptions } from '../../homedatas';
+import { featuresData, membersData, formOptions } from '../../datas/homedatas';
+import {
+  formFieldsInformations,
+  formFieldsRegistration,
+} from '../../datas/formFieldsConfig';
+
 import LegalNotice from './LegalNotice/LegalNotice';
+import FormTemplate from '../FormTemplate/FormTemplate';
 
 const Homepage = () => {
-  const firstname = useSelector((state) => state.homeform.firstname);
-  const lastname = useSelector((state) => state.homeform.lastname);
-  const organizationName = useSelector(
-    (state) => state.homeform.organizationName
-  );
-  const organizationType = useSelector(
-    (state) => state.homeform.organizationType
-  );
-  const email = useSelector((state) => state.homeform.email);
-  const phoneNumber = useSelector((state) => state.homeform.phoneNumber);
-  const address = useSelector((state) => state.homeform.address);
-  const siren = useSelector((state) => state.homeform.siren);
-  const message = useSelector((state) => state.homeform.message);
-
-  const dispatch = useDispatch();
-
-  const handleChange = (newValue, identifier) => {
-    dispatch(changeInfoField(newValue, identifier));
-  };
-
   const [selectedForm, setSelectedForm] = useState('default');
   const [formLoaded, setFormLoaded] = useState(false);
   const [displayState, setDisplayState] = useState('none');
@@ -127,7 +113,7 @@ const Homepage = () => {
             </option>
           ))}
         </select>
-        {selectedForm !== 'default' &&
+        {/* {selectedForm !== 'default' &&
           (selectedForm === 'informations' ? (
             <InformationForm
               firstname={firstname}
@@ -150,7 +136,17 @@ const Homepage = () => {
               siren={siren}
               changeInfoField={handleChange}
             />
-          ))}
+          ))} */}
+        {selectedForm !== 'default' && (
+          <FormTemplate
+            formFields={
+              selectedForm === 'informations'
+                ? formFieldsInformations
+                : formFieldsRegistration
+            }
+            buttonText="Envoyer"
+          />
+        )}
       </section>
       <LegalNotice
         displayState={displayState}
