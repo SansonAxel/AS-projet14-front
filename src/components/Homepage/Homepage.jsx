@@ -6,13 +6,9 @@ import Header from './Header/Header';
 import Presentation from './Presentation/Presentation';
 import Features from './Features/Features';
 import TeamMembers from './TeamMembers/TeamMembers';
-import InformationForm from './InformationForm/InformationForm';
-import RegistrationForm from './RegistrationForm/RegistrationForm';
 import Footer from './Footer/Footer';
 
 import './Homepage.scss';
-
-import { changeInfoField } from '../../actions/homeform';
 
 import { featuresData, membersData, formOptions } from '../../datas/homedatas';
 import {

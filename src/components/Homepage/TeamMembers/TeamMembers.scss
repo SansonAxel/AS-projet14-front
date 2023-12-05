@@ -7,6 +7,7 @@
   text-align: center;
   width: 70%;
   margin: auto;
+  margin-block-end: 1rem;
   gap: 1rem;
 
   &__Member__Details {
@@ -35,6 +36,7 @@
     flex-direction: column;
     text-align: center;
     margin: 0;
+    margin-block-end: 1rem;
 
     &__Member__Details {
       font-weight: v.$bold;
@@ -50,7 +52,7 @@
 
 @media screen and (min-width: 992px) {
   .Homepage__Section__Member {
-    width: 20%;
+    width: 25%;
     flex-direction: column;
     text-align: center;
 

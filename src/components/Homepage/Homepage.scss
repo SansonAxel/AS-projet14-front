@@ -35,6 +35,7 @@
     padding: 2em;
     text-align: center;
     height: 100vh;
+    padding-block-start: 80px;
   }
 
   &__Section:nth-of-type(2) {
@@ -45,7 +46,6 @@
 
   &__Section:nth-of-type(3) {
     padding-block-start: 80px;
-    height: 100vh;
     flex-direction: column;
   }
 
@@ -56,14 +56,12 @@
 
   @media screen and (min-width: 768px) {
     &__Section:nth-of-type(2) {
-      height: 50vh;
       flex-wrap: wrap;
       flex-direction: row;
       font-size: 1.2rem;
     }
 
     &__Section:nth-of-type(3) {
-      height: 100vh;
       flex-direction: row;
       flex-wrap: wrap;
       justify-content: flex-start;
