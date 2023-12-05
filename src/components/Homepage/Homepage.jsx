@@ -1,43 +1,24 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import Header from './Header/Header';
 import Presentation from './Presentation/Presentation';
 import Features from './Features/Features';
 import TeamMembers from './TeamMembers/TeamMembers';
-import InformationForm from './InformationForm/InformationForm';
-import RegistrationForm from './RegistrationForm/RegistrationForm';
 import Footer from './Footer/Footer';
 
 import './Homepage.scss';
 
-import { changeInfoField } from '../../actions/homeform';
+import { featuresData, membersData, formOptions } from '../../datas/homedatas';
+import {
+  formFieldsInformations,
+  formFieldsRegistration,
+} from '../../datas/formFieldsConfig';
 
-import { featuresData, membersData, formOptions } from '../../homedatas';
 import LegalNotice from './LegalNotice/LegalNotice';
+import FormTemplate from '../FormTemplate/FormTemplate';
 
 const Homepage = () => {
-  const firstname = useSelector((state) => state.homeform.firstname);
-  const lastname = useSelector((state) => state.homeform.lastname);
-  const organizationName = useSelector(
-    (state) => state.homeform.organizationName
-  );
-  const organizationType = useSelector(
-    (state) => state.homeform.organizationType
-  );
-  const email = useSelector((state) => state.homeform.email);
-  const phoneNumber = useSelector((state) => state.homeform.phoneNumber);
-  const address = useSelector((state) => state.homeform.address);
-  const siren = useSelector((state) => state.homeform.siren);
-  const message = useSelector((state) => state.homeform.message);
-
-  const dispatch = useDispatch();
-
-  const handleChange = (newValue, identifier) => {
-    dispatch(changeInfoField(newValue, identifier));
-  };
-
   const [selectedForm, setSelectedForm] = useState('default');
   const [formLoaded, setFormLoaded] = useState(false);
   const [displayState, setDisplayState] = useState('none');
@@ -127,30 +108,16 @@ const Homepage = () => {
             </option>
           ))}
         </select>
-        {selectedForm !== 'default' &&
-          (selectedForm === 'informations' ? (
-            <InformationForm
-              firstname={firstname}
-              lastname={lastname}
-              organizationName={organizationName}
-              email={email}
-              phoneNumber={phoneNumber}
-              message={message}
-              changeInfoField={handleChange}
-            />
-          ) : (
-            <RegistrationForm
-              firstname={firstname}
-              lastname={lastname}
-              organizationName={organizationName}
-              organizationType={organizationType}
-              email={email}
-              phoneNumber={phoneNumber}
-              address={address}
-              siren={siren}
-              changeInfoField={handleChange}
-            />
-          ))}
+        {selectedForm !== 'default' && (
+          <FormTemplate
+            formFields={
+              selectedForm === 'informations'
+                ? formFieldsInformations
+                : formFieldsRegistration
+            }
+            buttonText="Envoyer"
+          />
+        )}
       </section>
       <LegalNotice
         displayState={displayState}

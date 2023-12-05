@@ -10,7 +10,7 @@
   justify-content: space-evenly;
 
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: v.$deep-grey;
     font-weight: v.$bold;
     position: relative;
@@ -24,32 +24,14 @@
     height: 2px;
     background-color: v.$orange;
   }
-
-  &__Form {
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-
-    &__Button {
-      font-size: 1em;
-      color: v.$mid-purple;
-      background-color: v.$orange;
-      font-weight: v.$bold;
-      border-radius: 0.3em;
-      border: 0;
-      padding: 0.7em;
-      height: 2.5em;
-
-      &:active {
-        color: v.$orange;
-        background-color: v.$mid-purple;
-      }
-    }
-  }
 }
 
 @media screen and (min-width: 768px) {
+  .Login {
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
 }
 
 @media screen and (min-width: 992px) {
