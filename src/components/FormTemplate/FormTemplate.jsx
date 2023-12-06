@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import './FormTemplate.scss';
 
-const FormTemplate = ({ formFields, buttonText }) => {
+const FormTemplate = ({ formFields, infoText, buttonText }) => {
   // Create a validation schema using Yup based on formFields
   const validationSchema = Yup.object().shape(
     formFields.reduce((acc, field) => {
@@ -80,7 +80,7 @@ const FormTemplate = ({ formFields, buttonText }) => {
           </div>
         );
       })}
-      <p className="Form__Info">Les champs marqués d'un * sont obligatoires</p>
+      <p className="Form__Info">{infoText}</p>
       <button type="submit" className="Form__Submit">
         {buttonText}
       </button>
@@ -98,11 +98,13 @@ FormTemplate.propTypes = {
       validation: PropTypes.instanceOf(Yup.string),
     })
   ),
+  infoText: PropTypes.string,
   buttonText: PropTypes.string,
 };
 
 FormTemplate.defaultProps = {
   formFields: [],
+  infoText: '',
   buttonText: '',
 };
 
