@@ -1,6 +1,6 @@
 @use 'src/styles/variables' as v;
 
-.Menu {
+.HomeMenu {
   height: 100%;
   position: fixed;
   z-index: 1;
@@ -51,7 +51,7 @@
 }
 
 .Open,
-.Menu__CloseButton {
+.HomeMenu__CloseButton {
   cursor: pointer;
   font-size: 2rem;
   background: none;

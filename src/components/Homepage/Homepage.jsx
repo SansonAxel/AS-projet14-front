@@ -116,6 +116,7 @@ const Homepage = () => {
                 : formFieldsRegistration
             }
             buttonText="Envoyer"
+            infoText="Les champs marqués d'un * sont obligatoires"
           />
         )}
       </section>

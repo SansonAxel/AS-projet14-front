@@ -5,7 +5,7 @@ import Error from '../Error/Error';
 import Login from '../Login/Login';
 
 import './App.scss';
-import FormTemplate from '../FormTemplate/FormTemplate';
+import Dashboard from '../Dashboard/Dashboard';
 
 const App = () => {
   return (
@@ -15,7 +15,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Error />} />
         {/* TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST  */}
-        <Route path="/test" element={<FormTemplate />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         {/* TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST  */}
       </Routes>
     </div>

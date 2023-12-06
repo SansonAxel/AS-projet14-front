@@ -1,0 +1,35 @@
+@use 'src/styles/variables' as v;
+
+.Page {
+  &--Desktop {
+    margin-inline-start: 30px;
+
+    .Page__Header {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      padding: 1rem;
+      background-color: v.$white;
+      color: v.$black;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+        rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    }
+    &.SidebarOpened {
+      margin-inline-start: 250px;
+      transition: 0.3s ease-in-out;
+    }
+  }
+
+  &--Mobile {
+    .Page__Header {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding: 1rem;
+      background-color: v.$white;
+      color: v.$black;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+        rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    }
+  }
+}

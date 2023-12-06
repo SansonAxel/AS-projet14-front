@@ -1,5 +1,19 @@
 @use 'src/styles/variables' as v;
 
 .AppHeader {
-  // Styles for AppHeader
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  h1 {
+    font-size: 1.5rem;
+    font-weight: v.$bold;
+  }
+  p {
+    font-weight: v.$light;
+
+    span {
+      font-weight: v.$regular;
+    }
+  }
 }
