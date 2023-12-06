@@ -24,17 +24,17 @@ const Menu = ({
       <button type="button" className="Open" onClick={handleOpenNav}>
         &#9776;
       </button>
-      <nav className="Menu" style={{ width: `${navWidth}px` }}>
+      <nav className="HomeMenu" style={{ width: `${navWidth}px` }}>
         <button
           type="button"
-          className="Menu__CloseButton"
+          className="HomeMenu__CloseButton"
           onClick={handleCloseNav}
         >
           &times;
         </button>
 
         <HashLink
-          className="Menu__Item"
+          className="HomeMenu__Item"
           smooth
           to="/#presentation"
           onClick={handleCloseNav}
@@ -43,7 +43,7 @@ const Menu = ({
         </HashLink>
 
         <HashLink
-          className="Menu__Item"
+          className="HomeMenu__Item"
           smooth
           to="/#features"
           onClick={handleCloseNav}
@@ -52,7 +52,7 @@ const Menu = ({
         </HashLink>
 
         <HashLink
-          className="Menu__Item"
+          className="HomeMenu__Item"
           smooth
           to="/#team"
           onClick={handleCloseNav}
@@ -61,7 +61,7 @@ const Menu = ({
         </HashLink>
 
         <HashLink
-          className="Menu__Item"
+          className="HomeMenu__Item"
           smooth
           to="/#informations"
           onClick={() => {
@@ -73,7 +73,7 @@ const Menu = ({
         </HashLink>
 
         <HashLink
-          className="Menu__Item"
+          className="HomeMenu__Item"
           smooth
           to="/#registration"
           onClick={() => {
@@ -85,7 +85,7 @@ const Menu = ({
         </HashLink>
 
         <HashLink
-          className="Menu__Item"
+          className="HomeMenu__Item"
           to="/#legal-notice"
           onClick={handleDisplayLegalNotice}
         >

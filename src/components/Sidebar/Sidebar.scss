@@ -1,12 +1,13 @@
 @use 'src/styles/variables' as v;
 
-.HomeMenu {
+.Sidebar {
   height: 100%;
   position: fixed;
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: v.$white;
+  width: 250px;
+  background-color: v.$dark-purple;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 80px;
@@ -14,13 +15,14 @@
 
   a {
     padding: 8px 8px 8px 32px;
+    width: 100%;
     margin-block-end: 1rem;
     text-decoration: none;
     font-size: 1.2rem;
-    color: v.$deep-grey;
     position: relative;
     display: inline-block;
     transition: 0.3s;
+    color: v.$white;
   }
 
   a:after {
@@ -30,30 +32,68 @@
     top: 100%;
     width: 0;
     height: 2px;
-    background-color: v.$orange;
+    background-color: v.$white;
     transition: width 0.3s ease-in-out;
   }
 
   a:hover {
-    color: v.$dark-purple;
+    color: v.$orange;
     font-weight: v.$bold;
   }
 
   a:hover:after {
-    width: 100%;
+    width: 20%;
   }
 
   &__CloseButton {
     position: absolute;
     top: 15px;
     right: 25px;
+    color: v.$white;
+  }
+
+  &--Closed {
+    width: 0;
   }
 }
 
-.Open,
-.HomeMenu__CloseButton {
+.Sidebar__Trigger {
+  color: v.$black;
+}
+
+.Sidebar__Trigger,
+.Sidebar__CloseButton {
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1.5rem;
   background: none;
   border: none;
+}
+
+@media screen and (min-width: 992px) {
+  .Sidebar {
+    &--Closed {
+      width: 30px;
+    }
+
+    &--Opened {
+      width: 250px;
+    }
+  }
+
+  .Sidebar__Trigger {
+    color: v.$white;
+    z-index: 2;
+    background-color: v.$dark-purple;
+    position: absolute;
+    left: 0;
+    height: 100vh;
+  }
+
+  .Sidebar__Trigger,
+  .Sidebar__CloseButton {
+    cursor: pointer;
+    font-size: 2rem;
+    background: none;
+    border: none;
+  }
 }
