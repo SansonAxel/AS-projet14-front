@@ -3,12 +3,16 @@ import './AppHeader.scss';
 
 const AppHeader = () => {
   return (
-    <div className="AppHeader">
-      <h1>Current page</h1>
-      <p>
-        Name - <span>Role</span>
-      </p>
-    </div>
+    <header className="AppHeader">
+      <div className="AppHeader__Title">
+        <h1>Current page</h1>
+      </div>
+      <div className="AppHeader__Content">
+        <p>
+          Name - <span>Role</span>
+        </p>
+      </div>
+    </header>
   );
 };
 
