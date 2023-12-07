@@ -13,7 +13,6 @@ const App = () => {
     return Cookies.get('token');
   };
   const isAuthenticated = !!getTokenFromCookie();
-
   // console.log(`cookie : ${tokenCookie}`);
   // console.log(`token state : ${token}`);
   return (
@@ -26,8 +25,9 @@ const App = () => {
         {isAuthenticated ? (
           <Route path="/dashboard" element={<Dashboard />} />
         ) : (
-          <Route path="/dashboard" element={<Navigate to="/login" />} />
+          <Route path="/dashboard" element={<Login />} />
         )}
+
         {/* TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST  */}
       </Routes>
     </div>

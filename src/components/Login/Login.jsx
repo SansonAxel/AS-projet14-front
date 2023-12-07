@@ -17,10 +17,10 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = (values) => {
-    const { username, password } = values;
+    const { email, password } = values;
 
     const payload = {
-      username,
+      email,
       password,
     };
 
