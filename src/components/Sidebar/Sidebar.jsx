@@ -1,4 +1,7 @@
 import PropTypes from 'prop-types';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+
 import './Sidebar.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -6,8 +9,19 @@ import {
   faChevronRight,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import { handleLogout } from '../../actions/user';
 
 const Sidebar = ({ isSidebarOpened, toggleSidebar, isDesktop }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogoutClick = () => {
+    Cookies.remove('token');
+    dispatch(handleLogout());
+    navigate('/login');
+  };
+
   return (
     <>
       {/* BURGER button (mobile / tablet views */}
@@ -52,7 +66,13 @@ const Sidebar = ({ isSidebarOpened, toggleSidebar, isDesktop }) => {
         <a to="__blank" className="Sidebar__Item">
           hop
         </a>
-        {/* Ajoutez d'autres éléments de la sidebar ici */}
+        <button
+          type="button"
+          className="Sidebar__Button"
+          onClick={handleLogoutClick}
+        >
+          Déconnexion
+        </button>
       </nav>
     </>
   );

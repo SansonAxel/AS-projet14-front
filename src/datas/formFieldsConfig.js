@@ -126,8 +126,9 @@ export const formFieldsRegistration = [
 // ====================================================
 
 export const formFieldsLogin = [
+  // ! username -> mail mais attente backend
   {
-    name: 'email',
+    name: 'username',
     label: 'Adresse email',
     type: 'email',
     initialValue: '',

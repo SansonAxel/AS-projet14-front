@@ -1,5 +1,30 @@
 @use 'src/styles/variables' as v;
 
 .Error {
-  // Styles for Error
+  max-height: 100vh;
+  text-align: center;
+  color: #f0f;
+  font-weight: v.$extra-bold;
+  h1 {
+    font-size: 500px;
+    margin-block-start: 100px;
+    animation: bump 0.5s infinite alternate;
+  }
+  h2 {
+    font-size: 4rem;
+    animation: bump 0.5s 0.5s infinite alternate;
+  }
+  img {
+    margin-block-start: 100px;
+    animation: bump 0.5s 1s infinite alternate;
+  }
+}
+
+@keyframes bump {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1.2);
+  }
 }

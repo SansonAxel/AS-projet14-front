@@ -1,19 +1,22 @@
-import { CHANGE_LOGIN_FIELD } from '../actions/user';
+import { HANDLE_LOGOUT, HANDLE_SUCCESSFUL_LOGIN } from '../actions/user';
 
 // reducer for login form
 export const initialState = {
-  email: '',
-  password: '',
   isLogged: false,
   token: '',
 };
 
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-    case CHANGE_LOGIN_FIELD:
+    case HANDLE_SUCCESSFUL_LOGIN:
       return {
-        ...state,
-        [action.identifier]: action.newValue,
+        isLogged: true,
+        token: action.token,
+      };
+    case HANDLE_LOGOUT:
+      return {
+        isLogged: false,
+        token: '',
       };
     default:
       return state;
