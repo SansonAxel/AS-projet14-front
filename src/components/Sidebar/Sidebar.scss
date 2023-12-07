@@ -1,8 +1,10 @@
 @use 'src/styles/variables' as v;
 
 .Sidebar {
-  height: 100%;
+  height: 100vh;
   position: fixed;
+  display: flex;
+  flex-direction: column;
   z-index: 1;
   top: 0;
   left: 0;
@@ -13,7 +15,14 @@
   padding-top: 80px;
   box-shadow: 12px 0px 20px -15px v.$mid-grey;
 
-  a {
+  .Sidebar__Button {
+    background: none;
+    border: none;
+    text-align: left;
+  }
+
+  .Sidebar__Item,
+  .Sidebar__Button {
     padding: 8px 8px 8px 32px;
     width: 100%;
     margin-block-end: 1rem;
@@ -25,7 +34,8 @@
     color: v.$white;
   }
 
-  a:after {
+  .Sidebar__Item:after,
+  .Sidebar__Button:after {
     content: '';
     position: absolute;
     left: 32px;
@@ -36,13 +46,15 @@
     transition: width 0.3s ease-in-out;
   }
 
-  a:hover {
+  a:hover,
+  .Sidebar__Button:hover {
     color: v.$orange;
     font-weight: v.$bold;
   }
 
-  a:hover:after {
-    width: 20%;
+  a:hover:after,
+  .Sidebar__Button:hover:after {
+    width: 60%;
   }
 
   &__CloseButton {

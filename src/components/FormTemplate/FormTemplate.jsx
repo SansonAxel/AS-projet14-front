@@ -6,28 +6,34 @@ import PropTypes from 'prop-types';
 
 import './FormTemplate.scss';
 
-const FormTemplate = ({ formFields, infoText, buttonText }) => {
+const FormTemplate = ({
+  formFields,
+  infoText,
+  buttonText,
+  handleLoginSubmission,
+}) => {
   // Create a validation schema using Yup based on formFields
   const validationSchema = Yup.object().shape(
-    formFields.reduce((acc, field) => {
-      // For each field, add its validation to the schema
-      acc[field.name] = field.validation;
-      return acc;
+    formFields.reduce((accumulator, field) => {
+      // For each field, add its validation conditionsto the schema
+      accumulator[field.name] = field.validation;
+      return accumulator;
     }, {})
   );
 
   // Create a formik object to manage form state and actions
   const formik = useFormik({
     // Set initial form values based on formFields (cf /src/datas/formFieldsConfig.js)
-    initialValues: formFields.reduce((acc, field) => {
-      acc[field.name] = field.initialValue || ''; // Use initial value if provided, otherwise use an empty string
-      return acc;
+    initialValues: formFields.reduce((accumulator, field) => {
+      accumulator[field.name] = field.initialValue || ''; // Use initial value if provided, otherwise use an empty string
+      return accumulator;
     }, {}),
     // Use the validation schema we created
     validationSchema,
     // Handle form submission
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
+      handleLoginSubmission(values);
     },
   });
 
@@ -100,12 +106,14 @@ FormTemplate.propTypes = {
   ),
   infoText: PropTypes.string,
   buttonText: PropTypes.string,
+  handleLoginSubmission: PropTypes.func,
 };
 
 FormTemplate.defaultProps = {
   formFields: [],
   infoText: '',
   buttonText: '',
+  handleLoginSubmission: () => {},
 };
 
 export default FormTemplate;
