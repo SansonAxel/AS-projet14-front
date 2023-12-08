@@ -4,12 +4,12 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './components/App/App';
-import store from './store';
 
 import './styles/index.scss';
+import { legacyStore, rtkStore } from './store/store';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
+  <Provider store={(legacyStore, rtkStore)}>
     <BrowserRouter>
       <App />
     </BrowserRouter>
