@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import './Crud.scss';
+/* eslint import/no-cycle: [2, { maxDepth: 1 }] */
+
 import Page from '../Page/Page';
 
 const Crud = () => {
