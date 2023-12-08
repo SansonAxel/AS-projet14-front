@@ -1,37 +1,33 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+
 import Cookies from 'js-cookie';
 
-import Homepage from '../Homepage/Homepage';
-import Error from '../Error/Error';
-import Login from '../Login/Login';
+import routesConfig from '../../routes/routes';
 
-import './App.scss';
-import Dashboard from '../Dashboard/Dashboard';
-
-const App = () => {
-  const getTokenFromCookie = () => {
+export default function App() {
+  const getTokenCookie = () => {
     return Cookies.get('token');
   };
-  const isAuthenticated = !!getTokenFromCookie();
-  // console.log(`cookie : ${tokenCookie}`);
-  // console.log(`token state : ${token}`);
+
+  const isAuthenticated = getTokenCookie();
+
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="*" element={<Error />} />
-        {/* TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST  */}
-        {isAuthenticated ? (
-          <Route path="/dashboard" element={<Dashboard />} />
-        ) : (
-          <Route path="/dashboard" element={<Login />} />
-        )}
-
-        {/* TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST  */}
-      </Routes>
-    </div>
+    <Routes>
+      {routesConfig.map((route) => (
+        <Route
+          key={route.name}
+          path={route.path}
+          title={route.name}
+          element={
+            route.isPrivate && !isAuthenticated ? (
+              <Navigate to="/login" replace />
+            ) : (
+              route.element
+            )
+          }
+        />
+      ))}
+    </Routes>
   );
-};
-
-export default App;
+}

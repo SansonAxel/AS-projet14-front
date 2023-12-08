@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import AppHeader from '../AppHeader/AppHeader';
+/* eslint import/no-cycle: [2, { maxDepth: 1 }] */
 import Sidebar from '../Sidebar/Sidebar';
 
 import './Page.scss';

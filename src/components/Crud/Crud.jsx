@@ -1,8 +1,13 @@
 import PropTypes from 'prop-types';
 import './Crud.scss';
+import Page from '../Page/Page';
 
 const Crud = () => {
-  return <div className="Crud">Crud</div>;
+  return (
+    <Page>
+      <div className="Crud">Crud</div>
+    </Page>
+  );
 };
 
 Crud.propTypes = {};

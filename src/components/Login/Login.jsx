@@ -3,18 +3,19 @@ import axios from 'axios';
 import { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
 
 import './Login.scss';
 import FormTemplate from '../FormTemplate/FormTemplate';
-import { formFieldsLogin } from '../../datas/formFieldsConfig';
+import { formFieldsLogin } from '../../formsConfig/formFieldsConfig';
 import { handleSuccessfulLogin } from '../../actions/user';
 
 const Login = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = (values) => {
     const { email, password } = values;
@@ -27,25 +28,25 @@ const Login = () => {
     axios
       .post('http://sansonaxel-server.eddi.cloud/api/login_check', payload)
       .then((response) => {
+        setIsLoading(true);
+
         const { token } = response.data;
 
         dispatch(handleSuccessfulLogin(token, true));
         Cookies.set('token', token, { expires: 7, secure: true });
-
-        if (token) {
-          navigate('/dashboard');
-        } else {
-          navigate('/');
-        }
 
         setError(null);
       })
       .catch((errors) => {
         console.error(
           'Error:',
-          error.response ? error.response.data : error.message
+          errors.response ? errors.response.data : errors.message
         );
         setError('Identifiants invalides');
+      })
+      .finally(() => {
+        setIsLoading(false);
+        navigate('/dashboard');
       });
   };
 
