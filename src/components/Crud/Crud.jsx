@@ -7,10 +7,7 @@ import './Crud.scss';
 /* eslint import/no-cycle: [2, { maxDepth: 1 }] */
 
 import Page from '../Page/Page';
-import {
-  useGetProductByIdQuery,
-  useGetProductsQuery,
-} from '../../services/products';
+import { useGetProductsQuery } from '../../services/projectApi';
 
 const Crud = () => {
   const { data, error, isLoading } = useGetProductsQuery();

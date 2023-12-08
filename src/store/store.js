@@ -2,7 +2,7 @@ import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { projectApi } from '../services/products';
+import { projectApi } from '../services/projectApi';
 
 /* Main reducer */
 import reducer from '../reducers';
