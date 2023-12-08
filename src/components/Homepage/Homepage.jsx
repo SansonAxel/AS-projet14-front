@@ -13,7 +13,7 @@ import { featuresData, membersData, formOptions } from '../../homedatas';
 import {
   formFieldsInformations,
   formFieldsRegistration,
-} from '../../datas/formFieldsConfig';
+} from '../../formsConfig/formFieldsConfig';
 
 import LegalNotice from './LegalNotice/LegalNotice';
 import FormTemplate from '../FormTemplate/FormTemplate';

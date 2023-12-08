@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import './Sidebar.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,6 +11,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { handleLogout } from '../../actions/user';
+/* eslint import/no-cycle: [2, { maxDepth: 1 }] */
+import routesConfig from '../../routes/routes';
 
 const Sidebar = ({ isSidebarOpened, toggleSidebar, isDesktop }) => {
   const dispatch = useDispatch();
@@ -60,12 +62,13 @@ const Sidebar = ({ isSidebarOpened, toggleSidebar, isDesktop }) => {
             <FontAwesomeIcon icon={faTimes} />
           </button>
         )}
-        <a to="__blank" className="Sidebar__Item">
-          hip
-        </a>
-        <a to="__blank" className="Sidebar__Item">
-          hop
-        </a>
+        {routesConfig
+          .filter((route) => route.isPrivate)
+          .map((route) => (
+            <Link key={route.name} to={route.path} className="Sidebar__Item">
+              {route.name}
+            </Link>
+          ))}
         <button
           type="button"
           className="Sidebar__Button"
