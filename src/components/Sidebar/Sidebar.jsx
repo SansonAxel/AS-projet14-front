@@ -26,7 +26,7 @@ const Sidebar = ({ isSidebarOpened, toggleSidebar, isDesktop }) => {
 
   return (
     <>
-      {/* BURGER button (mobile / tablet views */}
+      {/* BURGER button (mobile / tablet views) */}
       {!isDesktop && (
         <button
           type="button"

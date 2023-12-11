@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import homeformReducer from './homeform';
 import userReducer from './user';
+// import crudSlice from './crudSlice';
 
 const rootReducer = combineReducers({
-  homeform: homeformReducer,
   user: userReducer,
+  // crud: crudSlice,
 });
 
 export default rootReducer;

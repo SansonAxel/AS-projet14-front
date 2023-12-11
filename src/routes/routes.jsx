@@ -33,37 +33,37 @@ const routesConfig = [
   {
     name: 'Associations',
     path: '/associations',
-    element: <Crud />,
+    element: <Crud entityType="organizations" />,
     isPrivate: true,
   },
   {
     name: 'Catégories',
     path: '/categories',
-    element: <Crud />,
+    element: <Crud entityType="categories" />,
     isPrivate: true,
   },
   {
     name: 'Antennes',
     path: '/structures',
-    element: <Crud />,
+    element: <Crud entityType="structures" />,
     isPrivate: true,
   },
   {
     name: 'Utilisateurs',
     path: '/utilisateurs',
-    element: <Crud />,
+    element: <Crud entityType="users" />,
     isPrivate: true,
   },
   {
     name: 'Marques',
     path: '/marques',
-    element: <Crud />,
+    element: <Crud entityType="brands" />,
     isPrivate: true,
   },
   {
     name: 'Produits',
     path: '/produits',
-    element: <Crud />,
+    element: <Crud entityType="products" />,
     isPrivate: true,
   },
 ];

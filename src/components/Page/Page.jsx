@@ -20,10 +20,8 @@ const Page = ({ children }) => {
       setIsDesktop(isWindowDesktop);
 
       if (!isWindowDesktop) {
-        // En vue mobile et tablette, fermer la barre latérale lors du redimensionnement
         setIsSidebarOpened(false);
       } else {
-        // En vue desktop, ouvrir la barre latérale lors du redimensionnement
         setIsSidebarOpened(true);
       }
     };
