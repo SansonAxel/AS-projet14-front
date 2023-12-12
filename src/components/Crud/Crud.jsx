@@ -15,6 +15,11 @@ import {
 } from '../../crudsConfig/crudsConfig';
 
 const Crud = ({ entityType }) => {
+  /* EDITING */
+  const handleAddClick = () => {
+    console.log('hop');
+  };
+  /* DATAS */
   const [skip, setSkip] = useState(true);
 
   let query;
@@ -63,9 +68,10 @@ const Crud = ({ entityType }) => {
     const { columns, mapFunction } = config;
     content = (
       <List
-        rows={data.map(mapFunction)}
-        columns={columns}
+        rowsData={data.map(mapFunction)}
+        columnsData={columns}
         headers={columns.map((column) => column.headerName)}
+        handleAddClick={handleAddClick}
       />
     );
   }
