@@ -7,17 +7,22 @@ import {
   useGetUsersQuery,
 } from '../services/projectApi';
 
-const createColumn = (field, headerName) => ({
+const createColumn = (field, headerName, type, editableState = false) => ({
   field,
   headerName,
+  type,
+  editable: editableState,
   headerClassName: 'List__Table__Head',
   cellClassName: 'List__Table__Col',
   flex: 1,
+  maxWidth: field === 'id' ? 75 : '100%',
+  headerAlign: 'left',
+  align: 'left',
 });
 
 export const brandConfig = {
   query: useGetBrandsQuery,
-  columns: [createColumn('id', 'ID'), createColumn('name', 'Nom')],
+  columns: [createColumn('id', 'ID', 'number'), createColumn('name', 'Nom')],
   mapFunction: (element) => ({
     id: element.id,
     name: element.name,
@@ -26,7 +31,7 @@ export const brandConfig = {
 
 export const categoryConfig = {
   query: useGetCategoriesQuery,
-  columns: [createColumn('id', 'ID'), createColumn('name', 'Nom')],
+  columns: [createColumn('id', 'ID', 'number'), createColumn('name', 'Nom')],
   mapFunction: (element) => ({
     id: element.id,
     name: element.name,
@@ -36,12 +41,12 @@ export const categoryConfig = {
 export const organizationConfig = {
   query: useGetOrganizationsQuery,
   columns: [
-    createColumn('id', 'ID'),
+    createColumn('id', 'ID', 'number'),
     createColumn('name', 'Nom'),
-    createColumn('email', 'Email'),
+    createColumn('email', 'Email', 'string', true),
     createColumn('phoneNumber', 'Téléphone'),
     createColumn('adress', 'Adresse'),
-    createColumn('siren', 'N° SIREN'),
+    createColumn('siren', 'N° SIREN', 'number'),
     createColumn('type', 'Type'),
     createColumn('status', 'Statut'),
   ],
@@ -60,10 +65,10 @@ export const organizationConfig = {
 export const productConfig = {
   query: useGetProductsQuery,
   columns: [
-    createColumn('id', 'ID'),
-    createColumn('name', 'Produit'),
-    createColumn('weight', 'Poids'),
-    createColumn('price', 'Prix'),
+    createColumn('id', 'ID', 'number'),
+    createColumn('name', 'Produits'),
+    createColumn('weight', 'Unités', 'number'),
+    createColumn('price', 'Prix', 'number'),
     createColumn('conservationType', 'Conservation'),
     createColumn('conditioning', 'Conditionnement'),
   ],
@@ -80,10 +85,10 @@ export const productConfig = {
 export const structureConfig = {
   query: useGetStructuresQuery,
   columns: [
-    createColumn('id', 'ID'),
+    createColumn('id', 'ID', 'number'),
     createColumn('organizationId', 'Association'),
     createColumn('name', 'Nom'),
-    createColumn('siret', 'N° SIRET'),
+    createColumn('siret', 'N° SIRET', 'number'),
     createColumn('status', 'statut'),
   ],
   mapFunction: (element) => ({
@@ -98,7 +103,7 @@ export const structureConfig = {
 export const userConfig = {
   query: useGetUsersQuery,
   columns: [
-    createColumn('id', 'ID'),
+    createColumn('id', 'ID', 'number'),
     createColumn('firstname', 'Prénom'),
     createColumn('lastname', 'Nom'),
     createColumn('email', 'Email'),

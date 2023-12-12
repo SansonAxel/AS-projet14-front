@@ -15,6 +15,8 @@ const List = ({ rows, columns }) => {
           },
         }}
         pageSizeOptions={[15, 30, 60]}
+        disableRowSelectionOnClick
+        experimentalFeatures={{ ariaV7: true }}
       />
     </div>
   );
