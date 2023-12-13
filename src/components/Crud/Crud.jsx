@@ -1,9 +1,16 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable react/jsx-key */
+import React, { useState } from 'react';
+import { DataGrid, frFR, GridActionsCellItem } from '@mui/x-data-grid';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PropTypes from 'prop-types';
+
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import './Crud.scss';
 // eslint-disable-next-line import/no-cycle
 import Page from '../Page/Page';
-import List from './List/List';
+import Toolbar from './Toolbar/Toolbar';
 import { projectApi } from '../../services/projectApi';
 import {
   userConfig,
@@ -13,14 +20,29 @@ import {
   categoryConfig,
   structureConfig,
 } from '../../crudsConfig/crudsConfig';
+import ModalForm from './Modal/Modal';
 
 const Crud = ({ entityType }) => {
-  /* EDITING */
-  const handleAddClick = () => {
-    console.log('hop');
-  };
+  // const theme = createTheme({
+  //   palette: {
+  //     primary: {
+  //       main: '#ebad36',
+  //     },
+  //   },
+  // });
+
   /* DATAS */
-  const [skip, setSkip] = useState(true);
+  // const [skip, setSkip] = useState(true);
+  /* MODAL */
+  const [isOpenModalForm, setIsOpenModalForm] = useState(false);
+
+  const handleOpenModalForm = () => {
+    setIsOpenModalForm(true);
+  };
+
+  const handleCloseModalForm = () => {
+    setIsOpenModalForm(false);
+  };
 
   let query;
   let config;
@@ -56,7 +78,9 @@ const Crud = ({ entityType }) => {
       return null;
   }
 
-  const { data, error, isLoading } = query({ skip });
+  const { data, error, isLoading, refetch } = query({
+    refetchOnMountOrArgChange: true,
+  });
 
   let content;
 
@@ -65,14 +89,70 @@ const Crud = ({ entityType }) => {
   } else if (error) {
     content = <>Erreur lors du chargement des données</>;
   } else {
-    const { columns, mapFunction } = config;
+    const { columns, rowMapFunction } = config;
+
+    const updatedColumns = [
+      ...columns,
+      {
+        field: 'actions',
+        type: 'actions',
+        headerName: 'Actions',
+        width: 100,
+        cellClassName: 'actions',
+        getActions: ({ id }) => {
+          return [
+            <GridActionsCellItem
+              icon={<EditIcon />}
+              label="Edit"
+              className="textPrimary"
+              onClick={() => {
+                console.log('edit');
+              }}
+              color="inherit"
+            />,
+            <GridActionsCellItem
+              icon={<DeleteIcon />}
+              label="Delete"
+              onClick={() => {
+                console.log('delete');
+              }}
+              color="inherit"
+            />,
+          ];
+        },
+      },
+    ];
+
     content = (
-      <List
-        rowsData={data.map(mapFunction)}
-        columnsData={columns}
-        headers={columns.map((column) => column.headerName)}
-        handleAddClick={handleAddClick}
-      />
+      // <ThemeProvider theme={theme}>
+      <div className="List">
+        <DataGrid
+          rows={data.map(rowMapFunction)}
+          columns={updatedColumns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 15 },
+            },
+            // rows: data.map(rowMapFunction),
+          }}
+          pageSizeOptions={[15, 30, 60]}
+          slots={{
+            toolbar: Toolbar,
+          }}
+          slotProps={{
+            toolbar: {
+              handleOpenModalForm,
+            },
+          }}
+          localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+        />
+        <ModalForm
+          isOpenModalForm={isOpenModalForm}
+          handleCloseModalForm={handleCloseModalForm}
+          refetch={refetch}
+        />
+      </div>
+      // </ThemeProvider>
     );
   }
 

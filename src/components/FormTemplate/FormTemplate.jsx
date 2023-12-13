@@ -11,6 +11,7 @@ const FormTemplate = ({
   infoText,
   buttonText,
   handleLoginSubmission,
+  handleOrganizationSubmission,
 }) => {
   // Create a validation schema using Yup based on formFields
   const validationSchema = Yup.object().shape(
@@ -34,6 +35,8 @@ const FormTemplate = ({
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
       handleLoginSubmission(values);
+      handleOrganizationSubmission(values);
+      console.log(values);
     },
   });
 
@@ -107,6 +110,7 @@ FormTemplate.propTypes = {
   infoText: PropTypes.string,
   buttonText: PropTypes.string,
   handleLoginSubmission: PropTypes.func,
+  handleOrganizationSubmission: PropTypes.func,
 };
 
 FormTemplate.defaultProps = {
@@ -114,6 +118,7 @@ FormTemplate.defaultProps = {
   infoText: '',
   buttonText: '',
   handleLoginSubmission: () => {},
+  handleOrganizationSubmission: () => {},
 };
 
 export default FormTemplate;

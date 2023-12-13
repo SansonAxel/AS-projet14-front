@@ -1,0 +1,73 @@
+@use 'src/styles/variables' as v;
+
+.ModalForm {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  cursor: pointer;
+  overflow-y: scroll;
+  height: 100vh;
+
+  &__Content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    background-color: v.$white;
+    padding: 20px;
+    overflow-y: auto;
+
+    h2 {
+      font-size: 1.5rem;
+      margin-block-end: 1rem;
+    }
+    p {
+      padding: 0 3rem 3rem 3rem;
+    }
+    &__CloseButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 3rem;
+      background: none;
+      border: none;
+      color: v.$red;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .ModalForm {
+    &__Content {
+      background-color: v.$white;
+      padding: 50px;
+
+      h2 {
+        font-size: 1.5rem;
+        margin-block-end: 1rem;
+      }
+      p {
+        padding: 0 3rem 3rem 3rem;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .ModalForm {
+    &__Content {
+      margin: 100px 200px;
+      &__CloseButton {
+        top: 100px;
+        right: 210px;
+      }
+    }
+  }
+}

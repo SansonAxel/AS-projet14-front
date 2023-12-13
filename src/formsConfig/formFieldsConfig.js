@@ -145,3 +145,81 @@ export const formFieldsLogin = [
       .required('Champ requis'),
   },
 ];
+
+// ====================================================
+//                      *CREATION
+// ====================================================
+
+export const formFieldAddOganization = [
+  {
+    name: 'name',
+    label: "Nom de l'association*",
+    type: 'text',
+    initialValue: '',
+    validation: Yup.string()
+      .max(100, 'Ne doit pas dépasser 100 caractères')
+      .required('Champ requis'),
+  },
+  {
+    name: 'email',
+    label: 'Adresse email*',
+    type: 'email',
+    initialValue: '',
+    validation: Yup.string()
+      .email('Adresse mail non valide')
+      .max(320, 'Ne doit pas dépasser 320 caractères')
+      .required('Champ requis'),
+  },
+  {
+    name: 'phoneNumber',
+    label: 'Numéro de téléphone',
+    type: 'text',
+    initialValue: '',
+    validation: Yup.string().max(20, 'Ne doit pas dépasser 20 caractères'),
+  },
+  {
+    name: 'address',
+    label: 'Adresse postale*',
+    type: 'text',
+    initialValue: '',
+    validation: Yup.string()
+      .max(255, 'Ne doit pas dépasser 255 caractères')
+      .required('Champ requis'),
+  },
+  {
+    name: 'siren',
+    label: 'Numéro de SIREN*',
+    type: 'text',
+    initialValue: '',
+    validation: Yup.string()
+      .max(9, 'Ne doit pas dépasser 9 caractères')
+      .required('Champ requis'),
+  },
+  {
+    name: 'type',
+    label: 'Statut juridique*',
+    type: 'text',
+    initialValue: '',
+    validation: Yup.string()
+      .max(255, 'Ne doit pas dépasser 255 caractères')
+      .required('Champ requis'),
+  },
+  {
+    name: 'status',
+    label: 'Actif',
+    type: 'number',
+    initialValue: '',
+    validation: Yup.string()
+      .max(255, 'Ne doit pas dépasser 255 caractères')
+      .required('Champ requis'),
+  },
+  {
+    name: 'createdAt',
+    label: 'Date création',
+    type: 'dateTime',
+    initialValue: '2023-12-13',
+    validation: Yup.string()
+      .max(255, 'Ne doit pas dépasser 255 caractères')
+      .required('Champ requis'),
+  },
+];

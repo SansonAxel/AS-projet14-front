@@ -3,13 +3,18 @@ import {
   GridToolbarContainer,
   GridToolbarDensitySelector,
   GridToolbarExport,
+  GridRowModes,
 } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
 import './Toolbar.scss';
 
-const Toolbar = ({ handleAddClick }) => {
+const Toolbar = ({ handleOpenModalForm }) => {
+  const handleAddClick = () => {
+    handleOpenModalForm();
+  };
+
   return (
     <div className="Toolbar">
       <GridToolbarContainer>
@@ -28,7 +33,7 @@ const Toolbar = ({ handleAddClick }) => {
 };
 
 Toolbar.propTypes = {
-  handleAddClick: PropTypes.func.isRequired,
+  handleOpenModalForm: PropTypes.func.isRequired,
 };
 
 export default Toolbar;

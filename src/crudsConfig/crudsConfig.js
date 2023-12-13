@@ -7,11 +7,10 @@ import {
   useGetUsersQuery,
 } from '../services/projectApi';
 
-const createColumn = (field, headerName, type, editableState = false) => ({
+const createColumn = (field, headerName, type) => ({
   field,
   headerName,
   type,
-  editable: editableState,
   headerClassName: 'List__Table__Head',
   cellClassName: 'List__Table__Col',
   flex: 1,
@@ -20,10 +19,18 @@ const createColumn = (field, headerName, type, editableState = false) => ({
   align: 'left',
 });
 
+// const createActionColumn = (getActions) => ({
+//   field: 'actions',
+//   type: 'actions',
+//   headerName: 'Actions',
+//   cellClassName: 'List__Table__Col__Actions',
+//   getActions,
+// });
+
 export const brandConfig = {
   query: useGetBrandsQuery,
   columns: [createColumn('id', 'ID', 'number'), createColumn('name', 'Nom')],
-  mapFunction: (element) => ({
+  rowMapFunction: (element) => ({
     id: element.id,
     name: element.name,
   }),
@@ -32,7 +39,7 @@ export const brandConfig = {
 export const categoryConfig = {
   query: useGetCategoriesQuery,
   columns: [createColumn('id', 'ID', 'number'), createColumn('name', 'Nom')],
-  mapFunction: (element) => ({
+  rowMapFunction: (element) => ({
     id: element.id,
     name: element.name,
   }),
@@ -43,14 +50,14 @@ export const organizationConfig = {
   columns: [
     createColumn('id', 'ID', 'number'),
     createColumn('name', 'Nom'),
-    createColumn('email', 'Email', 'string', true),
+    createColumn('email', 'Email'),
     createColumn('phoneNumber', 'Téléphone'),
     createColumn('adress', 'Adresse'),
     createColumn('siren', 'N° SIREN', 'number'),
     createColumn('type', 'Type'),
     createColumn('status', 'Statut'),
   ],
-  mapFunction: (element) => ({
+  rowMapFunction: (element) => ({
     id: element.id,
     name: element.name,
     email: element.email,
@@ -72,7 +79,7 @@ export const productConfig = {
     createColumn('conservationType', 'Conservation'),
     createColumn('conditioning', 'Conditionnement'),
   ],
-  mapFunction: (element) => ({
+  rowMapFunction: (element) => ({
     id: element.id,
     name: element.name,
     weight: element.weight,
@@ -91,7 +98,7 @@ export const structureConfig = {
     createColumn('siret', 'N° SIRET', 'number'),
     createColumn('status', 'statut'),
   ],
-  mapFunction: (element) => ({
+  rowMapFunction: (element) => ({
     id: element.id,
     organizationId: element.organizationId,
     name: element.name,
@@ -110,7 +117,7 @@ export const userConfig = {
     createColumn('phoneNumber', 'Téléphone'),
     createColumn('roles', 'Roles'),
   ],
-  mapFunction: (element) => ({
+  rowMapFunction: (element) => ({
     id: element.id,
     firstname: element.firstname,
     lastname: element.lastname,
