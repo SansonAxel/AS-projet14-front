@@ -1,8 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import './Modal.scss';
+import './ModalForm.scss';
 import { formFieldAddOganization } from '../../../formsConfig/formFieldsConfig';
 import FormTemplate from '../../FormTemplate/FormTemplate';
 import { useAddOrganizationMutation } from '../../../services/projectApi';

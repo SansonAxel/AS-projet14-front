@@ -11,7 +11,10 @@ import './Crud.scss';
 // eslint-disable-next-line import/no-cycle
 import Page from '../Page/Page';
 import Toolbar from './Toolbar/Toolbar';
-import { projectApi } from '../../services/projectApi';
+import {
+  projectApi,
+  useDeleteOrganizationMutation,
+} from '../../services/projectApi';
 import {
   userConfig,
   productConfig,
@@ -20,7 +23,8 @@ import {
   categoryConfig,
   structureConfig,
 } from '../../crudsConfig/crudsConfig';
-import ModalForm from './Modal/Modal';
+import ModalForm from './ModalForm/ModalForm';
+import ModalDelete from './ModalDelete/ModalDelete';
 
 const Crud = ({ entityType }) => {
   // const theme = createTheme({
@@ -35,6 +39,8 @@ const Crud = ({ entityType }) => {
   // const [skip, setSkip] = useState(true);
   /* MODAL */
   const [isOpenModalForm, setIsOpenModalForm] = useState(false);
+  const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState(null);
 
   const handleOpenModalForm = () => {
     setIsOpenModalForm(true);
@@ -42,6 +48,15 @@ const Crud = ({ entityType }) => {
 
   const handleCloseModalForm = () => {
     setIsOpenModalForm(false);
+  };
+
+  const handleOpenModalDelete = (id) => {
+    setIsOpenModalDelete(true);
+    setDeleteItemId(id);
+  };
+
+  const handleCloseModalDelete = () => {
+    setIsOpenModalDelete(false);
   };
 
   let query;
@@ -114,7 +129,8 @@ const Crud = ({ entityType }) => {
               icon={<DeleteIcon />}
               label="Delete"
               onClick={() => {
-                console.log('delete');
+                console.log('delete', id);
+                handleOpenModalDelete(id);
               }}
               color="inherit"
             />,
@@ -150,6 +166,12 @@ const Crud = ({ entityType }) => {
           isOpenModalForm={isOpenModalForm}
           handleCloseModalForm={handleCloseModalForm}
           refetch={refetch}
+        />
+        <ModalDelete
+          isOpenModalDelete={isOpenModalDelete}
+          handleCloseModalDelete={handleCloseModalDelete}
+          refetch={refetch}
+          deleteItemId={deleteItemId}
         />
       </div>
       // </ThemeProvider>

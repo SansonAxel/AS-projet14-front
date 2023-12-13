@@ -18,7 +18,6 @@ export const projectApi = createApi({
     },
   }),
   refetchOnMountOrArgChange: 3,
-  tagTypes: ['Organizations'],
   endpoints: (builder) => ({
     /* BRANDS */
     getBrands: builder.query({
@@ -31,13 +30,6 @@ export const projectApi = createApi({
     /* ORGANIZATIONS */
     getOrganizations: builder.query({
       query: () => `organizations`,
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'Organizations', id })),
-              { type: 'Organizations', id: 'LIST' },
-            ]
-          : [{ type: 'Organizations', id: 'LIST' }],
     }),
     addOrganization: builder.mutation({
       query: (body) => ({
@@ -45,6 +37,9 @@ export const projectApi = createApi({
         method: 'POST',
         body,
       }),
+    }),
+    deleteOrganization: builder.mutation({
+      query: (id) => ({ url: `organizations/${id}`, method: 'DELETE' }),
     }),
     getOrganization: builder.query({
       query: (id) => `organization/${id}`,
@@ -80,6 +75,7 @@ export const {
 
   useGetOrganizationsQuery,
   useAddOrganizationMutation,
+  useDeleteOrganizationMutation,
 
   useGetProductByIdQuery,
   useGetProductsQuery,
