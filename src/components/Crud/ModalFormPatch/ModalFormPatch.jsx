@@ -1,39 +1,19 @@
 /* eslint-disable react/no-unescaped-entities */
 import PropTypes from 'prop-types';
 
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import './ModalFormPatch.scss';
 import { formFieldAddOganization } from '../../../formsConfig/formFieldsConfig';
 import FormTemplate from '../../FormTemplate/FormTemplate';
-import { useGetOrganizationQuery } from '../../../services/projectApi';
+import { closeModal } from '../../../actions/modalActions';
 
-const ModalFormPatch = ({
-  isOpenModalFormPatch,
-  handleCloseModalFormPatch,
-  refetch,
-  patchItemId,
-}) => {
-  // const handleOrganizationSubmission = async (values) => {
-  //   // Call the addOrganization mutation
-  //   addOrganization(values)
-  //     .unwrap()
-  //     .then((response) => {
-  //       // Handle the response if needed
-  //       console.log(response);
-  //       // Close the modal form
-  //       handleCloseModalFormPatch();
-  //       refetch();
-  //     })
-  //     .catch((errors) => {
-  //       console.error('Error adding organization:', errors);
-  //       // Handle the error if needed
-  //     });
-  // };
+const ModalFormPatch = ({ isOpenModal, refetch, patchItemId }) => {
+  const dispatch = useDispatch();
 
   return (
     <div
       className="ModalFormPatch"
-      style={{ display: isOpenModalFormPatch ? 'block' : 'none' }}
+      style={{ display: isOpenModal ? 'block' : 'none' }}
     >
       <div className="ModalFormPatch__Content">
         <h2>{`Modification de l'association id ${patchItemId}`}</h2>
@@ -41,7 +21,7 @@ const ModalFormPatch = ({
         <button
           type="button"
           className="ModalFormPatch__Content__CloseButton"
-          onClick={handleCloseModalFormPatch}
+          onClick={() => dispatch(closeModal())}
         >
           &times;
         </button>
@@ -57,8 +37,7 @@ const ModalFormPatch = ({
 };
 
 ModalFormPatch.propTypes = {
-  isOpenModalFormPatch: PropTypes.bool.isRequired,
-  handleCloseModalFormPatch: PropTypes.func.isRequired,
+  isOpenModal: PropTypes.bool.isRequired,
   refetch: PropTypes.func.isRequired,
   patchItemId: PropTypes.number,
 };

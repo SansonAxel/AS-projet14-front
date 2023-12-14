@@ -1,33 +1,35 @@
-import { legacy_createStore as createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from '@redux-devtools/extension';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { projectApi } from '../services/projectApi';
-
-/* Main reducer */
-import reducer from '../reducers/index';
-
 import userMiddleware from '../middlewares/userMiddleware';
 import organizationMiddleware from '../middlewares/organizationsMiddleware';
 
-// Devtools + middlewares combined for legacy store
+/* Importez vos réducteurs ici */
+import userReducer from '../reducers/userReducer';
+import organizationReducer from '../reducers/organizationReducer';
+import modalReducer from '../reducers/modalReducer';
+
+/* Combinez les réducteurs */
+const rootReducer = combineReducers({
+  user: userReducer,
+  organization: organizationReducer,
+  modal: modalReducer,
+  [projectApi.reducerPath]: projectApi.reducer,
+});
+
+// Devtools + middlewares combinés pour le store legacy
 const legacyEnhancers = composeWithDevTools(
   applyMiddleware(userMiddleware, organizationMiddleware)
 );
 
-// Create the legacy store
-const legacyStore = createStore(
-  // Reducer
-  reducer,
-  // Enhancer
-  legacyEnhancers
-);
+// Créez le store legacy
+const legacyStore = createStore(rootReducer, legacyEnhancers);
 
-// Create the store with rtk-query middleware
+// Créez le store avec le middleware rtk-query
 const rtkStore = configureStore({
-  reducer: {
-    [projectApi.reducerPath]: projectApi.reducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       projectApi.middleware,
@@ -35,7 +37,7 @@ const rtkStore = configureStore({
     ),
 });
 
-// Setup listeners for rtk-query store
+// Configurez les auditeurs pour le store rtk-query
 setupListeners(rtkStore.dispatch);
 
 export { legacyStore, rtkStore };

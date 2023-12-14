@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/jsx-key */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid, frFR, GridActionsCellItem } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -12,7 +12,7 @@ import './Crud.scss';
 // eslint-disable-next-line import/no-cycle
 import Page from '../Page/Page';
 import Toolbar from './Toolbar/Toolbar';
-import { projectApi, useGetOrganizationQuery } from '../../services/projectApi';
+import { projectApi } from '../../services/projectApi';
 import {
   userConfig,
   productConfig,
@@ -25,6 +25,7 @@ import ModalFormCreate from './ModalFormCreate/ModalFormCreate';
 import ModalDelete from './ModalDelete/ModalDelete';
 import ModalFormPatch from './ModalFormPatch/ModalFormPatch';
 import { fetchOrganization } from '../../actions/oganization';
+import { openModal, closeModal } from '../../actions/modalActions';
 
 const Crud = ({ entityType }) => {
   const theme = createTheme({
@@ -43,10 +44,10 @@ const Crud = ({ entityType }) => {
   const [isOpenModalFormPatch, setIsOpenModalFormPatch] = useState(false);
 
   const [deleteItemId, setDeleteItemId] = useState(null);
-  const [editItemId, setEditItemId] = useState(null);
   /* EDIT */
   const dispatch = useDispatch();
   const organizationData = useSelector((state) => state.organization);
+  const isOpenModal = useSelector((state) => state.modal.isOpen);
 
   const handleOpenModalFormCreate = () => {
     setIsOpenModalFormCreate(true);
@@ -65,18 +66,7 @@ const Crud = ({ entityType }) => {
     setIsOpenModalDelete(false);
   };
 
-  const handleOpenModalFormPatch = (id) => {
-    setEditItemId(id);
-    setIsOpenModalFormPatch(true);
-    dispatch(fetchOrganization(id));
-    console.log('ID transmis à fetchOrganization :', id);
-    console.log(organizationData);
-  };
-
-  const handleCloseModalFormPatch = () => {
-    setIsOpenModalFormPatch(false);
-  };
-
+  console.log(isOpenModal);
   let query;
   let config;
 
@@ -140,7 +130,7 @@ const Crud = ({ entityType }) => {
               className="textPrimary"
               onClick={() => {
                 console.log('edit', id);
-                handleOpenModalFormPatch(id);
+                dispatch(fetchOrganization(id));
               }}
               color="inherit"
             />,
@@ -186,11 +176,8 @@ const Crud = ({ entityType }) => {
             handleCloseModalFormCreate={handleCloseModalFormCreate}
             refetch={refetch}
           />
-          <ModalFormPatch
-            isOpenModalFormPatch={isOpenModalFormPatch}
-            handleCloseModalFormPatch={handleCloseModalFormPatch}
-            refetch={refetch}
-          />
+          <ModalFormPatch isOpenModal={isOpenModal} refetch={refetch} />
+
           <ModalDelete
             isOpenModalDelete={isOpenModalDelete}
             handleCloseModalDelete={handleCloseModalDelete}
