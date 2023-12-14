@@ -13,8 +13,7 @@ const ModalDelete = ({
   const handleConfirmDelete = async () => {
     try {
       const response = await deleteOrganization(deleteItemId);
-      // Handle the response if needed
-      console.log(response);
+      alert(JSON.stringify(response.error.data.error));
       refetch();
       handleCloseModalDelete();
     } catch (error) {

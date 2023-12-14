@@ -42,8 +42,15 @@ export const projectApi = createApi({
       query: (id) => ({ url: `organizations/${id}`, method: 'DELETE' }),
     }),
     getOrganization: builder.query({
-      query: (id) => `organization/${id}`,
+      query: (id) => `organizations/${id}`,
       providesTags: (result, error, id) => [{ type: 'Organization', id }],
+    }),
+    updateOrganization: builder.mutation({
+      query: ({ id, ...patch }) => ({
+        url: `organization/${id}`,
+        method: 'PATCH',
+        body: patch,
+      }),
     }),
     /* PRODUCTS */
     getProducts: builder.query({
@@ -76,6 +83,8 @@ export const {
   useGetOrganizationsQuery,
   useAddOrganizationMutation,
   useDeleteOrganizationMutation,
+  useGetOrganizationQuery,
+  useUpdateOrganizationMutation,
 
   useGetProductByIdQuery,
   useGetProductsQuery,

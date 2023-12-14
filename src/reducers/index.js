@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
 import userReducer from './user';
-// import crudSlice from './crudSlice';
+import organizationReducer from './organization';
 
 const rootReducer = combineReducers({
   user: userReducer,
-  // crud: crudSlice,
+  organization: organizationReducer,
 });
 
 export default rootReducer;

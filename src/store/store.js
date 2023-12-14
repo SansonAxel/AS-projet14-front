@@ -5,12 +5,15 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { projectApi } from '../services/projectApi';
 
 /* Main reducer */
-import reducer from '../reducers';
+import reducer from '../reducers/index';
 
 import userMiddleware from '../middlewares/userMiddleware';
+import organizationMiddleware from '../middlewares/organizationsMiddleware';
 
 // Devtools + middlewares combined for legacy store
-const legacyEnhancers = composeWithDevTools(applyMiddleware(userMiddleware));
+const legacyEnhancers = composeWithDevTools(
+  applyMiddleware(userMiddleware, organizationMiddleware)
+);
 
 // Create the legacy store
 const legacyStore = createStore(
@@ -26,7 +29,10 @@ const rtkStore = configureStore({
     [projectApi.reducerPath]: projectApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(projectApi.middleware),
+    getDefaultMiddleware().concat(
+      projectApi.middleware,
+      organizationMiddleware
+    ),
 });
 
 // Setup listeners for rtk-query store

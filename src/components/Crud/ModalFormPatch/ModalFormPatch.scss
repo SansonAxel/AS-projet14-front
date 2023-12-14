@@ -1,6 +1,6 @@
 @use 'src/styles/variables' as v;
 
-.ModalForm {
+.ModalFormPatch {
   position: fixed;
   width: 100%;
   top: 0;
@@ -44,7 +44,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  .ModalForm {
+  .ModalFormPatch {
     &__Content {
       background-color: v.$white;
       padding: 50px;
@@ -61,7 +61,7 @@
 }
 
 @media screen and (min-width: 992px) {
-  .ModalForm {
+  .ModalFormPatch {
     &__Content {
       margin: 100px 200px;
       &__CloseButton {

@@ -16,7 +16,7 @@ const FormTemplate = ({
   // Create a validation schema using Yup based on formFields
   const validationSchema = Yup.object().shape(
     formFields.reduce((accumulator, field) => {
-      // For each field, add its validation conditionsto the schema
+      // For each field, add its validation conditions to the schema
       accumulator[field.name] = field.validation;
       return accumulator;
     }, {})
@@ -26,7 +26,7 @@ const FormTemplate = ({
   const formik = useFormik({
     // Set initial form values based on formFields (cf /src/datas/formFieldsConfig.js)
     initialValues: formFields.reduce((accumulator, field) => {
-      accumulator[field.name] = field.initialValue || ''; // Use initial value if provided, otherwise use an empty string
+      accumulator[field.name] = field.initialValues || ''; // Use initial value if provided, otherwise use an empty string
       return accumulator;
     }, {}),
     // Use the validation schema we created

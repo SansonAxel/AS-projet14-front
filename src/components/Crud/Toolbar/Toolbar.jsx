@@ -10,9 +10,9 @@ import AddIcon from '@mui/icons-material/Add';
 
 import './Toolbar.scss';
 
-const Toolbar = ({ handleOpenModalForm }) => {
+const Toolbar = ({ handleOpenModalFormCreate }) => {
   const handleAddClick = () => {
-    handleOpenModalForm();
+    handleOpenModalFormCreate();
   };
 
   return (
@@ -33,7 +33,7 @@ const Toolbar = ({ handleOpenModalForm }) => {
 };
 
 Toolbar.propTypes = {
-  handleOpenModalForm: PropTypes.func.isRequired,
+  handleOpenModalFormCreate: PropTypes.func.isRequired,
 };
 
 export default Toolbar;

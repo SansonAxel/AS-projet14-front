@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/jsx-key */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid, frFR, GridActionsCellItem } from '@mui/x-data-grid';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PropTypes from 'prop-types';
@@ -11,10 +12,7 @@ import './Crud.scss';
 // eslint-disable-next-line import/no-cycle
 import Page from '../Page/Page';
 import Toolbar from './Toolbar/Toolbar';
-import {
-  projectApi,
-  useDeleteOrganizationMutation,
-} from '../../services/projectApi';
+import { projectApi, useGetOrganizationQuery } from '../../services/projectApi';
 import {
   userConfig,
   productConfig,
@@ -23,31 +21,39 @@ import {
   categoryConfig,
   structureConfig,
 } from '../../crudsConfig/crudsConfig';
-import ModalForm from './ModalForm/ModalForm';
+import ModalFormCreate from './ModalFormCreate/ModalFormCreate';
 import ModalDelete from './ModalDelete/ModalDelete';
+import ModalFormPatch from './ModalFormPatch/ModalFormPatch';
+import { fetchOrganization } from '../../actions/oganization';
 
 const Crud = ({ entityType }) => {
-  // const theme = createTheme({
-  //   palette: {
-  //     primary: {
-  //       main: '#ebad36',
-  //     },
-  //   },
-  // });
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#701f99',
+      },
+    },
+  });
 
   /* DATAS */
   // const [skip, setSkip] = useState(true);
   /* MODAL */
-  const [isOpenModalForm, setIsOpenModalForm] = useState(false);
+  const [isOpenModalFormCreate, setIsOpenModalFormCreate] = useState(false);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
-  const [deleteItemId, setDeleteItemId] = useState(null);
+  const [isOpenModalFormPatch, setIsOpenModalFormPatch] = useState(false);
 
-  const handleOpenModalForm = () => {
-    setIsOpenModalForm(true);
+  const [deleteItemId, setDeleteItemId] = useState(null);
+  const [editItemId, setEditItemId] = useState(null);
+  /* EDIT */
+  const dispatch = useDispatch();
+  const organizationData = useSelector((state) => state.organization);
+
+  const handleOpenModalFormCreate = () => {
+    setIsOpenModalFormCreate(true);
   };
 
-  const handleCloseModalForm = () => {
-    setIsOpenModalForm(false);
+  const handleCloseModalFormCreate = () => {
+    setIsOpenModalFormCreate(false);
   };
 
   const handleOpenModalDelete = (id) => {
@@ -57,6 +63,18 @@ const Crud = ({ entityType }) => {
 
   const handleCloseModalDelete = () => {
     setIsOpenModalDelete(false);
+  };
+
+  const handleOpenModalFormPatch = (id) => {
+    setEditItemId(id);
+    setIsOpenModalFormPatch(true);
+    dispatch(fetchOrganization(id));
+    console.log('ID transmis à fetchOrganization :', id);
+    console.log(organizationData);
+  };
+
+  const handleCloseModalFormPatch = () => {
+    setIsOpenModalFormPatch(false);
   };
 
   let query;
@@ -121,7 +139,8 @@ const Crud = ({ entityType }) => {
               label="Edit"
               className="textPrimary"
               onClick={() => {
-                console.log('edit');
+                console.log('edit', id);
+                handleOpenModalFormPatch(id);
               }}
               color="inherit"
             />,
@@ -140,41 +159,46 @@ const Crud = ({ entityType }) => {
     ];
 
     content = (
-      // <ThemeProvider theme={theme}>
-      <div className="List">
-        <DataGrid
-          rows={data.map(rowMapFunction)}
-          columns={updatedColumns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 15 },
-            },
-            // rows: data.map(rowMapFunction),
-          }}
-          pageSizeOptions={[15, 30, 60]}
-          slots={{
-            toolbar: Toolbar,
-          }}
-          slotProps={{
-            toolbar: {
-              handleOpenModalForm,
-            },
-          }}
-          localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
-        />
-        <ModalForm
-          isOpenModalForm={isOpenModalForm}
-          handleCloseModalForm={handleCloseModalForm}
-          refetch={refetch}
-        />
-        <ModalDelete
-          isOpenModalDelete={isOpenModalDelete}
-          handleCloseModalDelete={handleCloseModalDelete}
-          refetch={refetch}
-          deleteItemId={deleteItemId}
-        />
-      </div>
-      // </ThemeProvider>
+      <ThemeProvider theme={theme}>
+        <div className="List">
+          <DataGrid
+            rows={data.map(rowMapFunction)}
+            columns={updatedColumns}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 15 },
+              },
+              // rows: data.map(rowMapFunction),
+            }}
+            pageSizeOptions={[15, 30, 60]}
+            slots={{
+              toolbar: Toolbar,
+            }}
+            slotProps={{
+              toolbar: {
+                handleOpenModalFormCreate,
+              },
+            }}
+            localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+          />
+          <ModalFormCreate
+            isOpenModalFormCreate={isOpenModalFormCreate}
+            handleCloseModalFormCreate={handleCloseModalFormCreate}
+            refetch={refetch}
+          />
+          <ModalFormPatch
+            isOpenModalFormPatch={isOpenModalFormPatch}
+            handleCloseModalFormPatch={handleCloseModalFormPatch}
+            refetch={refetch}
+          />
+          <ModalDelete
+            isOpenModalDelete={isOpenModalDelete}
+            handleCloseModalDelete={handleCloseModalDelete}
+            refetch={refetch}
+            deleteItemId={deleteItemId}
+          />
+        </div>
+      </ThemeProvider>
     );
   }
 
