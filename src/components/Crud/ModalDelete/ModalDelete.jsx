@@ -1,19 +1,40 @@
 import PropTypes from 'prop-types';
 import './ModalDelete.scss';
-import { useDeleteOrganizationMutation } from '../../../services/projectApi';
+import { projectApi } from '../../../services/projectApi';
 
 const ModalDelete = ({
   isOpenModalDelete,
   handleCloseModalDelete,
   refetch,
   deleteItemId,
+  currentEntityName,
+  entityType,
 }) => {
-  const [deleteOrganization] = useDeleteOrganizationMutation();
+  // Define the mutation hook directly in the component body
+  const [deleteItem] = (() => {
+    switch (entityType) {
+      case 'brands':
+        return projectApi.useDeleteBrandMutation();
+      case 'categories':
+        return projectApi.useDeleteCategoryMutation();
+      case 'organizations':
+        return projectApi.useDeleteOrganizationMutation();
+      case 'products':
+        return projectApi.useDeleteProductMutation();
+      case 'structures':
+        return projectApi.useDeleteStructureMutation();
+      case 'users':
+        return projectApi.useDeleteUsersMutation();
+      default:
+        console.error(`Invalid entityType: ${entityType}`);
+        return [() => {}]; // Provide a dummy function to avoid errors
+    }
+  })();
 
   const handleConfirmDelete = async () => {
     try {
-      const response = await deleteOrganization(deleteItemId);
-      alert(JSON.stringify(response.error.data.error));
+      const response = await deleteItem(deleteItemId);
+      console.log(response);
       refetch();
       handleCloseModalDelete();
     } catch (error) {
@@ -32,7 +53,7 @@ const ModalDelete = ({
       style={{ display: isOpenModalDelete ? 'block' : 'none' }}
     >
       <div className="ModalDelete__Content">
-        <p>{`Êtes-vous sûr•e de vouloir supprimer cet élément id ${deleteItemId} ?`}</p>
+        <p>{`Êtes-vous sûr•e de vouloir supprimer ${currentEntityName}, id : ${deleteItemId} ?`}</p>
         <div className="ModalDelete__Content__Buttons">
           <button
             type="button"
@@ -59,6 +80,8 @@ ModalDelete.propTypes = {
   handleCloseModalDelete: PropTypes.func.isRequired,
   refetch: PropTypes.func.isRequired,
   deleteItemId: PropTypes.number,
+  currentEntityName: PropTypes.string.isRequired,
+  entityType: PropTypes.string.isRequired,
 };
 
 ModalDelete.defaultProps = {

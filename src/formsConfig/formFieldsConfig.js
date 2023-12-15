@@ -480,3 +480,5 @@ export const formFieldsCreatePatch = {
     },
   ],
 };
+
+// TODO gérer les entités rattachées aux structures et organisations

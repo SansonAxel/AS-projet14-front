@@ -30,6 +30,9 @@ export const projectApi = createApi({
         body,
       }),
     }),
+    deleteBrand: builder.mutation({
+      query: (id) => ({ url: `brands/${id}`, method: 'DELETE' }),
+    }),
     /* CATEGORIES */
     getCategories: builder.query({
       query: () => `categories`,
@@ -40,6 +43,9 @@ export const projectApi = createApi({
         method: 'POST',
         body,
       }),
+    }),
+    deleteCategory: builder.mutation({
+      query: (id) => ({ url: `categories/${id}`, method: 'DELETE' }),
     }),
     /* ORGANIZATIONS */
     getOrganizations: builder.query({
@@ -76,7 +82,9 @@ export const projectApi = createApi({
         body,
       }),
     }),
-
+    deleteProduct: builder.mutation({
+      query: (id) => ({ url: `products/${id}`, method: 'DELETE' }),
+    }),
     /* STRUCTURES */
     getStructures: builder.query({
       query: () => 'structures',
@@ -87,6 +95,9 @@ export const projectApi = createApi({
         method: 'POST',
         body,
       }),
+    }),
+    deleteStructure: builder.mutation({
+      query: (id) => ({ url: `structures/${id}`, method: 'DELETE' }),
     }),
     /* USERS */
     getUsers: builder.query({
@@ -102,6 +113,9 @@ export const projectApi = createApi({
     getUsersById: builder.query({
       query: (id) => `users/${id}`,
     }),
+    deleteUsers: builder.mutation({
+      query: (id) => ({ url: `users/${id}`, method: 'DELETE' }),
+    }),
   }),
 });
 
@@ -109,9 +123,11 @@ export const projectApi = createApi({
 export const {
   useGetBrandsQuery,
   useAddBrandMutation,
+  useDeleteBrandMutation,
 
   useGetCategoriesQuery,
   useAddCategoryMutation,
+  useDeleteCategoryMutation,
 
   useGetOrganizationsQuery,
   useAddOrganizationMutation,
@@ -122,11 +138,14 @@ export const {
   useGetProductByIdQuery,
   useGetProductsQuery,
   useAddProductMutation,
+  useDeleteProductMutation,
 
   useGetStructuresQuery,
   useAddStructureMutation,
+  useDeleteStructureMutation,
 
   useGetUsersQuery,
   useGetUsersByIdQuery,
   useAddUserMutation,
+  useDeleteUsersMutation,
 } = projectApi;
