@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 // ====================================================
@@ -150,7 +151,7 @@ export const formFieldsLogin = [
 //                      *CREATION
 // ====================================================
 
-export const formFieldAddOganization = [
+export const formFieldOganization = [
   {
     name: 'name',
     label: "Nom de l'association*",

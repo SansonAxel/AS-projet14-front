@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
@@ -12,6 +12,7 @@ const FormTemplate = ({
   buttonText,
   handleLoginSubmission,
   handleOrganizationSubmission,
+  dataObject,
 }) => {
   // Create a validation schema using Yup based on formFields
   const validationSchema = Yup.object().shape(
@@ -21,14 +22,15 @@ const FormTemplate = ({
       return accumulator;
     }, {})
   );
-
   // Create a formik object to manage form state and actions
   const formik = useFormik({
     // Set initial form values based on formFields (cf /src/datas/formFieldsConfig.js)
-    initialValues: formFields.reduce((accumulator, field) => {
-      accumulator[field.name] = field.initialValues || ''; // Use initial value if provided, otherwise use an empty string
-      return accumulator;
-    }, {}),
+    initialValues: dataObject
+      ? formFields.reduce((accumulator, field) => {
+          accumulator[field.name] = dataObject[field.name] || '';
+          return accumulator;
+        }, {})
+      : {},
     // Use the validation schema we created
     validationSchema,
     // Handle form submission
@@ -36,9 +38,31 @@ const FormTemplate = ({
       // alert(JSON.stringify(values, null, 2));
       handleLoginSubmission(values);
       handleOrganizationSubmission(values);
-      console.log(values);
     },
   });
+
+  const prevDataObjectRef = useRef(null);
+
+  /* Editing initialvalues (to prevent the delay between state changes) */
+  useEffect(() => {
+    if (dataObject !== prevDataObjectRef.current) {
+      if (dataObject) {
+        formik.setValues((prevValues) => ({
+          ...prevValues,
+          ...formFields.reduce((accumulator, field) => {
+            accumulator[field.name] = dataObject[field.name] || '';
+            return accumulator;
+          }, {}),
+        }));
+      }
+    }
+    prevDataObjectRef.current = dataObject;
+  }, [dataObject, formik.setValues, prevDataObjectRef, formFields, formik]);
+
+  // Updates ref
+  useEffect(() => {
+    prevDataObjectRef.current = dataObject;
+  }, [dataObject]);
 
   return (
     // Render the form with input fields and validation messages
@@ -111,6 +135,7 @@ FormTemplate.propTypes = {
   buttonText: PropTypes.string,
   handleLoginSubmission: PropTypes.func,
   handleOrganizationSubmission: PropTypes.func,
+  dataObject: PropTypes.objectOf(PropTypes.any),
 };
 
 FormTemplate.defaultProps = {
@@ -119,6 +144,7 @@ FormTemplate.defaultProps = {
   buttonText: '',
   handleLoginSubmission: () => {},
   handleOrganizationSubmission: () => {},
+  dataObject: {},
 };
 
 export default FormTemplate;

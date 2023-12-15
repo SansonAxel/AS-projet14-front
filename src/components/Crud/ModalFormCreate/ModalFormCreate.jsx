@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types';
 
 import './ModalFormCreate.scss';
-import { formFieldAddOganization } from '../../../formsConfig/formFieldsConfig';
+import { formFieldOganization } from '../../../formsConfig/formFieldsConfig';
 import FormTemplate from '../../FormTemplate/FormTemplate';
 import { useAddOrganizationMutation } from '../../../services/projectApi';
 
@@ -19,7 +19,6 @@ const ModalFormCreate = ({
       .unwrap()
       .then((response) => {
         // Handle the response if needed
-        console.log(response);
         // Close the modal form
         handleCloseModalFormCreate();
         refetch();
@@ -47,7 +46,7 @@ const ModalFormCreate = ({
         </button>
         <FormTemplate
           className="ModalFormCreate__Content__Form"
-          formFields={formFieldAddOganization}
+          formFields={formFieldOganization}
           buttonText="Envoyer"
           infoText="Les champs marqués d'un * sont obligatoires"
           handleOrganizationSubmission={handleOrganizationSubmission}

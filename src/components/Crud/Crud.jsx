@@ -46,7 +46,9 @@ const Crud = ({ entityType }) => {
   const [deleteItemId, setDeleteItemId] = useState(null);
   /* EDIT */
   const dispatch = useDispatch();
-  const organizationData = useSelector((state) => state.organization);
+  const organizationData = useSelector(
+    (state) => state.organization.organization
+  );
   const isOpenModal = useSelector((state) => state.modal.isOpen);
 
   const handleOpenModalFormCreate = () => {
@@ -66,7 +68,6 @@ const Crud = ({ entityType }) => {
     setIsOpenModalDelete(false);
   };
 
-  console.log(isOpenModal);
   let query;
   let config;
 
@@ -129,7 +130,6 @@ const Crud = ({ entityType }) => {
               label="Edit"
               className="textPrimary"
               onClick={() => {
-                console.log('edit', id);
                 dispatch(fetchOrganization(id));
               }}
               color="inherit"
@@ -138,7 +138,6 @@ const Crud = ({ entityType }) => {
               icon={<DeleteIcon />}
               label="Delete"
               onClick={() => {
-                console.log('delete', id);
                 handleOpenModalDelete(id);
               }}
               color="inherit"
@@ -176,7 +175,11 @@ const Crud = ({ entityType }) => {
             handleCloseModalFormCreate={handleCloseModalFormCreate}
             refetch={refetch}
           />
-          <ModalFormPatch isOpenModal={isOpenModal} refetch={refetch} />
+          <ModalFormPatch
+            isOpenModal={isOpenModal}
+            refetch={refetch}
+            dataObject={organizationData}
+          />
 
           <ModalDelete
             isOpenModalDelete={isOpenModalDelete}

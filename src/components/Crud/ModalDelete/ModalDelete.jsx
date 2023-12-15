@@ -24,7 +24,6 @@ const ModalDelete = ({
 
   const handleCancelDelete = () => {
     handleCloseModalDelete();
-    console.log('non');
   };
 
   return (

@@ -9,7 +9,7 @@ const organizationMiddleware = (store) => (next) => (action) => {
 
   switch (action.type) {
     case FETCH_ORGANIZATION:
-      console.log("Middleware appelé avec l'ID :", id);
+      // console.log("Middleware appelé avec l'ID :", id);
 
       axios
         .get(`http://sansonaxel-server.eddi.cloud/api/organizations/${id}`, {
@@ -19,7 +19,7 @@ const organizationMiddleware = (store) => (next) => (action) => {
         })
         .then((response) => {
           // La requête a réussi
-          console.log('Réponse de la requête :', response.data);
+          // console.log('Réponse de la requête :', response.data);
           // Dispatch de l'action pour sauvegarder les données dans le state
           store.dispatch(saveOrganization(response.data));
           // Ouvrir la modal en cas de succès
@@ -33,7 +33,7 @@ const organizationMiddleware = (store) => (next) => (action) => {
         })
         .finally(() => {
           // Cette partie sera exécutée indépendamment du succès ou de l'échec de la requête
-          console.log('La requête est terminée.');
+          // console.log('La requête est terminée.');
         });
 
       break;
