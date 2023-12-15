@@ -23,9 +23,23 @@ export const projectApi = createApi({
     getBrands: builder.query({
       query: () => `brands`,
     }),
+    addBrand: builder.mutation({
+      query: (body) => ({
+        url: `brands`,
+        method: 'POST',
+        body,
+      }),
+    }),
     /* CATEGORIES */
     getCategories: builder.query({
       query: () => `categories`,
+    }),
+    addCategory: builder.mutation({
+      query: (body) => ({
+        url: `categories`,
+        method: 'POST',
+        body,
+      }),
     }),
     /* ORGANIZATIONS */
     getOrganizations: builder.query({
@@ -55,15 +69,35 @@ export const projectApi = createApi({
     getProductById: builder.query({
       query: (id) => `products/${id}`,
     }),
-    /* QUANTITIES */
-    /* ... */
+    addProduct: builder.mutation({
+      query: (body) => ({
+        url: `products`,
+        method: 'POST',
+        body,
+      }),
+    }),
+
     /* STRUCTURES */
     getStructures: builder.query({
       query: () => 'structures',
     }),
+    addStructure: builder.mutation({
+      query: (body) => ({
+        url: `structures`,
+        method: 'POST',
+        body,
+      }),
+    }),
     /* USERS */
     getUsers: builder.query({
       query: () => 'users',
+    }),
+    addUser: builder.mutation({
+      query: (body) => ({
+        url: `users`,
+        method: 'POST',
+        body,
+      }),
     }),
     getUsersById: builder.query({
       query: (id) => `users/${id}`,
@@ -74,7 +108,10 @@ export const projectApi = createApi({
 // Export hooks for usage in functional components
 export const {
   useGetBrandsQuery,
+  useAddBrandMutation,
+
   useGetCategoriesQuery,
+  useAddCategoryMutation,
 
   useGetOrganizationsQuery,
   useAddOrganizationMutation,
@@ -84,9 +121,12 @@ export const {
 
   useGetProductByIdQuery,
   useGetProductsQuery,
+  useAddProductMutation,
 
   useGetStructuresQuery,
+  useAddStructureMutation,
 
   useGetUsersQuery,
   useGetUsersByIdQuery,
+  useAddUserMutation,
 } = projectApi;

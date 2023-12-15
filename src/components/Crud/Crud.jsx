@@ -68,31 +68,38 @@ const Crud = ({ entityType }) => {
 
   let query;
   let config;
+  let entityName;
 
   switch (entityType) {
     case 'brands':
       query = projectApi.useGetBrandsQuery;
       config = brandConfig;
+      entityName = 'marque';
       break;
     case 'categories':
       query = projectApi.useGetCategoriesQuery;
       config = categoryConfig;
+      entityName = 'catégorie';
       break;
     case 'organizations':
       query = projectApi.useGetOrganizationsQuery;
       config = organizationConfig;
+      entityName = 'association';
       break;
     case 'products':
       query = projectApi.useGetProductsQuery;
       config = productConfig;
+      entityName = 'produit';
       break;
     case 'structures':
       query = projectApi.useGetStructuresQuery;
       config = structureConfig;
+      entityName = 'antenne';
       break;
     case 'users':
       query = projectApi.useGetUsersQuery;
       config = userConfig;
+      entityName = 'utilisateur';
       break;
 
     default:
@@ -103,6 +110,8 @@ const Crud = ({ entityType }) => {
   const { data, error, isLoading, refetch } = query({
     refetchOnMountOrArgChange: true,
   });
+
+  const currentEntityName = entityName;
 
   let content;
 
@@ -172,11 +181,15 @@ const Crud = ({ entityType }) => {
             isOpenModalFormCreate={isOpenModalFormCreate}
             handleCloseModalFormCreate={handleCloseModalFormCreate}
             refetch={refetch}
+            currentEntityName={currentEntityName}
+            entityType={entityType}
           />
           <ModalFormPatch
             isOpenModal={isOpenModal}
             refetch={refetch}
             dataObject={organizationData}
+            currentEntityName={currentEntityName}
+            entityType={entityType}
           />
 
           <ModalDelete
@@ -184,6 +197,8 @@ const Crud = ({ entityType }) => {
             handleCloseModalDelete={handleCloseModalDelete}
             refetch={refetch}
             deleteItemId={deleteItemId}
+            currentEntityName={currentEntityName}
+            entityType={entityType}
           />
         </div>
       </ThemeProvider>

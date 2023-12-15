@@ -2,31 +2,52 @@
 import PropTypes from 'prop-types';
 
 import './ModalFormCreate.scss';
-import { formFieldOganization } from '../../../formsConfig/formFieldsConfig';
+import { formFieldsCreatePatch } from '../../../formsConfig/formFieldsConfig';
 import FormTemplate from '../../FormTemplate/FormTemplate';
-import { useAddOrganizationMutation } from '../../../services/projectApi';
+import {
+  projectApi,
+  useAddOrganizationMutation,
+} from '../../../services/projectApi';
 
 const ModalFormCreate = ({
   isOpenModalFormCreate,
   handleCloseModalFormCreate,
   refetch,
+  currentEntityName,
+  entityType,
 }) => {
-  const [addOrganization] = useAddOrganizationMutation();
+  const entityFormFields = formFieldsCreatePatch[entityType];
+  // Define the mutation hook directly in the component body
+  const [create] = (() => {
+    switch (entityType) {
+      case 'brands':
+        return projectApi.useAddBrandMutation();
+      case 'categories':
+        return projectApi.useAddCategoryMutation();
+      case 'organizations':
+        return projectApi.useAddOrganizationMutation();
+      case 'products':
+        return projectApi.useAddProductMutation();
+      case 'structures':
+        return projectApi.useAddStructureMutation();
+      case 'users':
+        return projectApi.useAddUserMutation();
+      default:
+        console.error(`Invalid entityType: ${entityType}`);
+        return [() => {}]; // Provide a dummy function to avoid errors
+    }
+  })();
 
-  const handleOrganizationSubmission = async (values) => {
-    // Call the addOrganization mutation
-    addOrganization(values)
-      .unwrap()
-      .then((response) => {
-        // Handle the response if needed
-        // Close the modal form
-        handleCloseModalFormCreate();
-        refetch();
-      })
-      .catch((errors) => {
-        console.error('Error adding organization:', errors);
-        // Handle the error if needed
-      });
+  const handleSubmission = async (values) => {
+    try {
+      console.log('Request Payload:', values);
+      const response = await create(values).unwrap();
+      refetch();
+      handleCloseModalFormCreate();
+    } catch (errors) {
+      console.error(`Error adding ${currentEntityName}:`, errors);
+      // Handle the error if needed
+    }
   };
 
   return (
@@ -35,7 +56,7 @@ const ModalFormCreate = ({
       style={{ display: isOpenModalFormCreate ? 'block' : 'none' }}
     >
       <div className="ModalFormCreate__Content">
-        <h2>Ajout d'une association</h2>
+        <h2>{`Création ${currentEntityName}`}</h2>
 
         <button
           type="button"
@@ -46,10 +67,10 @@ const ModalFormCreate = ({
         </button>
         <FormTemplate
           className="ModalFormCreate__Content__Form"
-          formFields={formFieldOganization}
+          formFields={entityFormFields}
           buttonText="Envoyer"
           infoText="Les champs marqués d'un * sont obligatoires"
-          handleOrganizationSubmission={handleOrganizationSubmission}
+          handleSubmission={handleSubmission}
         />
       </div>
     </div>
@@ -60,5 +81,7 @@ ModalFormCreate.propTypes = {
   isOpenModalFormCreate: PropTypes.bool.isRequired,
   handleCloseModalFormCreate: PropTypes.func.isRequired,
   refetch: PropTypes.func.isRequired,
+  currentEntityName: PropTypes.string.isRequired,
+  entityType: PropTypes.string.isRequired,
 };
 export default ModalFormCreate;

@@ -11,7 +11,7 @@ const FormTemplate = ({
   infoText,
   buttonText,
   handleLoginSubmission,
-  handleOrganizationSubmission,
+  handleSubmission,
   handleOrganizationPatch,
   dataObject,
 }) => {
@@ -28,7 +28,8 @@ const FormTemplate = ({
     // Set initial form values based on formFields (cf /src/datas/formFieldsConfig.js)
     initialValues: dataObject
       ? formFields.reduce((accumulator, field) => {
-          accumulator[field.name] = dataObject[field.name] || '';
+          accumulator[field.name] =
+            dataObject[field.name] || field.initialValue || '';
           return accumulator;
         }, {})
       : {},
@@ -36,9 +37,9 @@ const FormTemplate = ({
     validationSchema,
     // Handle form submission
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
+      alert(JSON.stringify(values, null, 2));
       handleLoginSubmission(values);
-      handleOrganizationSubmission(values);
+      handleSubmission(values);
       handleOrganizationPatch(values);
     },
   });
@@ -136,7 +137,7 @@ FormTemplate.propTypes = {
   infoText: PropTypes.string,
   buttonText: PropTypes.string,
   handleLoginSubmission: PropTypes.func,
-  handleOrganizationSubmission: PropTypes.func,
+  handleSubmission: PropTypes.func,
   handleOrganizationPatch: PropTypes.func,
   dataObject: PropTypes.objectOf(PropTypes.any),
 };
@@ -146,7 +147,7 @@ FormTemplate.defaultProps = {
   infoText: '',
   buttonText: '',
   handleLoginSubmission: () => {},
-  handleOrganizationSubmission: () => {},
+  handleSubmission: () => {},
   handleOrganizationPatch: () => {},
   dataObject: {},
 };

@@ -3,12 +3,20 @@ import PropTypes from 'prop-types';
 
 import { useDispatch } from 'react-redux';
 import './ModalFormPatch.scss';
-import { formFieldOganization } from '../../../formsConfig/formFieldsConfig';
+import { formFieldsCreatePatch } from '../../../formsConfig/formFieldsConfig';
 import FormTemplate from '../../FormTemplate/FormTemplate';
 import { closeModal } from '../../../actions/modalActions';
 import { useUpdateOrganizationMutation } from '../../../services/projectApi';
 
-const ModalFormPatch = ({ isOpenModal, refetch, dataObject }) => {
+const ModalFormPatch = ({
+  isOpenModal,
+  refetch,
+  dataObject,
+  currentEntityName,
+  entityType,
+}) => {
+  const entityFormFields = formFieldsCreatePatch[entityType];
+  console.log(entityType);
   const [updateOrganization, { idLoading: isUpdating }] =
     useUpdateOrganizationMutation();
   const dispatch = useDispatch();
@@ -50,7 +58,7 @@ const ModalFormPatch = ({ isOpenModal, refetch, dataObject }) => {
         </button>
         <FormTemplate
           className="ModalFormPatch__Content__Form"
-          formFields={formFieldOganization}
+          formFields={entityFormFields}
           buttonText="Sauvegarder"
           infoText="Les champs marqués d'un * sont obligatoires"
           dataObject={dataObject}
@@ -65,6 +73,8 @@ ModalFormPatch.propTypes = {
   isOpenModal: PropTypes.bool.isRequired,
   refetch: PropTypes.func.isRequired,
   dataObject: PropTypes.objectOf(PropTypes.any),
+  currentEntityName: PropTypes.string.isRequired,
+  entityType: PropTypes.string.isRequired,
 };
 
 ModalFormPatch.defaultProps = {
