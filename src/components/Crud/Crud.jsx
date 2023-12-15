@@ -25,7 +25,6 @@ import ModalFormCreate from './ModalFormCreate/ModalFormCreate';
 import ModalDelete from './ModalDelete/ModalDelete';
 import ModalFormPatch from './ModalFormPatch/ModalFormPatch';
 import { fetchOrganization } from '../../actions/oganization';
-import { openModal, closeModal } from '../../actions/modalActions';
 
 const Crud = ({ entityType }) => {
   const theme = createTheme({
@@ -41,7 +40,6 @@ const Crud = ({ entityType }) => {
   /* MODAL */
   const [isOpenModalFormCreate, setIsOpenModalFormCreate] = useState(false);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
-  const [isOpenModalFormPatch, setIsOpenModalFormPatch] = useState(false);
 
   const [deleteItemId, setDeleteItemId] = useState(null);
   /* EDIT */

@@ -41,13 +41,9 @@ export const projectApi = createApi({
     deleteOrganization: builder.mutation({
       query: (id) => ({ url: `organizations/${id}`, method: 'DELETE' }),
     }),
-    getOrganization: builder.query({
-      query: (id) => `organizations/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Organization', id }],
-    }),
     updateOrganization: builder.mutation({
       query: ({ id, ...patch }) => ({
-        url: `organization/${id}`,
+        url: `organizations/${id}`,
         method: 'PATCH',
         body: patch,
       }),
