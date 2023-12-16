@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 
 import userReducer from './userReducer';
-import organizationReducer from './organizationReducer';
+import organizationReducer from './entitiesReducer';
 import modalReducer from './modalReducer';
 
 const rootReducer = combineReducers({

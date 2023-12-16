@@ -24,7 +24,16 @@ import {
 import ModalFormCreate from './ModalFormCreate/ModalFormCreate';
 import ModalDelete from './ModalDelete/ModalDelete';
 import ModalFormPatch from './ModalFormPatch/ModalFormPatch';
-import { fetchOrganization } from '../../actions/oganization';
+import selectEntity from '../../utils/entitySelector';
+import {
+  fetchBrands,
+  fetchCategories,
+  fetchOrganizations,
+  fetchProducts,
+  fetchStructures,
+  fetchUsers,
+} from '../../actions/entities';
+import { openModal } from '../../actions/modalActions';
 
 const Crud = ({ entityType }) => {
   const theme = createTheme({
@@ -34,7 +43,6 @@ const Crud = ({ entityType }) => {
       },
     },
   });
-
   /* DATAS */
   // const [skip, setSkip] = useState(true);
   /* MODAL */
@@ -44,9 +52,7 @@ const Crud = ({ entityType }) => {
   const [deleteItemId, setDeleteItemId] = useState(null);
   /* EDIT */
   const dispatch = useDispatch();
-  const organizationData = useSelector(
-    (state) => state.organization.organization
-  );
+
   const isOpenModal = useSelector((state) => state.modal.isOpen);
 
   const handleOpenModalFormCreate = () => {
@@ -64,6 +70,32 @@ const Crud = ({ entityType }) => {
 
   const handleCloseModalDelete = () => {
     setIsOpenModalDelete(false);
+  };
+
+  const handleOpenModalPatch = (id) => {
+    switch (entityType) {
+      case 'brands':
+        dispatch(fetchBrands(id));
+        break;
+      case 'categories':
+        dispatch(fetchCategories(id));
+        break;
+      case 'organizations':
+        dispatch(fetchOrganizations(id));
+        break;
+      case 'products':
+        dispatch(fetchProducts(id));
+        break;
+      case 'structures':
+        dispatch(fetchStructures(id));
+        break;
+      case 'users':
+        dispatch(fetchUsers(id));
+        break;
+      default:
+        console.error(`Invalid entityType: ${entityType}`);
+        break;
+    }
   };
 
   let query;
@@ -137,7 +169,7 @@ const Crud = ({ entityType }) => {
               label="Edit"
               className="textPrimary"
               onClick={() => {
-                dispatch(fetchOrganization(id));
+                handleOpenModalPatch(id);
               }}
               color="inherit"
             />,
@@ -187,7 +219,6 @@ const Crud = ({ entityType }) => {
           <ModalFormPatch
             isOpenModal={isOpenModal}
             refetch={refetch}
-            dataObject={organizationData}
             currentEntityName={currentEntityName}
             entityType={entityType}
           />

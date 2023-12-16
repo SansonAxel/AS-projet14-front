@@ -23,95 +23,124 @@ export const projectApi = createApi({
     getBrands: builder.query({
       query: () => `brands`,
     }),
-    addBrand: builder.mutation({
+    addBrands: builder.mutation({
       query: (body) => ({
         url: `brands`,
         method: 'POST',
         body,
       }),
     }),
-    deleteBrand: builder.mutation({
+    updateBrands: builder.mutation({
+      query: ({ id, ...patch }) => ({
+        url: `brands/${id}`,
+        method: 'PATCH',
+        body: patch,
+      }),
+    }),
+    deleteBrands: builder.mutation({
       query: (id) => ({ url: `brands/${id}`, method: 'DELETE' }),
     }),
     /* CATEGORIES */
     getCategories: builder.query({
       query: () => `categories`,
     }),
-    addCategory: builder.mutation({
+    addCategories: builder.mutation({
       query: (body) => ({
         url: `categories`,
         method: 'POST',
         body,
       }),
     }),
-    deleteCategory: builder.mutation({
+    updateCategories: builder.mutation({
+      query: ({ id, ...patch }) => ({
+        url: `categories/${id}`,
+        method: 'PATCH',
+        body: patch,
+      }),
+    }),
+    deleteCategories: builder.mutation({
       query: (id) => ({ url: `categories/${id}`, method: 'DELETE' }),
     }),
     /* ORGANIZATIONS */
     getOrganizations: builder.query({
       query: () => `organizations`,
     }),
-    addOrganization: builder.mutation({
+    addOrganizations: builder.mutation({
       query: (body) => ({
         url: `organizations`,
         method: 'POST',
         body,
       }),
     }),
-    deleteOrganization: builder.mutation({
-      query: (id) => ({ url: `organizations/${id}`, method: 'DELETE' }),
-    }),
-    updateOrganization: builder.mutation({
+    updateOrganizations: builder.mutation({
       query: ({ id, ...patch }) => ({
         url: `organizations/${id}`,
         method: 'PATCH',
         body: patch,
       }),
     }),
+    deleteOrganizations: builder.mutation({
+      query: (id) => ({ url: `organizations/${id}`, method: 'DELETE' }),
+    }),
     /* PRODUCTS */
     getProducts: builder.query({
       query: () => `products`,
     }),
-    getProductById: builder.query({
-      query: (id) => `products/${id}`,
-    }),
-    addProduct: builder.mutation({
+    addProducts: builder.mutation({
       query: (body) => ({
         url: `products`,
         method: 'POST',
         body,
       }),
     }),
-    deleteProduct: builder.mutation({
+    updateProducts: builder.mutation({
+      query: ({ id, ...patch }) => ({
+        url: `products/${id}`,
+        method: 'PATCH',
+        body: patch,
+      }),
+    }),
+    deleteProducts: builder.mutation({
       query: (id) => ({ url: `products/${id}`, method: 'DELETE' }),
     }),
     /* STRUCTURES */
     getStructures: builder.query({
       query: () => 'structures',
     }),
-    addStructure: builder.mutation({
+    addStructures: builder.mutation({
       query: (body) => ({
         url: `structures`,
         method: 'POST',
         body,
       }),
     }),
-    deleteStructure: builder.mutation({
+    updateStructures: builder.mutation({
+      query: ({ id, ...patch }) => ({
+        url: `structures/${id}`,
+        method: 'PATCH',
+        body: patch,
+      }),
+    }),
+    deleteStructures: builder.mutation({
       query: (id) => ({ url: `structures/${id}`, method: 'DELETE' }),
     }),
     /* USERS */
     getUsers: builder.query({
       query: () => 'users',
     }),
-    addUser: builder.mutation({
+    addUsers: builder.mutation({
       query: (body) => ({
         url: `users`,
         method: 'POST',
         body,
       }),
     }),
-    getUsersById: builder.query({
-      query: (id) => `users/${id}`,
+    updateUsers: builder.mutation({
+      query: ({ id, ...patch }) => ({
+        url: `users/${id}`,
+        method: 'PATCH',
+        body: patch,
+      }),
     }),
     deleteUsers: builder.mutation({
       query: (id) => ({ url: `users/${id}`, method: 'DELETE' }),
@@ -122,30 +151,33 @@ export const projectApi = createApi({
 // Export hooks for usage in functional components
 export const {
   useGetBrandsQuery,
-  useAddBrandMutation,
-  useDeleteBrandMutation,
+  useAddBrandsMutation,
+  useUpdateBrandsMutation,
+  useDeleteBrandsMutation,
 
   useGetCategoriesQuery,
-  useAddCategoryMutation,
-  useDeleteCategoryMutation,
+  useAddCategoriesMutation,
+  useUpdateCategoriesMutation,
+  useDeleteCategoriesMutation,
 
   useGetOrganizationsQuery,
-  useAddOrganizationMutation,
-  useDeleteOrganizationMutation,
+  useAddOrganizationsMutation,
+  useDeleteOrganizationsMutation,
   useGetOrganizationQuery,
-  useUpdateOrganizationMutation,
+  useUpdateOrganizationsMutation,
 
-  useGetProductByIdQuery,
   useGetProductsQuery,
-  useAddProductMutation,
-  useDeleteProductMutation,
+  useAddProductsMutation,
+  useUpdateProductsMutation,
+  useDeleteProductsMutation,
 
   useGetStructuresQuery,
-  useAddStructureMutation,
-  useDeleteStructureMutation,
+  useAddStructuresMutation,
+  useUpdateStructuressMutation,
+  useDeleteStructuresMutation,
 
   useGetUsersQuery,
-  useGetUsersByIdQuery,
-  useAddUserMutation,
-  useDeleteUsersMutation,
+  useAddUsersMutation,
+  useUpdateUsersMutation,
+  useDeleteUserssMutation,
 } = projectApi;

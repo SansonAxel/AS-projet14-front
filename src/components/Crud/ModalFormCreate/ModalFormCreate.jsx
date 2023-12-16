@@ -2,12 +2,14 @@
 import PropTypes from 'prop-types';
 
 import './ModalFormCreate.scss';
-import { formFieldsCreatePatch } from '../../../formsConfig/formFieldsConfig';
 import FormTemplate from '../../FormTemplate/FormTemplate';
-import {
-  projectApi,
-  useAddOrganizationMutation,
-} from '../../../services/projectApi';
+import { projectApi } from '../../../services/projectApi';
+import brandFormConfig from '../../../formsConfig/brandFormConfig';
+import categoryFormConfig from '../../../formsConfig/categoryFormConfig';
+import organizationFormConfig from '../../../formsConfig/organizationFormConfig';
+import productFormConfig from '../../../formsConfig/productFormConfig';
+import structureFormConfig from '../../../formsConfig/structureFormConfig';
+import userFormConfig from '../../../formsConfig/userFormConfig';
 
 const ModalFormCreate = ({
   isOpenModalFormCreate,
@@ -16,27 +18,53 @@ const ModalFormCreate = ({
   currentEntityName,
   entityType,
 }) => {
-  const entityFormFields = formFieldsCreatePatch[entityType];
   // Define the mutation hook directly in the component body
-  const [create] = (() => {
+  let mutation;
+  let entity;
+  let formFieldsConfig;
+  /* IIFE */
+  (() => {
     switch (entityType) {
       case 'brands':
-        return projectApi.useAddBrandMutation();
+        mutation = projectApi.useAddBrandsMutation();
+        entity = 'brand';
+        formFieldsConfig = brandFormConfig;
+        break;
       case 'categories':
-        return projectApi.useAddCategoryMutation();
+        mutation = projectApi.useAddCategoriesMutation();
+        entity = 'category';
+        formFieldsConfig = categoryFormConfig;
+        break;
       case 'organizations':
-        return projectApi.useAddOrganizationMutation();
+        mutation = projectApi.useAddOrganizationsMutation();
+        entity = 'organization';
+        formFieldsConfig = organizationFormConfig;
+        break;
       case 'products':
-        return projectApi.useAddProductMutation();
+        mutation = projectApi.useAddProductsMutation();
+        entity = 'product';
+        formFieldsConfig = productFormConfig;
+        break;
       case 'structures':
-        return projectApi.useAddStructureMutation();
+        mutation = projectApi.useAddStructuresMutation();
+        entity = 'structure';
+        formFieldsConfig = structureFormConfig;
+        break;
       case 'users':
-        return projectApi.useAddUserMutation();
+        mutation = projectApi.useAddUsersMutation();
+        entity = 'user';
+        formFieldsConfig = userFormConfig;
+        break;
       default:
         console.error(`Invalid entityType: ${entityType}`);
-        return [() => {}]; // Provide a dummy function to avoid errors
+        break;
     }
   })();
+
+  const [create] = mutation;
+
+  const entityFormFields = formFieldsConfig;
+  console.log(entityFormFields);
 
   const handleSubmission = async (values) => {
     try {

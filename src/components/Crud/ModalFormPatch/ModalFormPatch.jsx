@@ -1,29 +1,80 @@
 /* eslint-disable react/no-unescaped-entities */
 import PropTypes from 'prop-types';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './ModalFormPatch.scss';
-import { formFieldsCreatePatch } from '../../../formsConfig/formFieldsConfig';
 import FormTemplate from '../../FormTemplate/FormTemplate';
 import { closeModal } from '../../../actions/modalActions';
-import { useUpdateOrganizationMutation } from '../../../services/projectApi';
+import { projectApi } from '../../../services/projectApi';
+import brandFormConfig from '../../../formsConfig/brandFormConfig';
+import categoryFormConfig from '../../../formsConfig/categoryFormConfig';
+import organizationFormConfig from '../../../formsConfig/organizationFormConfig';
+import productFormConfig from '../../../formsConfig/productFormConfig';
+import structureFormConfig from '../../../formsConfig/structureFormConfig';
+import userFormConfig from '../../../formsConfig/userFormConfig';
 
 const ModalFormPatch = ({
   isOpenModal,
   refetch,
-  dataObject,
   currentEntityName,
   entityType,
 }) => {
-  const entityFormFields = formFieldsCreatePatch[entityType];
+  // Define the mutation hook directly in the component body
+  let mutation;
+  let entity;
+  let formFieldsConfig;
+  /* IIFE */
+  (() => {
+    switch (entityType) {
+      case 'brands':
+        mutation = projectApi.useUpdateBrandsMutation();
+        entity = 'brand';
+        formFieldsConfig = brandFormConfig;
+        break;
+      case 'categories':
+        mutation = projectApi.useUpdateCategoriesMutation();
+        entity = 'category';
+        formFieldsConfig = categoryFormConfig;
+        break;
+      case 'organizations':
+        mutation = projectApi.useUpdateOrganizationsMutation();
+        entity = 'organization';
+        formFieldsConfig = organizationFormConfig;
+        break;
+      case 'products':
+        mutation = projectApi.useUpdateProductsMutation();
+        entity = 'product';
+        formFieldsConfig = productFormConfig;
+        break;
+      case 'structures':
+        mutation = projectApi.useUpdateStructuresMutation();
+        entity = 'structure';
+        formFieldsConfig = structureFormConfig;
+        break;
+      case 'users':
+        mutation = projectApi.useUpdateUsersMutation();
+        entity = 'user';
+        formFieldsConfig = userFormConfig;
+        break;
+      default:
+        console.error(`Invalid entityType: ${entityType}`);
+        break;
+    }
+  })();
+  const entityFormFields = formFieldsConfig;
+  console.log(entityFormFields);
+
+  // Utilisez directement les variables mutation et entity ici
+  const [update, { isLoading: isUpdating }] = mutation;
+  const dataObject = useSelector((state) => state.entities[entity]);
+
   console.log(entityType);
-  const [updateOrganization, { idLoading: isUpdating }] =
-    useUpdateOrganizationMutation();
+  console.log('modal', dataObject);
   const dispatch = useDispatch();
-  const handleOrganizationPatch = async (values) => {
+  const handlePatch = async (values) => {
     try {
       // Use the RTK mutation to update the organization
-      const response = await updateOrganization({
+      const response = await update({
         id: dataObject.id,
         ...values,
         fixedCacheKey: 'shared-update-post',
@@ -62,7 +113,7 @@ const ModalFormPatch = ({
           buttonText="Sauvegarder"
           infoText="Les champs marqués d'un * sont obligatoires"
           dataObject={dataObject}
-          handleOrganizationPatch={handleOrganizationPatch}
+          handlePatch={handlePatch}
         />
       </div>
     </div>
@@ -72,12 +123,8 @@ const ModalFormPatch = ({
 ModalFormPatch.propTypes = {
   isOpenModal: PropTypes.bool.isRequired,
   refetch: PropTypes.func.isRequired,
-  dataObject: PropTypes.objectOf(PropTypes.any),
   currentEntityName: PropTypes.string.isRequired,
   entityType: PropTypes.string.isRequired,
 };
 
-ModalFormPatch.defaultProps = {
-  dataObject: {},
-};
 export default ModalFormPatch;

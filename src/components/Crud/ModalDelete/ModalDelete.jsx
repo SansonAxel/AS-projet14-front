@@ -14,15 +14,15 @@ const ModalDelete = ({
   const [deleteItem] = (() => {
     switch (entityType) {
       case 'brands':
-        return projectApi.useDeleteBrandMutation();
+        return projectApi.useDeleteBrandsMutation();
       case 'categories':
-        return projectApi.useDeleteCategoryMutation();
+        return projectApi.useDeleteCategoriesMutation();
       case 'organizations':
-        return projectApi.useDeleteOrganizationMutation();
+        return projectApi.useDeleteOrganizationsMutation();
       case 'products':
-        return projectApi.useDeleteProductMutation();
+        return projectApi.useDeleteProductsMutation();
       case 'structures':
-        return projectApi.useDeleteStructureMutation();
+        return projectApi.useDeleteStructuresMutation();
       case 'users':
         return projectApi.useDeleteUsersMutation();
       default:
