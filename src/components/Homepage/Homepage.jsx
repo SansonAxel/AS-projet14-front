@@ -13,8 +13,10 @@ import { featuresData, membersData, formOptions } from '../../homedatas';
 
 import LegalNotice from './LegalNotice/LegalNotice';
 import FormTemplate from '../FormTemplate/FormTemplate';
-import informationFormConfig from '../../formsConfig/informationFormConfig';
-import registrationFormConfig from '../../formsConfig/registrationFormConfig';
+import {
+  formFieldsInformations,
+  formFieldsRegistration,
+} from '../../formsConfig/homeFormsConfig';
 
 const Homepage = () => {
   const [selectedForm, setSelectedForm] = useState('default');
@@ -110,8 +112,8 @@ const Homepage = () => {
           <FormTemplate
             formFields={
               selectedForm === 'informations'
-                ? informationFormConfig
-                : registrationFormConfig
+                ? formFieldsInformations
+                : formFieldsRegistration
             }
             buttonText="Envoyer"
             infoText="Les champs marqués d'un * sont obligatoires"

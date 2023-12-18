@@ -24,7 +24,7 @@ const Login = () => {
       email,
       password,
     };
-    console.log('login');
+    console.log('login', values);
 
     axios
       .post('http://sansonaxel-server.eddi.cloud/api/login_check', payload)

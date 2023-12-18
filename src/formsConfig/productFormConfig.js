@@ -1,3 +1,5 @@
+import * as Yup from 'yup';
+
 const productFormConfig = [
   {
     name: 'name',
@@ -5,22 +7,27 @@ const productFormConfig = [
     label: 'Nom du produit*',
     type: 'text',
     initialValue: '',
+    validation: Yup.string()
+      .max(100, 'Ne doit pas dépasser 100 caractères')
+      .required('Champ requis'),
   },
   // ! catégorie et marque en attente
-  {
-    name: 'structuresId',
-    id: 'product',
-    label: 'Structure*',
-    type: 'number',
-    initialValue: null,
-  },
-  {
-    name: 'categoriesId',
-    id: 'product',
-    label: 'Catégorie',
-    type: 'number',
-    initialValue: null,
-  },
+  // {
+  //   name: 'structuresId',
+  //   id: 'product',
+  //   label: 'Structure*',
+  //   type: 'number',
+  //   initialValue: null,
+  //   validation: Yup.number().required('Champ requis'),
+  // },
+  // {
+  //   name: 'categoriesId',
+  //   id: 'product',
+  //   label: 'Catégorie',
+  //   type: 'number',
+  //   initialValue: null,
+  //   validation: Yup.number().required('Champ requis'),
+  // },
   // ! ------------------------------
   {
     name: 'description',
@@ -28,6 +35,7 @@ const productFormConfig = [
     label: 'Description',
     type: 'text',
     initialValue: '',
+    validation: Yup.string().max(300, 'Ne doit pas dépasser 300 caractères'),
   },
   {
     name: 'picture',
@@ -35,6 +43,7 @@ const productFormConfig = [
     label: 'Image',
     type: 'text',
     initialValue: '',
+    validation: Yup.string().max(255, 'Ne doit pas dépasser 255 caractères'),
   },
   {
     name: 'price',
@@ -42,6 +51,7 @@ const productFormConfig = [
     label: 'Prix*',
     type: 'number',
     initialValue: null,
+    validation: Yup.number().max(9999, 'Trop long').required('Champ requis'),
   },
   {
     name: 'conservationType',
@@ -49,6 +59,9 @@ const productFormConfig = [
     label: 'Conservation*',
     type: 'text',
     initialValue: '',
+    validation: Yup.string()
+      .max(100, 'Ne doit pas dépasser 100 caractères')
+      .required('Champ requis'),
   },
   {
     name: 'weight',
@@ -56,6 +69,7 @@ const productFormConfig = [
     label: 'Poids *',
     type: 'number',
     initialValue: null,
+    validation: Yup.number().max(9999, 'Trop long').required('Champ requis'),
   },
   {
     name: 'conditioning',
@@ -63,6 +77,9 @@ const productFormConfig = [
     label: 'Conditionnement*',
     type: 'text',
     initialValue: '',
+    validation: Yup.string()
+      .max(100, 'Ne doit pas dépasser 100 caractères')
+      .required('Champ requis'),
   },
   {
     name: 'quantity',
@@ -70,6 +87,7 @@ const productFormConfig = [
     label: 'Quantité',
     type: 'number',
     initialValue: null,
+    validation: Yup.number().max(9999, 'Trop long'),
   },
   {
     name: 'expirationDate',
@@ -77,6 +95,9 @@ const productFormConfig = [
     label: "Date d'expiration*",
     type: 'text',
     initialValue: '',
+    validation: Yup.string()
+      .max(100, 'Ne doit pas dépasser 100 caractères')
+      .required('Champ requis'),
   },
   {
     name: 'createdAt',
@@ -84,6 +105,7 @@ const productFormConfig = [
     label: 'Date création',
     type: 'dateTime',
     initialValue: new Date(),
+    validation: Yup.date(),
   },
 ];
 

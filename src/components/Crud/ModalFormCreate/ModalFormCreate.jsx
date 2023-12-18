@@ -64,16 +64,18 @@ const ModalFormCreate = ({
   const [create] = mutation;
 
   const entityFormFields = formFieldsConfig;
-  console.log(entityFormFields);
+  // console.log('entityFormFields', entityFormFields);
+  // console.log('formfields[0].validation', entityFormFields[0].validation);
 
+  // console.log(entityFormFields);
   const handleSubmission = async (values) => {
     try {
-      console.log('Request Payload:', values);
+      // console.log('Request Payload:', values);
       const response = await create(values).unwrap();
       refetch();
       handleCloseModalFormCreate();
     } catch (errors) {
-      console.error(`Error adding ${currentEntityName}:`, errors);
+      // console.error(`Error adding ${currentEntityName}:`, errors);
       // Handle the error if needed
     }
   };

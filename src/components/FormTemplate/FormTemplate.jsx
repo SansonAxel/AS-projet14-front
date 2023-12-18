@@ -14,8 +14,14 @@ const FormTemplate = ({
   handleSubmission,
   handlePatch,
   dataObject,
-  currentEntityName,
 }) => {
+  // Creates a validation schema using Yup based on formFields
+  const validationSchema = Yup.object().shape(
+    formFields.reduce((accumulator, field) => {
+      accumulator[field.name] = field.validation || null;
+      return accumulator;
+    }, {})
+  );
   // Create a formik object to manage form state and actions
   const formik = useFormik({
     // Set initial form values based on formFields (cf /src/datas/formFieldsConfig.js)
@@ -26,61 +32,10 @@ const FormTemplate = ({
           return accumulator;
         }, {})
       : {},
-    // Use the validation schema we created
-    validationSchema: Yup.object({
-      address: Yup.string()
-        .max(255, 'Ne doit pas dépasser 255 caractères')
-        .required('Champ requis'),
-      categoriesId: Yup.number().required('Champ requis'),
-      conservationType: Yup.string()
-        .max(100, 'Ne doit pas dépasser 100 caractères')
-        .required('Champ requis'),
-      createdAt: Yup.date(),
-      description: Yup.string().max(300, 'Ne doit pas dépasser 300 caractères'),
-      email: Yup.string()
-        .email('Adresse mail non valide')
-        .max(180, 'Ne doit pas dépasser 180 caractères')
-        .required('Champ requis'),
-      expirationDate: Yup.date(),
-      firstName: Yup.string()
-        .max(100, 'Ne doit pas dépasser 100 caractères')
-        .required('Champ requis'),
-      lastName: Yup.string()
-        .max(100, 'Ne doit pas dépasser 100 caractères')
-        .required('Champ requis'),
-      message: Yup.string()
-        .max(1000, 'Message limité à 1000 caractères')
-        .required('Champ requis'),
-      name: Yup.string()
-        .max(100, 'Ne doit pas dépasser 100 caractères')
-        .required('Champ requis'),
-      organizationName: Yup.string()
-        .max(100, 'Ne doit pas dépasser 100 caractères')
-        .required('Champ requis'),
-      organizationType: Yup.string()
-        .max(255, 'Ne doit pas dépasser 255 caractères')
-        .required('Champ requis'),
-      phoneNumber: Yup.string().max(20, 'Ne doit pas dépasser 20 caractères'),
-      picture: Yup.string().max(255, 'Ne doit pas dépasser 255 caractères'),
-      price: Yup.number().max(9999, 'Trop long').required('Champ requis'),
-      quantity: Yup.number().max(9999, 'Trop long'),
-      siret: Yup.string()
-        .max(9, 'Ne doit pas dépasser 9 caractères')
-        .required('Champ requis'),
-      siren: Yup.string()
-        .max(9, 'Ne doit pas dépasser 9 caractères')
-        .required('Champ requis'),
-      status:
-        currentEntityName === 'organizationConfig'
-          ? Yup.number().required('Champ requis')
-          : Yup.bool(),
-      structuresId: Yup.number().required('Champ requis'),
-      weight: Yup.number().max(9999, 'Trop long').required('Champ requis'),
-    }),
-
+    validationSchema,
     // Handle form submission
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       handleLoginSubmission(values);
       handleSubmission(values);
       handlePatch(values);
@@ -104,7 +59,6 @@ const FormTemplate = ({
     }
     prevDataObjectRef.current = dataObject;
   }, [dataObject, formik.setValues, prevDataObjectRef, formFields, formik]);
-
   // Updates ref
   useEffect(() => {
     prevDataObjectRef.current = dataObject;
@@ -114,7 +68,7 @@ const FormTemplate = ({
     <form onSubmit={formik.handleSubmit} className="Form">
       {formFields.map((field) => {
         const commonProps = {
-          id: field.name,
+          id: `${field.name}-${field.id}`,
           name: field.name,
           onChange: formik.handleChange,
           onBlur: formik.handleBlur,
@@ -122,7 +76,10 @@ const FormTemplate = ({
         return (
           // Map over each form field and create corresponding input elements
           <div key={field.name} className="Form__Element">
-            <label htmlFor={field.name} className="Form__Element__Label">
+            <label
+              htmlFor={`${field.name}-${field.id}`}
+              className="Form__Element__Label"
+            >
               {field.label}
             </label>
             {/* Use a checkbox input for 'checkbox' type, otherwise use a text input */}
@@ -172,20 +129,9 @@ FormTemplate.propTypes = {
       name: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       type: PropTypes.string,
-      initialValue: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.bool,
-        PropTypes.instanceOf(Date),
-      ]),
-      validation: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.bool,
-        PropTypes.instanceOf(Date),
-      ]),
     })
   ),
+
   infoText: PropTypes.string,
   buttonText: PropTypes.string,
   handleLoginSubmission: PropTypes.func,

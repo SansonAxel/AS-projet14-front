@@ -1,3 +1,5 @@
+import * as Yup from 'yup';
+
 const structureFormConfig = [
   // ! organizationId en attente
   {
@@ -6,6 +8,9 @@ const structureFormConfig = [
     label: "Nom de l'antenne*",
     type: 'text',
     initialValue: '',
+    validation: Yup.string()
+      .max(100, 'Ne doit pas dépasser 100 caractères')
+      .required('Champ requis'),
   },
   {
     name: 'siret',
@@ -13,6 +18,9 @@ const structureFormConfig = [
     label: 'Numéro de SIRET*',
     type: 'text',
     initialValue: '',
+    validation: Yup.string()
+      .max(9, 'Ne doit pas dépasser 9 caractères')
+      .required('Champ requis'),
   },
   {
     name: 'status',
@@ -20,6 +28,7 @@ const structureFormConfig = [
     label: 'Statut*',
     type: 'boolean',
     initialValue: true,
+    validation: Yup.bool(),
   },
   {
     name: 'createdAt',
@@ -27,6 +36,7 @@ const structureFormConfig = [
     label: 'Date création',
     type: 'dateTime',
     initialValue: new Date(),
+    validation: Yup.date(),
   },
 ];
 
