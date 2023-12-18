@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 
 import './Login.scss';
 import FormTemplate from '../FormTemplate/FormTemplate';
-import { formFieldsLogin } from '../../formsConfig/formFieldsConfig';
+import loginFormConfig from '../../formsConfig/loginFormConfig';
 import { handleSuccessfulLogin } from '../../actions/user';
 
 const Login = () => {
@@ -24,12 +24,12 @@ const Login = () => {
       email,
       password,
     };
+    console.log('login');
 
     axios
       .post('http://sansonaxel-server.eddi.cloud/api/login_check', payload)
       .then((response) => {
         setIsLoading(true);
-
         const { token } = response.data;
 
         dispatch(handleSuccessfulLogin(token, true));
@@ -54,7 +54,7 @@ const Login = () => {
     <div className="Login">
       <h2>Accès à votre tableau de bord</h2>
       <FormTemplate
-        formFields={formFieldsLogin}
+        formFields={loginFormConfig}
         buttonText="Se connecter"
         handleLoginSubmission={handleLogin}
       />

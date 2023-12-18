@@ -1,7 +1,3 @@
-import * as Yup from 'yup';
-
-const now = new Date();
-
 const organizationFormConfig = [
   {
     name: 'name',

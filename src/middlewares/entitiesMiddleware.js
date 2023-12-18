@@ -70,6 +70,54 @@ const entitiesMiddleware = (store) => (next) => (action) => {
         })
         .finally(() => {});
       break;
+    case FETCH_PRODUCTS:
+      axios
+        .get(`http://sansonaxel-server.eddi.cloud/api/products/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          store.dispatch(saveProducts(response.data));
+          store.dispatch(openModal());
+        })
+        .catch((error) => {
+          console.error('Erreur de la requête :', error);
+        })
+        .finally(() => {});
+      break;
+    case FETCH_STRUCTURES:
+      axios
+        .get(`http://sansonaxel-server.eddi.cloud/api/structures/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          store.dispatch(saveStructures(response.data));
+          store.dispatch(openModal());
+        })
+        .catch((error) => {
+          console.error('Erreur de la requête :', error);
+        })
+        .finally(() => {});
+      break;
+    case FETCH_USERS:
+      axios
+        .get(`http://sansonaxel-server.eddi.cloud/api/users/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          store.dispatch(saveUsers(response.data));
+          store.dispatch(openModal());
+        })
+        .catch((error) => {
+          console.error('Erreur de la requête :', error);
+        })
+        .finally(() => {});
+      break;
 
     default:
       break;

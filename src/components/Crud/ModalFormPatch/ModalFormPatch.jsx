@@ -79,6 +79,7 @@ const ModalFormPatch = ({
         ...values,
         fixedCacheKey: 'shared-update-post',
       });
+      console.log(response);
       refetch();
 
       // Close the modal
@@ -98,7 +99,7 @@ const ModalFormPatch = ({
       style={{ display: isOpenModal ? 'block' : 'none' }}
     >
       <div className="ModalFormPatch__Content">
-        <h2>{`Modification de l'association id ${dataObject.id}`}</h2>
+        <h2>{`Modification de  ${currentEntityName}`}</h2>
 
         <button
           type="button"
@@ -114,6 +115,7 @@ const ModalFormPatch = ({
           infoText="Les champs marqués d'un * sont obligatoires"
           dataObject={dataObject}
           handlePatch={handlePatch}
+          currentEntityName={currentEntityName}
         />
       </div>
     </div>

@@ -1,7 +1,3 @@
-import * as Yup from 'yup';
-
-const now = new Date();
-
 const categoryFormConfig = [
   {
     name: 'name',
@@ -15,7 +11,7 @@ const categoryFormConfig = [
     id: 'category',
     label: 'Date création',
     type: 'dateTime',
-    initialValue: now.toISOString().slice(0, 19),
+    initialValue: new Date(),
   },
 ];
 

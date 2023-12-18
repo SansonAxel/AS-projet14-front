@@ -1,7 +1,3 @@
-import * as Yup from 'yup';
-
-const now = new Date();
-
 const productFormConfig = [
   {
     name: 'name',
@@ -87,7 +83,7 @@ const productFormConfig = [
     id: 'product',
     label: 'Date création',
     type: 'dateTime',
-    initialValue: now.toISOString().slice(0, 19),
+    initialValue: new Date(),
   },
 ];
 

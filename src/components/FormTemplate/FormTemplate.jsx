@@ -14,15 +14,8 @@ const FormTemplate = ({
   handleSubmission,
   handlePatch,
   dataObject,
+  currentEntityName,
 }) => {
-  // const validationSchema = () => {
-  //   return Yup.object().shape(
-  //     formFields.reduce((accumulator, field) => {
-  //       accumulator[field.name] = field.validation;
-  //       return accumulator;
-  //     }, {})
-  //   );
-  // };
   // Create a formik object to manage form state and actions
   const formik = useFormik({
     // Set initial form values based on formFields (cf /src/datas/formFieldsConfig.js)
@@ -35,68 +28,56 @@ const FormTemplate = ({
       : {},
     // Use the validation schema we created
     validationSchema: Yup.object({
-      name: Yup.string()
+      address: Yup.string()
+        .max(255, 'Ne doit pas dépasser 255 caractères')
+        .required('Champ requis'),
+      categoriesId: Yup.number().required('Champ requis'),
+      conservationType: Yup.string()
         .max(100, 'Ne doit pas dépasser 100 caractères')
         .required('Champ requis'),
-
-      firstName: Yup.string()
-        .max(100, 'Ne doit pas dépasser 100 caractères')
-        .required('Champ requis'),
-
-      lastName: Yup.string()
-        .max(100, 'Ne doit pas dépasser 100 caractères')
-        .required('Champ requis'),
-
+      createdAt: Yup.date(),
+      description: Yup.string().max(300, 'Ne doit pas dépasser 300 caractères'),
       email: Yup.string()
         .email('Adresse mail non valide')
         .max(180, 'Ne doit pas dépasser 180 caractères')
         .required('Champ requis'),
-
-      phoneNumber: Yup.string().max(20, 'Ne doit pas dépasser 20 caractères'),
-
-      password: Yup.string()
-        .min(8, 'Doit faire 8 caractères minimum')
+      expirationDate: Yup.date(),
+      firstName: Yup.string()
+        .max(100, 'Ne doit pas dépasser 100 caractères')
+        .required('Champ requis'),
+      lastName: Yup.string()
+        .max(100, 'Ne doit pas dépasser 100 caractères')
+        .required('Champ requis'),
+      message: Yup.string()
+        .max(1000, 'Message limité à 1000 caractères')
+        .required('Champ requis'),
+      name: Yup.string()
+        .max(100, 'Ne doit pas dépasser 100 caractères')
+        .required('Champ requis'),
+      organizationName: Yup.string()
+        .max(100, 'Ne doit pas dépasser 100 caractères')
+        .required('Champ requis'),
+      organizationType: Yup.string()
         .max(255, 'Ne doit pas dépasser 255 caractères')
         .required('Champ requis'),
-
-      siren: Yup.string()
-        .max(9, 'Ne doit pas dépasser 9 caractères')
-        .required('Champ requis'),
-
+      phoneNumber: Yup.string().max(20, 'Ne doit pas dépasser 20 caractères'),
+      picture: Yup.string().max(255, 'Ne doit pas dépasser 255 caractères'),
+      price: Yup.number().max(9999, 'Trop long').required('Champ requis'),
+      quantity: Yup.number().max(9999, 'Trop long'),
       siret: Yup.string()
         .max(9, 'Ne doit pas dépasser 9 caractères')
         .required('Champ requis'),
-
-      status: Yup.number().required('Champ requis'),
-
-      description: Yup.string().max(300, 'Ne doit pas dépasser 300 caractères'),
-
-      picture: Yup.string().max(255, 'Ne doit pas dépasser 255 caractères'),
-
-      price: Yup.number().max(9999, 'Trop long').required('Champ requis'),
-
-      conservationType: Yup.string()
-        .max(100, 'Ne doit pas dépasser 100 caractères')
+      siren: Yup.string()
+        .max(9, 'Ne doit pas dépasser 9 caractères')
         .required('Champ requis'),
-
-      weight: Yup.number().max(9999, 'Trop long').required('Champ requis'),
-
-      conditioning: Yup.string()
-        .max(100, 'Ne doit pas dépasser 100 caractères')
-        .required('Champ requis'),
-
-      quantity: Yup.number().max(9999, 'Trop long'),
-
-      expirationDate: Yup.date()
-        .max(100, 'Ne doit pas dépasser 100 caractères')
-        .required('Champ requis'),
-
-      createdAt: Yup.date(),
-
+      status:
+        currentEntityName === 'organizationConfig'
+          ? Yup.number().required('Champ requis')
+          : Yup.bool(),
       structuresId: Yup.number().required('Champ requis'),
-
-      categoriesId: Yup.number().required('Champ requis'),
+      weight: Yup.number().max(9999, 'Trop long').required('Champ requis'),
     }),
+
     // Handle form submission
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
@@ -128,7 +109,6 @@ const FormTemplate = ({
   useEffect(() => {
     prevDataObjectRef.current = dataObject;
   }, [dataObject]);
-
   return (
     // Render the form with input fields and validation messages
     <form onSubmit={formik.handleSubmit} className="Form">
@@ -197,14 +177,14 @@ FormTemplate.propTypes = {
         PropTypes.number,
         PropTypes.bool,
         PropTypes.instanceOf(Date),
-      ]).isRequired,
+      ]),
       validation: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.number,
         PropTypes.bool,
         PropTypes.instanceOf(Date),
-      ]).isRequired,
-    }).isRequired
+      ]),
+    })
   ),
   infoText: PropTypes.string,
   buttonText: PropTypes.string,
@@ -212,6 +192,7 @@ FormTemplate.propTypes = {
   handleSubmission: PropTypes.func,
   handlePatch: PropTypes.func,
   dataObject: PropTypes.objectOf(PropTypes.any),
+  currentEntityName: PropTypes.string,
 };
 
 FormTemplate.defaultProps = {
@@ -222,6 +203,7 @@ FormTemplate.defaultProps = {
   handlePatch: () => {},
   dataObject: {},
   formFields: [],
+  currentEntityName: '',
 };
 
 export default FormTemplate;

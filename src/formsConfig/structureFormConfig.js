@@ -1,5 +1,3 @@
-const now = new Date();
-
 const structureFormConfig = [
   // ! organizationId en attente
   {
@@ -20,15 +18,15 @@ const structureFormConfig = [
     name: 'status',
     id: 'structure',
     label: 'Statut*',
-    type: 'number',
-    initialValue: null,
+    type: 'boolean',
+    initialValue: true,
   },
   {
     name: 'createdAt',
     id: 'structure',
     label: 'Date création',
     type: 'dateTime',
-    initialValue: now.toISOString().slice(0, 19),
+    initialValue: new Date(),
   },
 ];
 

@@ -10,13 +10,11 @@ import Footer from './Footer/Footer';
 import './Homepage.scss';
 
 import { featuresData, membersData, formOptions } from '../../homedatas';
-import {
-  formFieldsInformations,
-  formFieldsRegistration,
-} from '../../formsConfig/formFieldsConfig';
 
 import LegalNotice from './LegalNotice/LegalNotice';
 import FormTemplate from '../FormTemplate/FormTemplate';
+import informationFormConfig from '../../formsConfig/informationFormConfig';
+import registrationFormConfig from '../../formsConfig/registrationFormConfig';
 
 const Homepage = () => {
   const [selectedForm, setSelectedForm] = useState('default');
@@ -112,8 +110,8 @@ const Homepage = () => {
           <FormTemplate
             formFields={
               selectedForm === 'informations'
-                ? formFieldsInformations
-                : formFieldsRegistration
+                ? informationFormConfig
+                : registrationFormConfig
             }
             buttonText="Envoyer"
             infoText="Les champs marqués d'un * sont obligatoires"

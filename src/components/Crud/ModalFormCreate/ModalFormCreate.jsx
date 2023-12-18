@@ -99,6 +99,7 @@ const ModalFormCreate = ({
           buttonText="Envoyer"
           infoText="Les champs marqués d'un * sont obligatoires"
           handleSubmission={handleSubmission}
+          currentEntityName={currentEntityName}
         />
       </div>
     </div>
