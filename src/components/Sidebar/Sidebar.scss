@@ -1,0 +1,112 @@
+@use 'src/styles/variables' as v;
+
+.Sidebar {
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 250px;
+  background-color: v.$dark-purple;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 80px;
+  box-shadow: 12px 0px 20px -15px v.$mid-grey;
+
+  .Sidebar__Button {
+    background: none;
+    border: none;
+    text-align: left;
+    margin-block-start: auto;
+  }
+
+  .Sidebar__Item,
+  .Sidebar__Button {
+    padding: 8px 8px 8px 32px;
+    width: 100%;
+    margin-block-end: 1rem;
+    text-decoration: none;
+    font-size: 1.2rem;
+    position: relative;
+    display: inline-block;
+    transition: 0.3s;
+    color: v.$white;
+  }
+
+  .Sidebar__Item:after,
+  .Sidebar__Button:after {
+    content: '';
+    position: absolute;
+    left: 32px;
+    top: 100%;
+    width: 0;
+    height: 2px;
+    background-color: v.$white;
+    transition: width 0.3s ease-in-out;
+  }
+
+  a:hover,
+  .Sidebar__Button:hover {
+    color: v.$orange;
+    font-weight: v.$bold;
+  }
+
+  a:hover:after,
+  .Sidebar__Button:hover:after {
+    width: 60%;
+  }
+
+  &__CloseButton {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: v.$white;
+  }
+
+  &--Closed {
+    width: 0;
+  }
+}
+
+.Sidebar__Trigger {
+  color: v.$black;
+}
+
+.Sidebar__Trigger,
+.Sidebar__CloseButton {
+  cursor: pointer;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+}
+
+@media screen and (min-width: 992px) {
+  .Sidebar {
+    &--Closed {
+      width: 30px;
+    }
+
+    &--Opened {
+      width: 250px;
+    }
+  }
+
+  .Sidebar__Trigger {
+    color: v.$white;
+    z-index: 2;
+    background-color: v.$dark-purple;
+    position: absolute;
+    left: 0;
+    height: 100vh;
+  }
+
+  .Sidebar__Trigger,
+  .Sidebar__CloseButton {
+    cursor: pointer;
+    font-size: 2rem;
+    background: none;
+    border: none;
+  }
+}

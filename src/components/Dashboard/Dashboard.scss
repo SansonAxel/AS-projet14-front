@@ -2,4 +2,20 @@
 
 .Dashboard {
   // Styles for Dashboard
+  background-color: v.$light-grey;
+  height: 100vh;
+  margin: 1rem;
+  padding: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  .Dashboard {
+    margin: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .Dashboard {
+    margin: 2rem;
+  }
 }

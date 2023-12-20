@@ -1,0 +1,72 @@
+@use 'src/styles/variables' as v;
+
+.LegalNotice {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 2;
+  cursor: pointer;
+  overflow-y: scroll;
+
+  &__Content {
+    margin: 10px;
+    background-color: v.$white;
+    padding: 20px;
+    overflow-y: auto;
+
+    h1 {
+      font-size: 2rem;
+      margin-block-end: 2rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+      margin-block-end: 1rem;
+    }
+    p {
+      padding: 0 3rem 3rem 3rem;
+    }
+    &__CloseButton {
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      cursor: pointer;
+      font-size: 3rem;
+      background: none;
+      border: none;
+      color: v.$orange;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .LegalNotice {
+    &__Content {
+      background-color: v.$white;
+      padding: 50px;
+
+      h1 {
+        font-size: 2rem;
+        margin-block-end: 2rem;
+      }
+      h2 {
+        font-size: 1.5rem;
+        margin-block-end: 1rem;
+      }
+      p {
+        padding: 0 3rem 3rem 3rem;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .LegalNotice {
+    &__Content {
+      margin: 100px;
+    }
+  }
+}

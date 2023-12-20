@@ -1,5 +1,15 @@
 @use 'src/styles/variables' as v;
 
 .Crud {
-  // Styles for Crud
+  max-width: 100%;
+  margin: 2rem;
+
+  &__Table__Head {
+    background-color: v.$light-grey;
+    font-size: 1.2rem;
+  }
+
+  .MuiDataGrid-row:nth-of-type(even) {
+    background-color: v.$light-grey;
+  }
 }

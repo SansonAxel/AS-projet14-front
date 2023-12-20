@@ -1,0 +1,59 @@
+@use 'src/styles/variables' as v;
+
+.HomeMenu {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: v.$white;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 80px;
+  box-shadow: 12px 0px 20px -15px v.$mid-grey;
+
+  a {
+    padding: 8px 8px 8px 32px;
+    margin-block-end: 1rem;
+    text-decoration: none;
+    font-size: 1.2rem;
+    color: v.$deep-grey;
+    position: relative;
+    display: inline-block;
+    transition: 0.3s;
+  }
+
+  a:after {
+    content: '';
+    position: absolute;
+    left: 32px;
+    top: 100%;
+    width: 0;
+    height: 2px;
+    background-color: v.$orange;
+    transition: width 0.3s ease-in-out;
+  }
+
+  a:hover {
+    color: v.$dark-purple;
+    font-weight: v.$bold;
+  }
+
+  a:hover:after {
+    width: 100%;
+  }
+
+  &__CloseButton {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+  }
+}
+
+.Open,
+.HomeMenu__CloseButton {
+  cursor: pointer;
+  font-size: 2rem;
+  background: none;
+  border: none;
+}

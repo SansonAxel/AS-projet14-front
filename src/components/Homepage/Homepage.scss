@@ -1,5 +1,92 @@
 @use 'src/styles/variables' as v;
 
 .Homepage {
-  // Styles for Homepage
+  margin: auto;
+  max-width: 100%;
+
+  &__Section {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    h2 {
+      text-align: center;
+      font-weight: v.$bold;
+      font-size: 1.5rem;
+      margin-block-end: 3rem;
+      width: 100%;
+    }
+
+    select {
+      display: block;
+      margin: auto;
+      text-align: center;
+      border: none;
+      font-size: 1.2em;
+    }
+  }
+
+  &__Section:nth-of-type(1) {
+    flex-direction: column;
+    background-image: url(../../assets/home-bg.png);
+    background-position: center;
+    background-size: cover;
+    padding: 2em;
+    text-align: center;
+    height: 100vh;
+    padding-block-start: 80px;
+  }
+
+  &__Section:nth-of-type(2) {
+    padding-block-start: 80px;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &__Section:nth-of-type(3) {
+    padding-block-start: 80px;
+    flex-direction: column;
+  }
+
+  &__Section:nth-of-type(4) {
+    flex-direction: column;
+    padding-block-start: 80px;
+  }
+
+  @media screen and (min-width: 768px) {
+    &__Section:nth-of-type(2) {
+      flex-wrap: wrap;
+      flex-direction: row;
+      font-size: 1.2rem;
+    }
+
+    &__Section:nth-of-type(3) {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    h2 {
+      margin-block-end: 3rem;
+    }
+
+    &__Section {
+      padding: 2rem;
+    }
+
+    &__Section:nth-of-type(1),
+    &__Section:nth-of-type(2),
+    &__Section:nth-of-type(3) {
+      height: max-content;
+      margin-block-end: 2rem;
+      justify-content: center;
+    }
+
+    &__Section:nth-of-type(1) {
+      height: 100vh;
+    }
+  }
 }

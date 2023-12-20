@@ -1,0 +1,65 @@
+@use 'src/styles/variables' as v;
+
+.Homepage__Section__Member {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 70%;
+  margin: auto;
+  margin-block-end: 1rem;
+  gap: 1rem;
+
+  &__Member__Details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-weight: v.$bold;
+    color: v.$orange;
+    border: 3px solid v.$mid-purple;
+    height: 100px;
+    width: 80%;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;
+
+    span {
+      font-weight: v.$regular;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .Homepage__Section__Member {
+    width: 50%;
+    flex-direction: column;
+    text-align: center;
+    margin: 0;
+    margin-block-end: 1rem;
+
+    &__Member__Details {
+      font-weight: v.$bold;
+      font-size: 1.2rem;
+
+      span {
+        font-weight: v.$regular;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .Homepage__Section__Member {
+    width: 25%;
+    flex-direction: column;
+    text-align: center;
+
+    &__Member__Details {
+      span {
+        word-wrap: break-word;
+      }
+    }
+  }
+}
