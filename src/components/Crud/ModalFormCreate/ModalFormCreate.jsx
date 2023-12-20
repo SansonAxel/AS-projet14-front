@@ -17,6 +17,7 @@ const ModalFormCreate = ({
   refetch,
   currentEntityName,
   entityType,
+  setSnackbar,
 }) => {
   // Define the mutation hook directly in the component body
   let mutation;
@@ -74,9 +75,12 @@ const ModalFormCreate = ({
       const response = await create(values).unwrap();
       refetch();
       handleCloseModalFormCreate();
+      setSnackbar({
+        children: `Ajout réussi`,
+        severity: 'success',
+      });
     } catch (errors) {
-      // console.error(`Error adding ${currentEntityName}:`, errors);
-      // Handle the error if needed
+      setSnackbar({ children: errors.message, severity: 'error' });
     }
   };
 
@@ -114,5 +118,6 @@ ModalFormCreate.propTypes = {
   refetch: PropTypes.func.isRequired,
   currentEntityName: PropTypes.string.isRequired,
   entityType: PropTypes.string.isRequired,
+  setSnackbar: PropTypes.func.isRequired,
 };
 export default ModalFormCreate;

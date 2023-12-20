@@ -18,6 +18,7 @@ const ModalFormPatch = ({
   refetch,
   currentEntityName,
   entityType,
+  setSnackbar,
 }) => {
   // Define the mutation hook directly in the component body
   let mutation;
@@ -73,19 +74,21 @@ const ModalFormPatch = ({
   const dispatch = useDispatch();
   const handlePatch = async (values) => {
     try {
-      // Use the RTK mutation to update the organization
+      console.log(values);
       const response = await update({
         id: dataObject.id,
         ...values,
         fixedCacheKey: 'shared-update-post',
       });
-      // console.log(response);
-      refetch();
 
-      // Close the modal
+      refetch();
       dispatch(closeModal());
+      setSnackbar({
+        children: `Modification réussie`,
+        severity: 'success',
+      });
     } catch (error) {
-      console.error('Erreur lors de la mise à jour :', error);
+      setSnackbar({ children: 'Echec de la modification', severity: 'error' });
     }
   };
 
@@ -127,6 +130,7 @@ ModalFormPatch.propTypes = {
   refetch: PropTypes.func.isRequired,
   currentEntityName: PropTypes.string.isRequired,
   entityType: PropTypes.string.isRequired,
+  setSnackbar: PropTypes.func.isRequired,
 };
 
 export default ModalFormPatch;

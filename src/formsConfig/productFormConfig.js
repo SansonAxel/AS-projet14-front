@@ -1,4 +1,55 @@
 import * as Yup from 'yup';
+import Cookies from 'js-cookie';
+import axios from 'axios';
+
+export const getToken = () => {
+  return Cookies.get('token');
+};
+
+export const fetchBrandsData = async () => {
+  const token = getToken();
+  try {
+    const response = await axios.get(
+      `https://sansonaxel-server.eddi.cloud/api/brands`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log('brands', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching associations data:', error);
+    return [];
+  }
+};
+
+const brandsData = await fetchBrandsData();
+console.log('brandsData', brandsData);
+
+export const fetchCategoriesData = async () => {
+  const token = getToken();
+  try {
+    const response = await axios.get(
+      `https://sansonaxel-server.eddi.cloud/api/categories`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    console.log('categories', response.data);
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching associations data:', error);
+    return [];
+  }
+};
+
+const categoriesData = await fetchCategoriesData();
+console.log('brandsData', categoriesData);
 
 const productFormConfig = [
   {
@@ -11,47 +62,35 @@ const productFormConfig = [
       .max(100, 'Ne doit pas dépasser 100 caractères')
       .required('Champ requis'),
   },
-  // ! catégorie et marque en attente
-  // {
-  //   name: 'structuresId',
-  //   id: 'product',
-  //   label: 'Structure*',
-  //   type: 'number',
-  //   initialValue: null,
-  //   validation: Yup.number().required('Champ requis'),
-  // },
-  // {
-  //   name: 'categoriesId',
-  //   id: 'product',
-  //   label: 'Catégorie',
-  //   type: 'number',
-  //   initialValue: null,
-  //   validation: Yup.number().required('Champ requis'),
-  // },
-  // ! ------------------------------
   {
-    name: 'description',
-    id: 'product',
-    label: 'Description',
-    type: 'text',
-    initialValue: '',
-    validation: Yup.string().max(300, 'Ne doit pas dépasser 300 caractères'),
+    name: 'brands',
+    id: 'products',
+    label: 'Marque',
+    type: 'select',
+    options: brandsData.map((brand) => ({
+      value: brand.id,
+      label: brand.name,
+    })),
+    valueType: 'object',
   },
   {
-    name: 'picture',
-    id: 'product',
-    label: 'Image',
-    type: 'text',
-    initialValue: '',
-    validation: Yup.string().max(255, 'Ne doit pas dépasser 255 caractères'),
+    name: 'categories',
+    id: 'products',
+    label: 'Catégorie',
+    type: 'select',
+    options: categoriesData.map((category) => ({
+      value: category.id,
+      label: category.name,
+    })),
+    valueType: 'object',
   },
   {
     name: 'price',
     id: 'product',
     label: 'Prix*',
-    type: 'number',
+    type: 'text',
     initialValue: null,
-    validation: Yup.number().max(9999, 'Trop long').required('Champ requis'),
+    validation: Yup.string().max(100, 'Trop long').required('Champ requis'),
   },
   {
     name: 'conservationType',
@@ -98,14 +137,6 @@ const productFormConfig = [
     validation: Yup.string()
       .max(100, 'Ne doit pas dépasser 100 caractères')
       .required('Champ requis'),
-  },
-  {
-    name: 'createdAt',
-    id: 'product',
-    label: 'Date création',
-    type: 'dateTime',
-    initialValue: new Date(),
-    validation: Yup.date(),
   },
 ];
 

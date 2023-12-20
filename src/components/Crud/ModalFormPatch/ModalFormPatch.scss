@@ -12,6 +12,7 @@
   cursor: pointer;
   overflow-y: scroll;
   height: 100vh;
+  border-radius: 15px;
 
   &__Content {
     display: flex;
@@ -19,9 +20,11 @@
     align-items: center;
     justify-content: center;
     margin: 10px;
-    background-color: v.$white;
+    // background-color: v.$white;
+    background: linear-gradient(v.$white, v.$light-grey);
     padding: 20px;
     overflow-y: auto;
+    border-radius: 15px;
 
     h2 {
       font-size: 1.5rem;

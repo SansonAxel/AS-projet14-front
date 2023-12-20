@@ -20,6 +20,7 @@ const Sidebar = ({ isSidebarOpened, toggleSidebar, isDesktop }) => {
 
   const handleLogoutClick = () => {
     Cookies.remove('token');
+    Cookies.remove('user');
     dispatch(handleLogout());
     navigate('/login');
   };

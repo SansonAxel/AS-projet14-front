@@ -5,10 +5,41 @@ export const getToken = () => {
   return Cookies.get('token');
 };
 
+const userCookie = Cookies.get('user');
+
+export const getRole = () => {
+  if (userCookie) {
+    const userData = JSON.parse(userCookie);
+    const userRole = userData.roles[0];
+    return userRole;
+  }
+  return null;
+};
+
+const role = getRole();
+
+export const getOrganizationId = () => {
+  if (userCookie && role !== 'ROLE_SUPERADMIN') {
+    const userData = JSON.parse(userCookie);
+    const userOrganizationId = userData.organizations.id;
+    return userOrganizationId;
+  }
+  return null;
+};
+
+export const getStructureId = () => {
+  if (userCookie && role !== 'ROLE_SUPERADMIN' && role !== 'ROLE_ADMIN') {
+    const userData = JSON.parse(userCookie);
+    const userStructuresId = userData.structures.id;
+    return userStructuresId;
+  }
+  return null;
+};
+
 export const projectApi = createApi({
   reducerPath: 'projectApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://sansonaxel-server.eddi.cloud/api/',
+    baseUrl: 'https://sansonaxel-server.eddi.cloud/api/',
     prepareHeaders: (headers) => {
       const token = getToken();
       if (token) {
@@ -79,12 +110,37 @@ export const projectApi = createApi({
         body: patch,
       }),
     }),
+    updateOrganizationsStatus: builder.mutation({
+      query: ({ id, status }) => ({
+        url: `organizations/${id}`,
+        method: 'PATCH',
+        body: { status },
+      }),
+    }),
     deleteOrganizations: builder.mutation({
       query: (id) => ({ url: `organizations/${id}`, method: 'DELETE' }),
     }),
     /* PRODUCTS */
     getProducts: builder.query({
-      query: () => `products`,
+      query: () => {
+        const organizationId = getOrganizationId();
+        const structureId = getStructureId();
+        const userRole = getRole();
+        if (userRole === 'ROLE_SUPERADMIN') {
+          return { url: 'products' };
+        }
+        if (userRole === 'ROLE_ADMIN') {
+          return {
+            url: `organizations/${organizationId}/products`,
+          };
+        }
+        if (userRole === 'ROLE_MANAGER' || userRole === 'ROLE_LOGISTICIAN') {
+          return {
+            url: `structures/${structureId}/products`,
+          };
+        }
+        return null;
+      },
     }),
     addProducts: builder.mutation({
       query: (body) => ({
@@ -105,35 +161,112 @@ export const projectApi = createApi({
     }),
     /* STRUCTURES */
     getStructures: builder.query({
-      query: () => 'structures',
+      query: () => {
+        const userRole = getRole();
+        const organizationId = getOrganizationId();
+        if (userRole === 'ROLE_ADMIN') {
+          return {
+            url: `organizations/${organizationId}/structures`,
+          };
+        }
+        return {
+          url: 'structures',
+        };
+      },
     }),
     addStructures: builder.mutation({
-      query: (body) => ({
-        url: `structures`,
-        method: 'POST',
-        body,
-      }),
+      query: (body) => {
+        const organizationId = getOrganizationId();
+        return {
+          url: `structures`,
+          method: 'POST',
+          body: {
+            organizations: {
+              id: organizationId,
+            },
+            ...body,
+          },
+        };
+      },
     }),
     updateStructures: builder.mutation({
-      query: ({ id, ...patch }) => ({
-        url: `structures/${id}`,
-        method: 'PATCH',
-        body: patch,
-      }),
+      query: ({ id, ...patch }) => {
+        const organizationId = getOrganizationId();
+        return {
+          url: `structures/${id}`,
+          method: 'PATCH',
+          body: {
+            organizations: {
+              id: organizationId,
+            },
+            ...patch,
+          },
+        };
+      },
     }),
     deleteStructures: builder.mutation({
       query: (id) => ({ url: `structures/${id}`, method: 'DELETE' }),
     }),
     /* USERS */
     getUsers: builder.query({
-      query: () => 'users',
+      query: () => {
+        const organizationId = getOrganizationId();
+        const structureId = getStructureId();
+        const userRole = getRole();
+        if (userRole === 'ROLE_SUPERADMIN') {
+          return { url: 'users' };
+        }
+        if (userRole === 'ROLE_ADMIN') {
+          return {
+            url: `organizations/${organizationId}/users`,
+          };
+        }
+        if (userRole === 'ROLE_MANAGER') {
+          return {
+            url: `structures/${structureId}/users`,
+          };
+        }
+        return null;
+      },
     }),
     addUsers: builder.mutation({
-      query: (body) => ({
-        url: `users`,
-        method: 'POST',
-        body,
-      }),
+      query: (body) => {
+        const userRole = getRole();
+        const organizationId = getOrganizationId();
+        const structuresId = getStructureId();
+        if (userRole === 'ROLE_SUPERADMIN') {
+          return {
+            url: `users`,
+            method: 'POST',
+            body: {
+              structures: {
+                id: 0,
+              },
+              ...body,
+            },
+          };
+        }
+        if (userRole === 'ROLE_ADMIN') {
+          return {
+            url: `users`,
+            method: 'POST',
+            body: {
+              organizations: {
+                id: organizationId,
+              },
+              ...body,
+            },
+          };
+        }
+        if (userRole === 'ROLE_MANAGER') {
+          return {
+            url: `users`,
+            method: 'POST',
+            body,
+          };
+        }
+        return null;
+      },
     }),
     updateUsers: builder.mutation({
       query: ({ id, ...patch }) => ({
@@ -165,6 +298,7 @@ export const {
   useDeleteOrganizationsMutation,
   useGetOrganizationQuery,
   useUpdateOrganizationsMutation,
+  useUpdateOrganizationsStatusMutation,
 
   useGetProductsQuery,
   useAddProductsMutation,

@@ -63,18 +63,15 @@ const organizationFormConfig = [
   {
     name: 'status',
     id: 'organization',
-    label: 'Status*',
-    type: 'number',
-    initialValue: '',
-    validation: Yup.number().max(99, 'Trop long').required('Champ requis'),
-  },
-  {
-    name: 'createdAt',
-    id: 'organization',
-    label: 'Date création',
-    type: 'dateTime',
-    initialValue: new Date(),
-    validation: Yup.date(),
+    label: 'Statut*',
+    type: 'select',
+    options: [
+      { value: 0, label: 'Inactif' },
+      { value: 1, label: 'En attente' },
+      { value: 2, label: 'Actif' },
+    ],
+    validation: Yup.number(),
+    valueType: 'number',
   },
 ];
 

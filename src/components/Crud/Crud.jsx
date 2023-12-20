@@ -3,15 +3,22 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid, frFR, GridActionsCellItem } from '@mui/x-data-grid';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PropTypes from 'prop-types';
+import SecurityIcon from '@mui/icons-material/Security';
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import LinearProgress from '@mui/material/LinearProgress';
+
 import './Crud.scss';
 // eslint-disable-next-line import/no-cycle
 import Page from '../Page/Page';
 import Toolbar from './Toolbar/Toolbar';
+
 import { projectApi } from '../../services/projectApi';
 import {
   userConfig,
@@ -24,7 +31,6 @@ import {
 import ModalFormCreate from './ModalFormCreate/ModalFormCreate';
 import ModalDelete from './ModalDelete/ModalDelete';
 import ModalFormPatch from './ModalFormPatch/ModalFormPatch';
-import selectEntity from '../../utils/entitySelector';
 import {
   fetchBrands,
   fetchCategories,
@@ -50,6 +56,8 @@ const Crud = ({ entityType }) => {
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
 
   const [deleteItemId, setDeleteItemId] = useState(null);
+  const [snackbar, setSnackbar] = React.useState(null);
+
   /* EDIT */
   const dispatch = useDispatch();
 
@@ -72,6 +80,8 @@ const Crud = ({ entityType }) => {
     setIsOpenModalDelete(false);
   };
 
+  const handleCloseSnackbar = () => setSnackbar(null);
+
   const handleOpenModalPatch = (id) => {
     switch (entityType) {
       case 'brands':
@@ -82,6 +92,7 @@ const Crud = ({ entityType }) => {
         break;
       case 'organizations':
         dispatch(fetchOrganizations(id));
+        dispatch(openModal());
         break;
       case 'products':
         dispatch(fetchProducts(id));
@@ -142,7 +153,6 @@ const Crud = ({ entityType }) => {
   const { data, error, isLoading, refetch } = query({
     refetchOnMountOrArgChange: true,
   });
-
   const currentEntityName = entityName;
 
   let content;
@@ -153,7 +163,21 @@ const Crud = ({ entityType }) => {
     content = <>Erreur lors du chargement des données</>;
   } else {
     const { columns, rowMapFunction } = config;
+    console.log(data);
 
+    let rows = [];
+
+    if (Array.isArray(data)) {
+      rows = data.map(rowMapFunction);
+    } else if (Array.isArray(data.users)) {
+      rows = data.users.map(rowMapFunction);
+    } else if (Array.isArray(data.structures)) {
+      rows = data.structures.map(rowMapFunction);
+    } else if (Array.isArray(data.products)) {
+      rows = data.products.map(rowMapFunction);
+    }
+
+    console.log(rows);
     const updatedColumns = [
       ...columns,
       {
@@ -163,9 +187,10 @@ const Crud = ({ entityType }) => {
         width: 100,
         cellClassName: 'actions',
         getActions: ({ id }) => {
-          return [
+          const actions = [
             <GridActionsCellItem
               icon={<EditIcon />}
+              key={`edit_${id}`}
               label="Edit"
               className="textPrimary"
               onClick={() => {
@@ -175,6 +200,7 @@ const Crud = ({ entityType }) => {
             />,
             <GridActionsCellItem
               icon={<DeleteIcon />}
+              key={`delete_${id}`}
               label="Delete"
               onClick={() => {
                 handleOpenModalDelete(id);
@@ -182,6 +208,7 @@ const Crud = ({ entityType }) => {
               color="inherit"
             />,
           ];
+          return actions;
         },
       },
     ];
@@ -190,7 +217,7 @@ const Crud = ({ entityType }) => {
       <ThemeProvider theme={theme}>
         <div className="List">
           <DataGrid
-            rows={data.map(rowMapFunction)}
+            rows={rows}
             columns={updatedColumns}
             initialState={{
               pagination: {
@@ -209,18 +236,30 @@ const Crud = ({ entityType }) => {
             }}
             localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
           />
+          {!!snackbar && (
+            <Snackbar
+              open
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+              onClose={handleCloseSnackbar}
+              autoHideDuration={6000}
+            >
+              <Alert {...snackbar} onClose={handleCloseSnackbar} />
+            </Snackbar>
+          )}
           <ModalFormCreate
             isOpenModalFormCreate={isOpenModalFormCreate}
             handleCloseModalFormCreate={handleCloseModalFormCreate}
             refetch={refetch}
             currentEntityName={currentEntityName}
             entityType={entityType}
+            setSnackbar={setSnackbar}
           />
           <ModalFormPatch
             isOpenModal={isOpenModal}
             refetch={refetch}
             currentEntityName={currentEntityName}
             entityType={entityType}
+            setSnackbar={setSnackbar}
           />
 
           <ModalDelete

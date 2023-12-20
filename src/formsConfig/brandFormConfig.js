@@ -11,14 +11,6 @@ const brandFormConfig = [
       .max(100, 'Ne doit pas dépasser 100 caractères')
       .required('Champ requis'),
   },
-  {
-    name: 'createdAt',
-    id: 'brand',
-    label: 'Date création',
-    type: 'dateTime',
-    initialValue: new Date(),
-    validation: Yup.date(),
-  },
 ];
 
 export default brandFormConfig;

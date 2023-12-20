@@ -36,29 +36,69 @@ const FormTemplate = ({
     // Handle form submission
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
+      console.log('on submit values :', values);
+      const convertedValues = formFields.reduce((acc, field) => {
+        switch (field.valueType) {
+          case 'number':
+            acc[field.name] = parseInt(values[field.name], 10);
+            break;
+          case 'boolean':
+            acc[field.name] =
+              String(values[field.name]).toLowerCase() === 'true';
+            break;
+          case 'array':
+            acc[field.name] = Array.isArray(values[field.name])
+              ? values[field.name]
+              : values[field.name].split(',').map((item) => item.trim());
+            break;
+          case 'object':
+            acc[field.name] = { id: parseInt(values[field.name], 10) };
+            break;
+          default:
+            acc[field.name] = values[field.name];
+            break;
+        }
+        return acc;
+      }, {});
+      console.log('Converted values:', convertedValues);
+
+      // Handle form submission with the updated 'status' value
       handleLoginSubmission(values);
-      handleSubmission(values);
-      handlePatch(values);
+      handleSubmission(convertedValues);
+      handlePatch(convertedValues);
     },
   });
 
   const prevDataObjectRef = useRef(null);
 
   /* Editing initialvalues (to prevent the delay between state changes) */
+  // useEffect(() => {
+  //   if (dataObject !== prevDataObjectRef.current) {
+  //     if (dataObject) {
+  //       formik.setValues((prevValues) => ({
+  //         ...prevValues,
+  //         ...formFields.reduce((accumulator, field) => {
+  //           accumulator[field.name] = dataObject[field.name] || '';
+  //           return accumulator;
+  //         }, {}),
+  //       }));
+  //     }
+  //   }
+  //   prevDataObjectRef.current = dataObject;
+  // }, [dataObject, formik.setValues, prevDataObjectRef, formFields, formik]);
   useEffect(() => {
-    if (dataObject !== prevDataObjectRef.current) {
-      if (dataObject) {
-        formik.setValues((prevValues) => ({
-          ...prevValues,
-          ...formFields.reduce((accumulator, field) => {
-            accumulator[field.name] = dataObject[field.name] || '';
-            return accumulator;
-          }, {}),
-        }));
-      }
+    if (dataObject !== prevDataObjectRef.current && dataObject) {
+      formik.setValues((prevValues) => ({
+        ...prevValues,
+        ...formFields.reduce((accumulator, field) => {
+          accumulator[field.name] = dataObject[field.name] || '';
+          return accumulator;
+        }, {}),
+      }));
     }
     prevDataObjectRef.current = dataObject;
-  }, [dataObject, formik.setValues, prevDataObjectRef, formFields, formik]);
+  }, [dataObject, prevDataObjectRef, formFields, formik]);
+
   // Updates ref
   useEffect(() => {
     prevDataObjectRef.current = dataObject;
@@ -82,7 +122,7 @@ const FormTemplate = ({
             >
               {field.label}
             </label>
-            {/* Use a checkbox input for 'checkbox' type, otherwise use a text input */}
+            {/* Use a checkbox input for 'checkbox' type, textarea for 'textarea', select for 'select', otherwise use a text input */}
             {field.type === 'checkbox' && (
               <input
                 {...commonProps}
@@ -98,14 +138,29 @@ const FormTemplate = ({
                 value={formik.values[field.name]}
               />
             )}
-            {field.type !== 'checkbox' && field.type !== 'textarea' && (
-              <input
+            {field.type === 'select' && (
+              <select
                 {...commonProps}
-                className="Form__Element__Input"
-                type={field.type}
+                className="Form__Element__Select"
                 value={formik.values[field.name]}
-              />
+              >
+                {field.options.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             )}
+            {field.type !== 'checkbox' &&
+              field.type !== 'textarea' &&
+              field.type !== 'select' && (
+                <input
+                  {...commonProps}
+                  className="Form__Element__Input"
+                  type={field.type}
+                  value={formik.values[field.name]}
+                />
+              )}
             {/* Display validation error if the field has been touched and there's an error */}
             {formik.touched[field.name] && formik.errors[field.name] && (
               <div className="Form__Element__Error">

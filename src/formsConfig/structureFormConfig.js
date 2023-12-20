@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 
 const structureFormConfig = [
-  // ! organizationId en attente
   {
     name: 'name',
     id: 'structure',
@@ -26,17 +25,13 @@ const structureFormConfig = [
     name: 'status',
     id: 'structure',
     label: 'Statut*',
-    type: 'boolean',
-    initialValue: true,
-    validation: Yup.bool(),
-  },
-  {
-    name: 'createdAt',
-    id: 'structure',
-    label: 'Date création',
-    type: 'dateTime',
-    initialValue: new Date(),
-    validation: Yup.date(),
+    type: 'select',
+    options: [
+      { value: '', label: 'Choisissez' },
+      { value: true, label: 'Actif' },
+      { value: false, label: 'Inactif' },
+    ],
+    valueType: 'boolean',
   },
 ];
 

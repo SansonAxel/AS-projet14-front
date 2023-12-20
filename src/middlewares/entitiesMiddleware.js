@@ -23,7 +23,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_BRANDS:
       axios
-        .get(`http://sansonaxel-server.eddi.cloud/api/brands/${id}`, {
+        .get(`https://sansonaxel-server.eddi.cloud/api/brands/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -40,7 +40,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_CATEGORIES:
       axios
-        .get(`http://sansonaxel-server.eddi.cloud/api/categories/${id}`, {
+        .get(`https://sansonaxel-server.eddi.cloud/api/categories/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -56,14 +56,14 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_ORGANIZATIONS:
       axios
-        .get(`http://sansonaxel-server.eddi.cloud/api/organizations/${id}`, {
+        .get(`https://sansonaxel-server.eddi.cloud/api/organizations/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
           store.dispatch(saveOrganizations(response.data));
-          store.dispatch(openModal());
+          // store.dispatch(openModal());
         })
         .catch((error) => {
           console.error('Erreur de la requête :', error);
@@ -72,7 +72,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_PRODUCTS:
       axios
-        .get(`http://sansonaxel-server.eddi.cloud/api/products/${id}`, {
+        .get(`https://sansonaxel-server.eddi.cloud/api/products/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -88,7 +88,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_STRUCTURES:
       axios
-        .get(`http://sansonaxel-server.eddi.cloud/api/structures/${id}`, {
+        .get(`https://sansonaxel-server.eddi.cloud/api/structures/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -104,7 +104,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_USERS:
       axios
-        .get(`http://sansonaxel-server.eddi.cloud/api/users/${id}`, {
+        .get(`https://sansonaxel-server.eddi.cloud/api/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

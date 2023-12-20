@@ -8,7 +8,7 @@ import Cookies from 'js-cookie';
 
 import './Login.scss';
 import FormTemplate from '../FormTemplate/FormTemplate';
-import loginFormConfig from '../../formsConfig/loginFormConfig';
+import { loginFormConfig } from '../../formsConfig/loginFormConfig';
 import { handleSuccessfulLogin } from '../../actions/user';
 
 const Login = () => {
@@ -17,36 +17,45 @@ const Login = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (values) => {
-    const { email, password } = values;
-
+  const handleLogin = ({ email, password }) => {
     const payload = {
       email,
       password,
     };
-    console.log('login', values);
-
     axios
-      .post('http://sansonaxel-server.eddi.cloud/api/login_check', payload)
+      .post('https://sansonaxel-server.eddi.cloud/api/login_check', payload)
       .then((response) => {
         setIsLoading(true);
-        const { token } = response.data;
 
-        dispatch(handleSuccessfulLogin(token, true));
+        const { token, userInformation } = response.data;
+        const { firstname, lastname, roles, organizations, structures } =
+          userInformation;
+
+        dispatch(
+          handleSuccessfulLogin(
+            token,
+            firstname,
+            lastname,
+            roles[0],
+            organizations,
+            structures
+          )
+        );
         Cookies.set('token', token, { expires: 7, secure: true });
+        Cookies.set('user', JSON.stringify(userInformation), {
+          expires: 7,
+          secure: true,
+        });
+        navigate('/dashboard');
+        setIsLoading(false);
 
-        setError(null);
+        console.log(response);
       })
       .catch((errors) => {
         console.error(
           'Error:',
           errors.response ? errors.response.data : errors.message
         );
-        setError('Identifiants invalides');
-      })
-      .finally(() => {
-        setIsLoading(false);
-        navigate('/dashboard');
       });
   };
 

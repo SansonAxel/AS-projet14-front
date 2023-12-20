@@ -1,6 +1,67 @@
 import * as Yup from 'yup';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
-const now = new Date();
+export const getToken = () => {
+  return Cookies.get('token');
+};
+
+const userCookie = Cookies.get('user');
+
+export const getOrganizationId = () => {
+  if (userCookie) {
+    const userData = JSON.parse(userCookie);
+    const userOrganizationId = userData.organizations.id;
+    return userOrganizationId;
+  }
+  return null;
+};
+
+export const getRole = () => {
+  if (userCookie) {
+    const userData = JSON.parse(userCookie);
+    const userRole = userData.roles[0];
+    return userRole;
+  }
+  return null;
+};
+
+export const fetchOrganizationsData = async () => {
+  const token = getToken();
+  try {
+    const response = await axios.get(
+      `https://sansonaxel-server.eddi.cloud/api/organizations`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching associations data:', error);
+    return [];
+  }
+};
+
+export const fetchStructuresData = async () => {
+  const token = getToken();
+  const id = getOrganizationId();
+  try {
+    const response = await axios.get(
+      `https://sansonaxel-server.eddi.cloud/api/organizations/${id}/structures`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data.structures;
+  } catch (error) {
+    console.error('Error fetching associations data:', error);
+    return [];
+  }
+};
 
 const userFormConfig = [
   {
@@ -54,21 +115,65 @@ const userFormConfig = [
       .required('Champ requis'),
   },
   {
+    name: 'roles',
+    id: 'user',
+    label: 'Role*',
+    type: 'select',
+    options: [
+      { value: '', label: 'Choisissez' },
+      { value: ['ROLE_ADMIN', 'ROLE_USER'], label: 'Admin' },
+      { value: ['ROLE_MANAGER', 'ROLE_USER'], label: 'Manager' },
+      { value: ['ROLE_LOGISTICIAN', 'ROLE_USER'], label: 'Logisticien' },
+    ],
+    valueType: 'array',
+  },
+  {
     name: 'status',
     id: 'user',
     label: 'Statut*',
-    type: 'boolean',
-    initialValue: true,
-    validation: Yup.bool(),
-  },
-  {
-    name: 'createdAt',
-    id: 'user',
-    label: 'Date création',
-    type: 'dateTime',
-    initialValue: now.toISOString().slice(0, 19),
-    validation: Yup.date(),
+    type: 'select',
+    options: [
+      { value: '', label: 'Choisissez' },
+      { value: true, label: 'Actif' },
+      { value: false, label: 'Inactif' },
+    ],
+    valueType: 'boolean',
   },
 ];
+
+const userRole = getRole();
+console.log(userRole);
+
+if (userRole === 'ROLE_SUPERADMIN') {
+  const associationsData = await fetchOrganizationsData();
+
+  userFormConfig.push({
+    name: 'organizations',
+    id: 'user',
+    label: 'Association',
+    type: 'select',
+    options: associationsData.map((association) => ({
+      value: association.id,
+      label: association.name,
+    })),
+    valueType: 'object',
+  });
+}
+
+if (userRole === 'ROLE_ADMIN') {
+  const structuresData = await fetchStructuresData();
+  console.log('structuresData', structuresData);
+  userFormConfig.push({
+    name: 'structures',
+    id: 'user',
+    label: 'Antenne',
+    type: 'select',
+    options: structuresData.map((structure) => ({
+      value: structure.id,
+      label: structure.name,
+    })),
+    valueType: 'object',
+  });
+}
 
 export default userFormConfig;
