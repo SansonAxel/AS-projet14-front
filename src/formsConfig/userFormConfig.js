@@ -30,7 +30,7 @@ export const fetchOrganizationsData = async () => {
   const token = getToken();
   try {
     const response = await axios.get(
-      `https://sansonaxel-server.eddi.cloud/api/organizations`,
+      `http://localhost:8080/api/organizations`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ export const fetchStructuresData = async () => {
   const id = getOrganizationId();
   try {
     const response = await axios.get(
-      `https://sansonaxel-server.eddi.cloud/api/organizations/${id}/structures`,
+      `http://localhost:8080/api/organizations/${id}/structures`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -142,7 +142,6 @@ const userFormConfig = [
 ];
 
 const userRole = getRole();
-console.log(userRole);
 
 if (userRole === 'ROLE_SUPERADMIN') {
   const associationsData = await fetchOrganizationsData();
@@ -162,7 +161,6 @@ if (userRole === 'ROLE_SUPERADMIN') {
 
 if (userRole === 'ROLE_ADMIN') {
   const structuresData = await fetchStructuresData();
-  console.log('structuresData', structuresData);
   userFormConfig.push({
     name: 'structures',
     id: 'user',

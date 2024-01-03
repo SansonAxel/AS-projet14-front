@@ -23,7 +23,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_BRANDS:
       axios
-        .get(`https://sansonaxel-server.eddi.cloud/api/brands/${id}`, {
+        .get(`http://localhost:8080/api/brands/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -40,7 +40,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_CATEGORIES:
       axios
-        .get(`https://sansonaxel-server.eddi.cloud/api/categories/${id}`, {
+        .get(`http://localhost:8080/api/categories/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -56,7 +56,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_ORGANIZATIONS:
       axios
-        .get(`https://sansonaxel-server.eddi.cloud/api/organizations/${id}`, {
+        .get(`http://localhost:8080/api/organizations/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -72,7 +72,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_PRODUCTS:
       axios
-        .get(`https://sansonaxel-server.eddi.cloud/api/products/${id}`, {
+        .get(`http://localhost:8080/api/products/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -88,7 +88,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_STRUCTURES:
       axios
-        .get(`https://sansonaxel-server.eddi.cloud/api/structures/${id}`, {
+        .get(`http://localhost:8080/api/structures/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -104,7 +104,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_USERS:
       axios
-        .get(`https://sansonaxel-server.eddi.cloud/api/users/${id}`, {
+        .get(`http://localhost:8080/api/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -163,7 +163,6 @@ const Crud = ({ entityType }) => {
     content = <>Erreur lors du chargement des données</>;
   } else {
     const { columns, rowMapFunction } = config;
-    console.log(data);
 
     let rows = [];
 
@@ -177,7 +176,6 @@ const Crud = ({ entityType }) => {
       rows = data.products.map(rowMapFunction);
     }
 
-    console.log(rows);
     const updatedColumns = [
       ...columns,
       {

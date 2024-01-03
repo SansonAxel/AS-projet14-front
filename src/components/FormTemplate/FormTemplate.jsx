@@ -36,7 +36,6 @@ const FormTemplate = ({
     // Handle form submission
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
-      console.log('on submit values :', values);
       const convertedValues = formFields.reduce((acc, field) => {
         switch (field.valueType) {
           case 'number':
@@ -60,7 +59,6 @@ const FormTemplate = ({
         }
         return acc;
       }, {});
-      console.log('Converted values:', convertedValues);
 
       // Handle form submission with the updated 'status' value
       handleLoginSubmission(values);

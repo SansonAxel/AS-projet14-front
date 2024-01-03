@@ -23,7 +23,8 @@ const Login = () => {
       password,
     };
     axios
-      .post('https://sansonaxel-server.eddi.cloud/api/login_check', payload)
+      .post('http://localhost:8080/api/login_check', payload)
+      // https://sansonaxel-server.eddi.cloud/api/login_check
       .then((response) => {
         setIsLoading(true);
 
@@ -48,8 +49,6 @@ const Login = () => {
         });
         navigate('/dashboard');
         setIsLoading(false);
-
-        console.log(response);
       })
       .catch((errors) => {
         console.error(
@@ -67,7 +66,7 @@ const Login = () => {
         buttonText="Se connecter"
         handleLoginSubmission={handleLogin}
       />
-      {error && <p className="Login__Error">{error}</p>}
+      {error && <p className="Login__Error">{error.response}</p>}
       <HashLink smooth to="/">
         Retour à l'accueil
       </HashLink>

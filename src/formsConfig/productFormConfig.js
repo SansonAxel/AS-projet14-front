@@ -8,48 +8,52 @@ export const getToken = () => {
 
 export const fetchBrandsData = async () => {
   const token = getToken();
-  try {
-    const response = await axios.get(
-      `https://sansonaxel-server.eddi.cloud/api/brands`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    console.log('brands', response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching associations data:', error);
-    return [];
+  if (token) {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/brands`,
+        // https://sansonaxel-server.eddi.cloud/api/brands
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching associations data:', error);
+      return [];
+    }
   }
+  return [];
 };
 
 const brandsData = await fetchBrandsData();
-console.log('brandsData', brandsData);
 
 export const fetchCategoriesData = async () => {
   const token = getToken();
-  try {
-    const response = await axios.get(
-      `https://sansonaxel-server.eddi.cloud/api/categories`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    console.log('categories', response.data);
+  if (token) {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/categories`,
+        // https://sansonaxel-server.eddi.cloud/api/brands
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching associations data:', error);
-    return [];
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching associations data:', error);
+      return [];
+    }
   }
+  return [];
 };
 
 const categoriesData = await fetchCategoriesData();
-console.log('brandsData', categoriesData);
 
 const productFormConfig = [
   {

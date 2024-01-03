@@ -36,10 +36,13 @@ export const getStructureId = () => {
   return null;
 };
 
+const baseURL = 'http://localhost:8080/api/';
+// https://sansonaxel-server.eddi.cloud/api/
+
 export const projectApi = createApi({
   reducerPath: 'projectApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://sansonaxel-server.eddi.cloud/api/',
+    baseUrl: baseURL,
     prepareHeaders: (headers) => {
       const token = getToken();
       if (token) {
