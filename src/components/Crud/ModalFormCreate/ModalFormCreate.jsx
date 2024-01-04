@@ -65,13 +65,10 @@ const ModalFormCreate = ({
   const [create] = mutation;
 
   const entityFormFields = formFieldsConfig;
-  // console.log('entityFormFields', entityFormFields);
-  // console.log('formfields[0].validation', entityFormFields[0].validation);
 
-  // console.log(entityFormFields);
   const handleSubmission = async (values) => {
+    console.log(values);
     try {
-      // console.log('Request Payload:', values);
       const response = await create(values).unwrap();
       refetch();
       handleCloseModalFormCreate();

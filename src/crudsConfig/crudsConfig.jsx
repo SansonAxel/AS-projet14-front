@@ -82,6 +82,8 @@ export const productConfig = {
     createColumn('conservationType', 'Conservation', 'string'),
     createColumn('conditioning', 'Conditionnement', 'string'),
     createColumn('quantity', 'Quantité', 'number'),
+    createColumn('brand', 'Marque', 'string'),
+    createColumn('category', 'Catégorie', 'string'),
   ],
   rowMapFunction: (element) => ({
     id: element.id,
@@ -91,6 +93,8 @@ export const productConfig = {
     conservationType: element.conservationType,
     conditioning: element.conditioning,
     quantity: element.quantity,
+    brand: element.brands ? element.brands.name : '',
+    category: element.categories ? element.categories.name : '',
   }),
 };
 
@@ -121,6 +125,7 @@ export const userConfig = {
     createColumn('phoneNumber', 'Téléphone', 'string'),
     createColumn('roles', 'Roles', 'string'),
     createColumn('status', 'Active', 'string'),
+    createColumn('organization', 'Association', 'string'),
   ],
   rowMapFunction: (element) => ({
     id: element.id,
@@ -130,5 +135,6 @@ export const userConfig = {
     phoneNumber: element.phoneNumber,
     roles: element.roles[0],
     status: element.status,
+    organization: element.organizations ? element.organizations.name : '',
   }),
 };

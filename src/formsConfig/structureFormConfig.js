@@ -27,7 +27,6 @@ const structureFormConfig = [
     label: 'Statut*',
     type: 'select',
     options: [
-      { value: '', label: 'Choisissez' },
       { value: true, label: 'Actif' },
       { value: false, label: 'Inactif' },
     ],

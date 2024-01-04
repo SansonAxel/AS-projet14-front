@@ -68,9 +68,10 @@ const ModalFormPatch = ({
   // Utilisez directement les variables mutation et entity ici
   const [update, { isLoading: isUpdating }] = mutation;
   const dataObject = useSelector((state) => state.entities[entity]);
+  // console.log(dataObject);
+  // console.log(dataObject.brands.id);
+  // console.log(dataObject.categories.id);
 
-  // console.log(entityType);
-  // console.log('modal', dataObject);
   const dispatch = useDispatch();
   const handlePatch = async (values) => {
     try {

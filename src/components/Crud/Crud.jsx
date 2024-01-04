@@ -154,7 +154,6 @@ const Crud = ({ entityType }) => {
     refetchOnMountOrArgChange: true,
   });
   const currentEntityName = entityName;
-
   let content;
 
   if (isLoading) {

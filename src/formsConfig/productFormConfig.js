@@ -71,22 +71,30 @@ const productFormConfig = [
     id: 'products',
     label: 'Marque',
     type: 'select',
-    options: brandsData.map((brand) => ({
-      value: brand.id,
-      label: brand.name,
-    })),
+    options: brandsData
+      .map((brand) => ({
+        value: brand.id,
+        label: brand.name,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label)),
     valueType: 'object',
+    // validation: Yup.number().required('Veuillez choisir une marque'),
+    extractId: true,
   },
   {
     name: 'categories',
     id: 'products',
     label: 'Catégorie',
     type: 'select',
-    options: categoriesData.map((category) => ({
-      value: category.id,
-      label: category.name,
-    })),
+    options: categoriesData
+      .map((category) => ({
+        value: category.id,
+        label: category.name,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label)),
     valueType: 'object',
+    // validation: Yup.number().required('Veuillez choisir une catégorie'),
+    extractId: true,
   },
   {
     name: 'price',
@@ -100,11 +108,15 @@ const productFormConfig = [
     name: 'conservationType',
     id: 'product',
     label: 'Conservation*',
-    type: 'text',
-    initialValue: '',
-    validation: Yup.string()
-      .max(100, 'Ne doit pas dépasser 100 caractères')
-      .required('Champ requis'),
+    type: 'select',
+    options: [
+      { value: 'Ambiant', label: 'Ambiant' },
+      { value: 'Frais', label: 'Frais' },
+      { value: 'Utra-frais', label: 'Utra-frais' },
+      { value: 'Surgelé', label: 'Surgelé' },
+    ],
+    validation: Yup.string().required('Veuillez choisir une option'),
+    valueType: 'string',
   },
   {
     name: 'weight',

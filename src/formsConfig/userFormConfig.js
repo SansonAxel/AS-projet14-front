@@ -120,7 +120,6 @@ const userFormConfig = [
     label: 'Role*',
     type: 'select',
     options: [
-      { value: '', label: 'Choisissez' },
       { value: ['ROLE_ADMIN', 'ROLE_USER'], label: 'Admin' },
       { value: ['ROLE_MANAGER', 'ROLE_USER'], label: 'Manager' },
       { value: ['ROLE_LOGISTICIAN', 'ROLE_USER'], label: 'Logisticien' },
@@ -133,7 +132,6 @@ const userFormConfig = [
     label: 'Statut*',
     type: 'select',
     options: [
-      { value: '', label: 'Choisissez' },
       { value: true, label: 'Actif' },
       { value: false, label: 'Inactif' },
     ],
