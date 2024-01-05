@@ -63,14 +63,9 @@ const ModalFormPatch = ({
     }
   })();
   const entityFormFields = formFieldsConfig;
-  // console.log(entityFormFields);
 
-  // Utilisez directement les variables mutation et entity ici
   const [update, { isLoading: isUpdating }] = mutation;
   const dataObject = useSelector((state) => state.entities[entity]);
-  // console.log(dataObject);
-  // console.log(dataObject.brands.id);
-  // console.log(dataObject.categories.id);
 
   const dispatch = useDispatch();
   const handlePatch = async (values) => {
@@ -92,10 +87,6 @@ const ModalFormPatch = ({
     }
   };
 
-  const handleCancelPatch = () => {
-    // Close the modal without updating
-    dispatch(closeModal());
-  };
   return (
     <div
       className="ModalFormPatch"
@@ -114,7 +105,7 @@ const ModalFormPatch = ({
         <FormTemplate
           className="ModalFormPatch__Content__Form"
           formFields={entityFormFields}
-          buttonText="Sauvegarder"
+          buttonText="Enregistrer"
           infoText="Les champs marqués d'un * sont obligatoires"
           dataObject={dataObject}
           handlePatch={handlePatch}

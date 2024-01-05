@@ -15,9 +15,10 @@ const createColumn = (field, headerName, type, valueOptions) => ({
   headerClassName: 'List__Table__Head',
   cellClassName: 'List__Table__Col',
   flex: 1,
-  maxWidth: field === 'id' ? 75 : '100%',
   headerAlign: 'left',
   align: 'left',
+  disableColumnMenu: true,
+  sortable: true,
 });
 
 export const brandConfig = {

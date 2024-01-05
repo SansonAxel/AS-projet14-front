@@ -7,7 +7,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import './Page.scss';
 
 const Page = ({ children }) => {
-  const [isSideBarOpened, setIsSidebarOpened] = useState(false);
+  const [isSideBarOpened, setIsSidebarOpened] = useState(true);
   const toggleSidebar = () => {
     setIsSidebarOpened(!isSideBarOpened);
   };
@@ -25,7 +25,6 @@ const Page = ({ children }) => {
         setIsSidebarOpened(true);
       }
     };
-
     window.addEventListener('resize', handleResize);
 
     return () => {

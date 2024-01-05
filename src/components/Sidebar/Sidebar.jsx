@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import Cookies from 'js-cookie';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import './Sidebar.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,7 +17,7 @@ import routesConfig from '../../routes/routes';
 const Sidebar = ({ isSidebarOpened, toggleSidebar, isDesktop }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const location = useLocation();
   const handleLogoutClick = () => {
     Cookies.remove('token');
     Cookies.remove('user');
@@ -66,7 +66,13 @@ const Sidebar = ({ isSidebarOpened, toggleSidebar, isDesktop }) => {
         {routesConfig
           .filter((route) => route.isPrivate)
           .map((route) => (
-            <Link key={route.name} to={route.path} className="Sidebar__Item">
+            <Link
+              key={route.name}
+              to={route.path}
+              className={`Sidebar__Item${
+                location.pathname === route.path ? ' Sidebar__Item--active' : ''
+              }`}
+            >
               {route.name}
             </Link>
           ))}

@@ -40,6 +40,7 @@ import {
   fetchUsers,
 } from '../../actions/entities';
 import { openModal } from '../../actions/modalActions';
+import Loader from '../Loader/Loader';
 
 const Crud = ({ entityType }) => {
   const theme = createTheme({
@@ -49,8 +50,7 @@ const Crud = ({ entityType }) => {
       },
     },
   });
-  /* DATAS */
-  // const [skip, setSkip] = useState(true);
+
   /* MODAL */
   const [isOpenModalFormCreate, setIsOpenModalFormCreate] = useState(false);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
@@ -72,7 +72,6 @@ const Crud = ({ entityType }) => {
     };
   }, []);
 
-  console.log(isMobileView);
   const getToken = () => {
     return Cookies.get('token');
   };
@@ -189,7 +188,7 @@ const Crud = ({ entityType }) => {
   let content;
 
   if (isLoading) {
-    content = <>Chargement...</>;
+    content = <Loader />;
   } else if (error) {
     content = <>Erreur lors du chargement des données</>;
   } else {
@@ -213,7 +212,9 @@ const Crud = ({ entityType }) => {
           (column) =>
             column.field !== 'brand' &&
             column.field !== 'category' &&
-            column.field !== 'price'
+            column.field !== 'price' &&
+            column.field !== 'conditioning' &&
+            column.field !== 'conservationType'
         )
       : [...columns];
 
@@ -232,7 +233,7 @@ const Crud = ({ entityType }) => {
       updatedColumns.push({
         field: 'actions',
         type: 'actions',
-        headerName: 'Actions',
+        headerName: '',
         width: 100,
         cellClassName: 'actions',
         getActions: ({ id }) => {
@@ -270,7 +271,7 @@ const Crud = ({ entityType }) => {
             columns={updatedColumns}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 15 },
+                paginationModel: { page: 0, pageSize: 10 },
               },
               columns: {
                 columnVisibilityModel: {
@@ -278,7 +279,7 @@ const Crud = ({ entityType }) => {
                 },
               },
             }}
-            pageSizeOptions={[15, 30, 60]}
+            pageSizeOptions={[10, 30, 60]}
             slots={{
               toolbar: Toolbar,
             }}
@@ -288,6 +289,7 @@ const Crud = ({ entityType }) => {
               },
             }}
             localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+            sx={{ '&, [class^=MuiDataGrid]': { border: 'none' } }}
           />
           {!!snackbar && (
             <Snackbar
@@ -322,6 +324,7 @@ const Crud = ({ entityType }) => {
             deleteItemId={deleteItemId}
             currentEntityName={currentEntityName}
             entityType={entityType}
+            setSnackbar={setSnackbar}
           />
         </div>
       </ThemeProvider>

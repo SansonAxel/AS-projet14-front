@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import PropTypes from 'prop-types';
 import './ModalDelete.scss';
 import { projectApi } from '../../../services/projectApi';
@@ -7,8 +8,8 @@ const ModalDelete = ({
   handleCloseModalDelete,
   refetch,
   deleteItemId,
-  currentEntityName,
   entityType,
+  setSnackbar,
 }) => {
   // Define the mutation hook directly in the component body
   const [deleteItem] = (() => {
@@ -36,9 +37,13 @@ const ModalDelete = ({
       const response = await deleteItem(deleteItemId);
       refetch();
       handleCloseModalDelete();
+      setSnackbar({
+        children: `Modification réussie`,
+        severity: 'success',
+      });
     } catch (error) {
-      console.error('Erreur lors de la suppression :', error);
-      // Handle the error if needed
+      // console.error('Erreur lors de la suppression :', error);
+      setSnackbar({ children: 'Echec de la suppression', severity: 'error' });
     }
   };
 
@@ -52,9 +57,8 @@ const ModalDelete = ({
       style={{ display: isOpenModalDelete ? 'block' : 'none' }}
     >
       <div className="ModalDelete__Content">
-        <p>
-          Supprimer l'élément ? <span>(cette action est irréversible)</span>
-        </p>
+        <p>Supprimer l'élément ?</p>
+        <span>(cette action est irréversible)</span>
         <div className="ModalDelete__Content__Buttons">
           <button
             type="button"
@@ -81,8 +85,8 @@ ModalDelete.propTypes = {
   handleCloseModalDelete: PropTypes.func.isRequired,
   refetch: PropTypes.func.isRequired,
   deleteItemId: PropTypes.number,
-  currentEntityName: PropTypes.string.isRequired,
   entityType: PropTypes.string.isRequired,
+  setSnackbar: PropTypes.func.isRequired,
 };
 
 ModalDelete.defaultProps = {

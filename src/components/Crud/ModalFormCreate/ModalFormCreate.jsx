@@ -98,7 +98,7 @@ const ModalFormCreate = ({
         <FormTemplate
           className="ModalFormCreate__Content__Form"
           formFields={entityFormFields}
-          buttonText="Envoyer"
+          buttonText="Enregistrer"
           infoText="Les champs marqués d'un * sont obligatoires"
           handleSubmission={handleSubmission}
           currentEntityName={currentEntityName}

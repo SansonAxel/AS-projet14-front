@@ -2,8 +2,8 @@
 
 .Crud {
   max-width: 100%;
-  margin: 2rem;
-
+  margin: auto;
+  margin-block-start: 1rem;
   &__Table__Head {
     background-color: v.$light-grey;
     font-size: 1.2rem;
@@ -11,5 +11,11 @@
 
   .MuiDataGrid-row:nth-of-type(even) {
     background-color: v.$light-grey;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .Crud {
+    padding: 1rem;
   }
 }
