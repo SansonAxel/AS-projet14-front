@@ -20,13 +20,14 @@ const Sidebar = ({ isSidebarOpened, toggleSidebar, isDesktop }) => {
 
   const handleLogoutClick = () => {
     Cookies.remove('token');
+    Cookies.remove('user');
     dispatch(handleLogout());
     navigate('/login');
   };
 
   return (
     <>
-      {/* BURGER button (mobile / tablet views */}
+      {/* BURGER button (mobile / tablet views) */}
       {!isDesktop && (
         <button
           type="button"

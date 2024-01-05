@@ -10,13 +10,13 @@ import Footer from './Footer/Footer';
 import './Homepage.scss';
 
 import { featuresData, membersData, formOptions } from '../../homedatas';
-import {
-  formFieldsInformations,
-  formFieldsRegistration,
-} from '../../formsConfig/formFieldsConfig';
 
 import LegalNotice from './LegalNotice/LegalNotice';
 import FormTemplate from '../FormTemplate/FormTemplate';
+import {
+  formFieldsInformations,
+  formFieldsRegistration,
+} from '../../formsConfig/homeFormsConfig';
 
 const Homepage = () => {
   const [selectedForm, setSelectedForm] = useState('default');

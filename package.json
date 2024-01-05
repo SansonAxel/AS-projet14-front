@@ -11,12 +11,20 @@
     "lint:fix": "eslint src/**/*.{js,jsx,ts,tsx} --fix"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/icons-material": "^5.14.19",
+    "@mui/material": "^5.14.20",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.7",
+    "@mui/x-data-grid": "^6.18.4",
     "@redux-devtools/extension": "^3.2.6",
+    "@reduxjs/toolkit": "^2.0.1",
+    "@table-library/react-table-library": "^4.1.7",
     "axios": "^1.6.2",
     "formik": "^2.4.5",
     "js-cookie": "^3.0.5",
@@ -27,6 +35,8 @@
     "react-router-hash-link": "^2.4.3",
     "react-select": "^5.8.0",
     "redux": "^4.2.1",
+    "redux-devtools-extension": "^2.13.9",
+    "styled-components": "^6.1.1",
     "yup": "^1.3.2"
   },
   "devDependencies": {

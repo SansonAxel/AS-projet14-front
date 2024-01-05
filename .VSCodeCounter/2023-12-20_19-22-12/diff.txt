@@ -1,0 +1,88 @@
+Date : 2023-12-20 19:22:12
+Directory : /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front
+Total : 36 files,  881 codes, -5 comments, 184 blanks, all 1060 lines
+
+Languages
++--------------------+------------+------------+------------+------------+------------+
+| language           | files      | code       | comment    | blank      | total      |
++--------------------+------------+------------+------------+------------+------------+
+| JavaScript JSX     |         10 |        369 |         13 |         28 |        410 |
+| Markdown           |          2 |        226 |          0 |        133 |        359 |
+| JavaScript         |         13 |        104 |        -25 |         11 |         90 |
+| JSON               |          3 |         96 |          0 |          2 |         98 |
+| Ignore             |          1 |         27 |          3 |          6 |         36 |
+| JSON with Comments |          1 |         25 |          0 |          1 |         26 |
+| HTML               |          1 |         24 |          0 |          1 |         25 |
+| SCSS               |          4 |          5 |          3 |          0 |          8 |
+| TypeScript         |          1 |          5 |          1 |          2 |          8 |
++--------------------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                           | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                              |         36 |        881 |         -5 |        184 |      1,060 |
+| . (Files)                                                                                                                      |         10 |        440 |          5 |        147 |        592 |
+| public                                                                                                                         |          1 |         25 |          0 |          0 |         25 |
+| src                                                                                                                            |         25 |        416 |        -10 |         37 |        443 |
+| src/actions                                                                                                                    |          1 |         16 |          0 |          1 |         17 |
+| src/components                                                                                                                 |         11 |         77 |         16 |          9 |        102 |
+| src/components/AppHeader                                                                                                       |          1 |         17 |          3 |          3 |         23 |
+| src/components/Crud                                                                                                            |          6 |         10 |         -2 |          5 |         13 |
+| src/components/Crud (Files)                                                                                                    |          1 |         -8 |          0 |          5 |         -3 |
+| src/components/Crud/ModalDelete                                                                                                |          1 |          1 |          1 |          0 |          2 |
+| src/components/Crud/ModalFormCreate                                                                                            |          2 |          8 |         -1 |          0 |          7 |
+| src/components/Crud/ModalFormPatch                                                                                             |          2 |          9 |         -2 |          0 |          7 |
+| src/components/FormTemplate                                                                                                    |          2 |         39 |         15 |          2 |         56 |
+| src/components/Login                                                                                                           |          1 |         10 |          0 |         -1 |          9 |
+| src/components/Sidebar                                                                                                         |          1 |          1 |          0 |          0 |          1 |
+| src/crudsConfig                                                                                                                |          2 |          8 |         -8 |         -1 |         -1 |
+| src/formsConfig                                                                                                                |          6 |        116 |        -19 |         15 |        112 |
+| src/middlewares                                                                                                                |          2 |          2 |          1 |          2 |          5 |
+| src/reducers                                                                                                                   |          1 |         27 |          0 |          0 |         27 |
+| src/routes                                                                                                                     |          1 |         41 |          0 |          6 |         47 |
+| src/services                                                                                                                   |          1 |        129 |          0 |          5 |        134 |
++--------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| filename                                                                                                                       | language           | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/.eslintrc.cjs                                            | JavaScript         |         53 |          1 |          1 |         55 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/.prettierignore                                          | Ignore             |         27 |          3 |          6 |         36 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/.prettierrc.cjs                                          | JavaScript         |          9 |          0 |          1 |         10 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/INSTALL.md                                               | Markdown           |        225 |          0 |        132 |        357 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/README.md                                                | Markdown           |          1 |          0 |          1 |          2 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/index.html                                               | HTML               |         24 |          0 |          1 |         25 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/package.json                                             | JSON               |         62 |          0 |          1 |         63 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/public/manifest.json                                     | JSON               |         25 |          0 |          0 |         25 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/actions/user.js                                      | JavaScript         |         16 |          0 |          1 |         17 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/components/AppHeader/AppHeader.jsx                   | JavaScript JSX     |         17 |          3 |          3 |         23 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/components/Crud/Crud.jsx                             | JavaScript JSX     |         -8 |          0 |          5 |         -3 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/components/Crud/ModalDelete/ModalDelete.scss         | SCSS               |          1 |          1 |          0 |          2 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/components/Crud/ModalFormCreate/ModalFormCreate.jsx  | JavaScript JSX     |          7 |         -2 |          0 |          5 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/components/Crud/ModalFormCreate/ModalFormCreate.scss | SCSS               |          1 |          1 |          0 |          2 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/components/Crud/ModalFormPatch/ModalFormPatch.jsx    | JavaScript JSX     |          7 |         -3 |          0 |          4 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/components/Crud/ModalFormPatch/ModalFormPatch.scss   | SCSS               |          2 |          1 |          0 |          3 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/components/FormTemplate/FormTemplate.jsx             | JavaScript JSX     |         38 |         15 |          2 |         55 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/components/FormTemplate/FormTemplate.scss            | SCSS               |          1 |          0 |          0 |          1 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/components/Login/Login.jsx                           | JavaScript JSX     |         10 |          0 |         -1 |          9 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/components/Sidebar/Sidebar.jsx                       | JavaScript JSX     |          1 |          0 |          0 |          1 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/crudsConfig/crudsConfig.js                           | JavaScript         |       -119 |         -8 |         -9 |       -136 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/crudsConfig/crudsConfig.jsx                          | JavaScript JSX     |        127 |          0 |          8 |        135 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/formsConfig/brandFormConfig.js                       | JavaScript         |         -8 |          0 |          0 |         -8 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/formsConfig/categoryFormConfig.js                    | JavaScript         |         -8 |          0 |          0 |         -8 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/formsConfig/organizationFormConfig.js                | JavaScript         |         -3 |          0 |          0 |         -3 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/formsConfig/productFormConfig.js                     | JavaScript         |         43 |        -18 |          6 |         31 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/formsConfig/structureFormConfig.js                   | JavaScript         |         -4 |         -1 |          0 |         -5 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/formsConfig/userFormConfig.js                        | JavaScript         |         96 |          0 |          9 |        105 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/middlewares/entitiesMiddleware.js                    | JavaScript         |         -1 |          1 |          0 |          0 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/middlewares/userMiddleware.js                        | JavaScript         |          3 |          0 |          2 |          5 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/reducers/userReducer.js                              | JavaScript         |         27 |          0 |          0 |         27 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/routes/routes.jsx                                    | JavaScript JSX     |         41 |          0 |          6 |         47 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/src/services/projectApi.jsx                              | JavaScript JSX     |        129 |          0 |          5 |        134 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/tsconfig.json                                            | JSON with Comments |         25 |          0 |          1 |         26 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/tsconfig.node.json                                       | JSON               |          9 |          0 |          1 |         10 |
+| /Applications/MAMP/htdocs/PROJET14/projet-14-gestion-logistique-front/vite.config.ts                                           | TypeScript         |          5 |          1 |          2 |          8 |
+| Total                                                                                                                          |                    |        881 |         -5 |        184 |      1,060 |
++--------------------------------------------------------------------------------------------------------------------------------+--------------------+------------+------------+------------+------------+

@@ -8,8 +8,9 @@ import Cookies from 'js-cookie';
 
 import './Login.scss';
 import FormTemplate from '../FormTemplate/FormTemplate';
-import { formFieldsLogin } from '../../formsConfig/formFieldsConfig';
+import { loginFormConfig } from '../../formsConfig/loginFormConfig';
 import { handleSuccessfulLogin } from '../../actions/user';
+import Loader from '../Loader/Loader';
 
 const Login = () => {
   const [error, setError] = useState(null);
@@ -17,48 +18,65 @@ const Login = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = (values) => {
-    const { email, password } = values;
-
+  const handleLogin = ({ email, password }) => {
+    setIsLoading(true);
     const payload = {
       email,
       password,
     };
-
     axios
-      .post('http://sansonaxel-server.eddi.cloud/api/login_check', payload)
+      .post('http://localhost:8080/api/login_check', payload)
+      // https://sansonaxel-server.eddi.cloud/api/login_check
       .then((response) => {
-        setIsLoading(true);
+        const { token, userInformation } = response.data;
+        const { firstname, lastname, roles, organizations, structures } =
+          userInformation;
 
-        const { token } = response.data;
-
-        dispatch(handleSuccessfulLogin(token, true));
+        dispatch(
+          handleSuccessfulLogin(
+            token,
+            firstname,
+            lastname,
+            roles[0],
+            organizations,
+            structures
+          )
+        );
         Cookies.set('token', token, { expires: 7, secure: true });
-
-        setError(null);
+        Cookies.set('user', JSON.stringify(userInformation), {
+          expires: 7,
+          secure: true,
+        });
+        console.log('Response data:', response.data);
+        console.log('Navigating to /dashboard');
+        // navigate('/produits', { replace: true });
+        setTimeout(() => {
+          setIsLoading(false);
+          navigate('/dashboard', { replace: true });
+          window.location.reload();
+        }, 100);
       })
       .catch((errors) => {
         console.error(
           'Error:',
           errors.response ? errors.response.data : errors.message
         );
-        setError('Identifiants invalides');
-      })
-      .finally(() => {
         setIsLoading(false);
-        navigate('/dashboard');
       });
   };
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="Login">
       <h2>Accès à votre tableau de bord</h2>
       <FormTemplate
-        formFields={formFieldsLogin}
+        formFields={loginFormConfig}
         buttonText="Se connecter"
         handleLoginSubmission={handleLogin}
       />
-      {error && <p className="Login__Error">{error}</p>}
+      {error && <p className="Login__Error">{error.response}</p>}
       <HashLink smooth to="/">
         Retour à l'accueil
       </HashLink>
