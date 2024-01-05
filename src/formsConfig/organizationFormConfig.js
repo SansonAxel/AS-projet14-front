@@ -28,7 +28,9 @@ const organizationFormConfig = [
     label: 'Numéro de téléphone',
     type: 'text',
     initialValue: '',
-    validation: Yup.string().max(20, 'Ne doit pas dépasser 20 caractères'),
+    validation: Yup.string()
+      .max(20, 'Ne doit pas dépasser 20 caractères')
+      .required('Champ requis'),
   },
   {
     name: 'address',

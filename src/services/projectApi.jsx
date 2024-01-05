@@ -65,14 +65,22 @@ export const projectApi = createApi({
       }),
     }),
     updateBrands: builder.mutation({
-      query: ({ id, ...patch }) => ({
-        url: `brands/${id}`,
-        method: 'PATCH',
-        body: patch,
-      }),
+      query: ({ id, ...patch }) => {
+        const userRole = getRole();
+        if (userRole === 'ROLE_SUPERADMIN' || userRole === 'ROLE_ADMIN') {
+          return { url: `brands/${id}`, method: 'PATCH', body: patch };
+        }
+        return null;
+      },
     }),
     deleteBrands: builder.mutation({
-      query: (id) => ({ url: `brands/${id}`, method: 'DELETE' }),
+      query: (id) => {
+        const userRole = getRole();
+        if (userRole === 'ROLE_SUPERADMIN' || userRole === 'ROLE_ADMIN') {
+          return { url: `brands/${id}`, method: 'DELETE' };
+        }
+        return null;
+      },
     }),
     /* CATEGORIES */
     getCategories: builder.query({
@@ -86,14 +94,26 @@ export const projectApi = createApi({
       }),
     }),
     updateCategories: builder.mutation({
-      query: ({ id, ...patch }) => ({
-        url: `categories/${id}`,
-        method: 'PATCH',
-        body: patch,
-      }),
+      query: ({ id, ...patch }) => {
+        const userRole = getRole();
+        if (userRole === 'ROLE_SUPERADMIN' || userRole === 'ROLE_ADMIN') {
+          return {
+            url: `categories/${id}`,
+            method: 'PATCH',
+            body: patch,
+          };
+        }
+        return null;
+      },
     }),
     deleteCategories: builder.mutation({
-      query: (id) => ({ url: `categories/${id}`, method: 'DELETE' }),
+      query: (id) => {
+        const userRole = getRole();
+        if (userRole === 'ROLE_SUPERADMIN' || userRole === 'ROLE_ADMIN') {
+          return { url: `categories/${id}`, method: 'DELETE' };
+        }
+        return null;
+      },
     }),
     /* ORGANIZATIONS */
     getOrganizations: builder.query({
@@ -126,16 +146,10 @@ export const projectApi = createApi({
     /* PRODUCTS */
     getProducts: builder.query({
       query: () => {
-        const organizationId = getOrganizationId();
         const structureId = getStructureId();
         const userRole = getRole();
         if (userRole === 'ROLE_SUPERADMIN') {
           return { url: 'products' };
-        }
-        if (userRole === 'ROLE_ADMIN') {
-          return {
-            url: `organizations/${organizationId}/products`,
-          };
         }
         if (userRole === 'ROLE_MANAGER' || userRole === 'ROLE_LOGISTICIAN') {
           return {

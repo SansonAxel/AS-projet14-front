@@ -34,7 +34,6 @@ const ModalDelete = ({
   const handleConfirmDelete = async () => {
     try {
       const response = await deleteItem(deleteItemId);
-      console.log(response);
       refetch();
       handleCloseModalDelete();
     } catch (error) {
@@ -53,7 +52,9 @@ const ModalDelete = ({
       style={{ display: isOpenModalDelete ? 'block' : 'none' }}
     >
       <div className="ModalDelete__Content">
-        <p>{`Êtes-vous sûr•e de vouloir supprimer ${currentEntityName}, id : ${deleteItemId} ?`}</p>
+        <p>
+          Supprimer l'élément ? <span>(cette action est irréversible)</span>
+        </p>
         <div className="ModalDelete__Content__Buttons">
           <button
             type="button"

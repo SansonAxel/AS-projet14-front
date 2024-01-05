@@ -60,12 +60,6 @@ const commonRoutes = [
     element: <Crud entityType="brands" />,
     isPrivate: true,
   },
-  {
-    name: 'Produits',
-    path: '/produits',
-    element: <Crud entityType="products" />,
-    isPrivate: true,
-  },
 ];
 
 const roleSpecificRoutes = {
@@ -88,6 +82,12 @@ const roleSpecificRoutes = {
       element: <Crud entityType="users" />,
       isPrivate: true,
     },
+    {
+      name: 'Produits',
+      path: '/produits',
+      element: <Crud entityType="products" />,
+      isPrivate: true,
+    },
   ],
   ROLE_ADMIN: [
     {
@@ -108,6 +108,20 @@ const roleSpecificRoutes = {
       name: 'Utilisateurs',
       path: '/utilisateurs',
       element: <Crud entityType="users" />,
+      isPrivate: true,
+    },
+    {
+      name: 'Produits',
+      path: '/produits',
+      element: <Crud entityType="products" />,
+      isPrivate: true,
+    },
+  ],
+  ROLE_LOGISTICIAN: [
+    {
+      name: 'Produits',
+      path: '/produits',
+      element: <Crud entityType="products" />,
       isPrivate: true,
     },
   ],

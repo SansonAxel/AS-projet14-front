@@ -67,7 +67,6 @@ const ModalFormCreate = ({
   const entityFormFields = formFieldsConfig;
 
   const handleSubmission = async (values) => {
-    console.log(values);
     try {
       const response = await create(values).unwrap();
       refetch();

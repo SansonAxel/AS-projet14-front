@@ -1,18 +1,18 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/jsx-key */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid, frFR, GridActionsCellItem } from '@mui/x-data-grid';
+import Cookies from 'js-cookie';
+
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import PropTypes from 'prop-types';
-import SecurityIcon from '@mui/icons-material/Security';
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import LinearProgress from '@mui/material/LinearProgress';
 
 import './Crud.scss';
 // eslint-disable-next-line import/no-cycle
@@ -57,6 +57,38 @@ const Crud = ({ entityType }) => {
 
   const [deleteItemId, setDeleteItemId] = useState(null);
   const [snackbar, setSnackbar] = React.useState(null);
+
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 800);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 800);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  console.log(isMobileView);
+  const getToken = () => {
+    return Cookies.get('token');
+  };
+
+  const userCookie = Cookies.get('user');
+
+  const getRole = () => {
+    if (userCookie) {
+      const userData = JSON.parse(userCookie);
+      const userRole = userData.roles[0];
+      return userRole;
+    }
+    return null;
+  };
+
+  const role = getRole();
 
   /* EDIT */
   const dispatch = useDispatch();
@@ -175,9 +207,29 @@ const Crud = ({ entityType }) => {
       rows = data.products.map(rowMapFunction);
     }
 
-    const updatedColumns = [
-      ...columns,
-      {
+    // Condition pour masquer la colonne "actions" en vue mobile
+    const updatedColumns = isMobileView
+      ? columns.filter(
+          (column) =>
+            column.field !== 'brand' &&
+            column.field !== 'category' &&
+            column.field !== 'price'
+        )
+      : [...columns];
+
+    const isManager = role === 'ROLE_MANAGER';
+    const isLogistician = role === 'ROLE_LOGISTICIAN';
+    const isMarqueEntity = currentEntityName === 'marque';
+    const isCategorieEntity = currentEntityName === 'catégorie';
+
+    const forbiddenEditOrDelete =
+      (isManager && isMarqueEntity) ||
+      (isLogistician && isMarqueEntity) ||
+      (isManager && isCategorieEntity) ||
+      (isLogistician && isCategorieEntity);
+
+    if (!forbiddenEditOrDelete) {
+      updatedColumns.push({
         field: 'actions',
         type: 'actions',
         headerName: 'Actions',
@@ -207,8 +259,8 @@ const Crud = ({ entityType }) => {
           ];
           return actions;
         },
-      },
-    ];
+      });
+    }
 
     content = (
       <ThemeProvider theme={theme}>
@@ -220,7 +272,11 @@ const Crud = ({ entityType }) => {
               pagination: {
                 paginationModel: { page: 0, pageSize: 15 },
               },
-              // rows: data.map(rowMapFunction),
+              columns: {
+                columnVisibilityModel: {
+                  id: false,
+                },
+              },
             }}
             pageSizeOptions={[15, 30, 60]}
             slots={{

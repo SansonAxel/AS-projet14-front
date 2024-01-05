@@ -75,7 +75,6 @@ const ModalFormPatch = ({
   const dispatch = useDispatch();
   const handlePatch = async (values) => {
     try {
-      console.log(values);
       const response = await update({
         id: dataObject.id,
         ...values,

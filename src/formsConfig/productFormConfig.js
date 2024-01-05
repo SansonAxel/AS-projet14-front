@@ -130,11 +130,14 @@ const productFormConfig = [
     name: 'conditioning',
     id: 'product',
     label: 'Conditionnement*',
-    type: 'text',
-    initialValue: '',
-    validation: Yup.string()
-      .max(100, 'Ne doit pas dépasser 100 caractères')
-      .required('Champ requis'),
+    type: 'select',
+    options: [
+      { value: 'Caisse/Carton', label: 'Caisse/Carton' },
+      { value: 'Individuel', label: 'Individuel' },
+      { value: 'Palette', label: 'Palette' },
+    ],
+    validation: Yup.string().required('Veuillez choisir une option'),
+    valueType: 'string',
   },
   {
     name: 'quantity',
