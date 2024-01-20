@@ -1,30 +1,57 @@
 @use 'src/styles/variables' as v;
 
 .Error {
-  max-height: 100vh;
+  margin: 20%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
   text-align: center;
-  color: #f0f;
-  font-weight: v.$extra-bold;
-  h1 {
-    font-size: 500px;
-    margin-block-start: 100px;
-    animation: bump 0.5s infinite alternate;
-  }
-  h2 {
-    font-size: 4rem;
-    animation: bump 0.5s 0.5s infinite alternate;
-  }
-  img {
-    margin-block-start: 100px;
-    animation: bump 0.5s 1s infinite alternate;
-  }
-}
 
-@keyframes bump {
-  from {
-    transform: scale(0.8);
+  &__Type {
+    font-size: 2rem;
+    font-weight: v.$bold;
+    color: v.$mid-grey;
   }
-  to {
-    transform: scale(1.2);
+
+  &__Description {
+    font-size: 1.5rem;
+    color: v.$dark-grey;
+  }
+
+  &__Countdown {
+    color: v.$light-grey;
+
+    &__Progress {
+      position: absolute;
+      top: 0;
+    }
+    &__Progress[value] {
+      /* Reset the default appearance */
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 5px;
+    }
+
+    &__Progress[value]::-webkit-progress-bar {
+      background-color: #eee;
+      border-radius: 2px;
+    }
+
+    &__Progress[value]::-webkit-progress-value {
+      background-color: v.$purple;
+      border-radius: 2px;
+    }
+  }
+
+  &__Link {
+    color: v.$orange;
+    font-weight: v.$bold;
+  }
+
+  &__Link:hover {
+    color: v.$purple;
   }
 }

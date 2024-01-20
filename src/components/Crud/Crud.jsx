@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid, frFR, GridActionsCellItem } from '@mui/x-data-grid';
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import Snackbar from '@mui/material/Snackbar';
@@ -41,6 +42,7 @@ import {
 } from '../../actions/entities';
 import { openModal } from '../../actions/modalActions';
 import Loader from '../Loader/Loader';
+import Error from '../Error/Error';
 
 const Crud = ({ entityType }) => {
   const theme = createTheme({
@@ -59,6 +61,7 @@ const Crud = ({ entityType }) => {
   const [snackbar, setSnackbar] = React.useState(null);
 
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 800);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -135,7 +138,9 @@ const Crud = ({ entityType }) => {
         dispatch(fetchUsers(id));
         break;
       default:
-        console.error(`Invalid entityType: ${entityType}`);
+        navigate('/error', {
+          state: { error: `Type d'entité invalide: ${entityType}` },
+        });
         break;
     }
   };
@@ -175,9 +180,10 @@ const Crud = ({ entityType }) => {
       config = userConfig;
       entityName = 'utilisateur';
       break;
-
     default:
-      console.error(`Invalid entityType: ${entityType}`);
+      navigate('/error', {
+        state: { error: `Type d'entité invalide: ${entityType}` },
+      });
       return null;
   }
 
@@ -186,7 +192,6 @@ const Crud = ({ entityType }) => {
   });
   const currentEntityName = entityName;
   let content;
-
   if (isLoading) {
     content = <Loader />;
   } else if (error) {
@@ -305,14 +310,12 @@ const Crud = ({ entityType }) => {
             isOpenModalFormCreate={isOpenModalFormCreate}
             handleCloseModalFormCreate={handleCloseModalFormCreate}
             refetch={refetch}
-            currentEntityName={currentEntityName}
             entityType={entityType}
             setSnackbar={setSnackbar}
           />
           <ModalFormPatch
             isOpenModal={isOpenModal}
             refetch={refetch}
-            currentEntityName={currentEntityName}
             entityType={entityType}
             setSnackbar={setSnackbar}
           />
@@ -333,7 +336,11 @@ const Crud = ({ entityType }) => {
 
   return (
     <Page>
-      <div className="Crud">{content}</div>
+      {error && error.data && error.data.code === 401 ? (
+        <Error errorType={401} errorMessage="Veuillez vous reconnecter" />
+      ) : (
+        <div className="Crud">{content}</div>
+      )}
     </Page>
   );
 };

@@ -24,6 +24,12 @@
     height: 2px;
     background-color: v.$orange;
   }
+
+  &__Error {
+    font-weight: bold;
+    color: v.$red;
+    margin-block-start: -100px;
+  }
 }
 
 @media screen and (min-width: 768px) {

@@ -29,7 +29,6 @@ const entitiesMiddleware = (store) => (next) => (action) => {
           },
         })
         .then((response) => {
-          console.log(response.data);
           store.dispatch(saveBrands(response.data));
           store.dispatch(openModal());
         })

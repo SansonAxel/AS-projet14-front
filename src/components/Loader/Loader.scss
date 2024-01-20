@@ -8,6 +8,9 @@
   left: 50%;
   margin-left: -50px;
   margin-top: -50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   &__Spinner {
     width: 48px;
@@ -32,12 +35,28 @@
     border-bottom: 4px solid transparent;
     animation: rotation 0.5s linear infinite reverse;
   }
+  &__Text {
+    animation: opacity 2s linear infinite reverse;
+  }
+
   @keyframes rotation {
     0% {
       transform: rotate(0deg);
     }
     100% {
       transform: rotate(360deg);
+    }
+  }
+
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
     }
   }
 }

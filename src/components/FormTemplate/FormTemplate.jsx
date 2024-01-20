@@ -16,14 +16,10 @@ const FormTemplate = ({
   dataObject,
 }) => {
   function isModifyingNestedObject(field, values) {
-    // Ajoute ta logique ici pour déterminer si le champ modifie un objet imbriqué
-    // Par exemple, vérifie si le champ est une clé d'un objet imbriqué
     return field.name in values && typeof values[field.name] === 'string';
   }
 
   function shouldPatch(convertedValues) {
-    // Ajoute ta logique ici pour déterminer si tu devrais appeler handlePatch
-    // Par exemple, vérifie si l'une des valeurs modifiées est un objet imbriqué
     return Object.values(convertedValues).some(
       (value) => typeof value === 'object' && value !== null && 'id' in value
     );
@@ -37,15 +33,6 @@ const FormTemplate = ({
   );
   // Create a formik object to manage form state and actions
   const formik = useFormik({
-    // Set initial form values based on formFields (cf /src/datas/formFieldsConfig.js)
-    // initialValues: dataObject
-    //   ? formFields.reduce((accumulator, field) => {
-    //       accumulator[field.name] =
-    //         dataObject[field.name] || field.initialValue || '';
-    //       return accumulator;
-    //     }, {})
-    //   : {},
-
     initialValues: dataObject
       ? formFields.reduce((accumulator, field) => {
           if (field.extractId && dataObject[field.name]) {
@@ -63,8 +50,6 @@ const FormTemplate = ({
     validationSchema,
     // Handle form submission
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
-      console.log('values', values);
       const convertedValues = formFields.reduce((acc, field) => {
         switch (field.valueType) {
           case 'number':
@@ -90,8 +75,6 @@ const FormTemplate = ({
         }
         return acc;
       }, {});
-      console.log('converted values', convertedValues);
-
       // Handle form submission with the updated 'status' value
       handleLoginSubmission(values);
       handleSubmission(convertedValues);
@@ -104,21 +87,6 @@ const FormTemplate = ({
 
   const prevDataObjectRef = useRef(null);
 
-  /* Editing initialvalues (to prevent the delay between state changes) */
-  // useEffect(() => {
-  //   if (dataObject !== prevDataObjectRef.current) {
-  //     if (dataObject) {
-  //       formik.setValues((prevValues) => ({
-  //         ...prevValues,
-  //         ...formFields.reduce((accumulator, field) => {
-  //           accumulator[field.name] = dataObject[field.name] || '';
-  //           return accumulator;
-  //         }, {}),
-  //       }));
-  //     }
-  //   }
-  //   prevDataObjectRef.current = dataObject;
-  // }, [dataObject, formik.setValues, prevDataObjectRef, formFields, formik]);
   useEffect(() => {
     if (dataObject !== prevDataObjectRef.current && dataObject) {
       formik.setValues((prevValues) => ({

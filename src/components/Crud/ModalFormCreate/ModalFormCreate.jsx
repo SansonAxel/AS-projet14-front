@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types';
 
 import './ModalFormCreate.scss';
+import { useLocation, useNavigate } from 'react-router-dom';
 import FormTemplate from '../../FormTemplate/FormTemplate';
 import { projectApi } from '../../../services/projectApi';
 import brandFormConfig from '../../../formsConfig/brandFormConfig';
@@ -15,68 +16,68 @@ const ModalFormCreate = ({
   isOpenModalFormCreate,
   handleCloseModalFormCreate,
   refetch,
-  currentEntityName,
   entityType,
   setSnackbar,
 }) => {
+  const location = useLocation();
+  const currentEntity = location.pathname.split('/')[1];
   // Define the mutation hook directly in the component body
   let mutation;
-  let entity;
   let formFieldsConfig;
+  const navigate = useNavigate();
   /* IIFE */
   (() => {
-    switch (entityType) {
-      case 'brands':
+    switch (currentEntity) {
+      case 'marques':
         mutation = projectApi.useAddBrandsMutation();
-        entity = 'brand';
         formFieldsConfig = brandFormConfig;
         break;
       case 'categories':
         mutation = projectApi.useAddCategoriesMutation();
-        entity = 'category';
         formFieldsConfig = categoryFormConfig;
         break;
-      case 'organizations':
+      case 'associations':
         mutation = projectApi.useAddOrganizationsMutation();
-        entity = 'organization';
         formFieldsConfig = organizationFormConfig;
         break;
-      case 'products':
+      case 'produits':
         mutation = projectApi.useAddProductsMutation();
-        entity = 'product';
         formFieldsConfig = productFormConfig;
         break;
       case 'structures':
         mutation = projectApi.useAddStructuresMutation();
-        entity = 'structure';
         formFieldsConfig = structureFormConfig;
         break;
-      case 'users':
+      case 'utilisateurs':
         mutation = projectApi.useAddUsersMutation();
-        entity = 'user';
         formFieldsConfig = userFormConfig;
         break;
       default:
-        console.error(`Invalid entityType: ${entityType}`);
+        navigate('/error', {
+          state: { error: `Type d'entité invalide: ${entityType}` },
+        });
         break;
     }
   })();
 
   const [create] = mutation;
 
-  const entityFormFields = formFieldsConfig;
-
   const handleSubmission = async (values) => {
     try {
       const response = await create(values).unwrap();
-      refetch();
       handleCloseModalFormCreate();
-      setSnackbar({
-        children: `Ajout réussi`,
-        severity: 'success',
-      });
+      refetch();
+      if (response.message === 'creation successfull') {
+        setSnackbar({
+          children: `Ajout réussi`,
+          severity: 'success',
+        });
+      }
     } catch (errors) {
-      setSnackbar({ children: errors.message, severity: 'error' });
+      setSnackbar({
+        children: 'Erreur lors de la validation du formulaire',
+        severity: 'error',
+      });
     }
   };
 
@@ -86,7 +87,7 @@ const ModalFormCreate = ({
       style={{ display: isOpenModalFormCreate ? 'block' : 'none' }}
     >
       <div className="ModalFormCreate__Content">
-        <h2>{`Création ${currentEntityName}`}</h2>
+        <h2>{`Création ${currentEntity}`}</h2>
 
         <button
           type="button"
@@ -97,11 +98,11 @@ const ModalFormCreate = ({
         </button>
         <FormTemplate
           className="ModalFormCreate__Content__Form"
-          formFields={entityFormFields}
+          formFields={formFieldsConfig}
           buttonText="Enregistrer"
           infoText="Les champs marqués d'un * sont obligatoires"
           handleSubmission={handleSubmission}
-          currentEntityName={currentEntityName}
+          currentEntityName={currentEntity}
         />
       </div>
     </div>
@@ -112,7 +113,6 @@ ModalFormCreate.propTypes = {
   isOpenModalFormCreate: PropTypes.bool.isRequired,
   handleCloseModalFormCreate: PropTypes.func.isRequired,
   refetch: PropTypes.func.isRequired,
-  currentEntityName: PropTypes.string.isRequired,
   entityType: PropTypes.string.isRequired,
   setSnackbar: PropTypes.func.isRequired,
 };

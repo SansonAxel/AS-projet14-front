@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 
 import './Login.scss';
@@ -47,9 +47,6 @@ const Login = () => {
           expires: 7,
           secure: true,
         });
-        console.log('Response data:', response.data);
-        console.log('Navigating to /dashboard');
-        // navigate('/produits', { replace: true });
         setTimeout(() => {
           setIsLoading(false);
           navigate('/dashboard', { replace: true });
@@ -57,10 +54,7 @@ const Login = () => {
         }, 100);
       })
       .catch((errors) => {
-        console.error(
-          'Error:',
-          errors.response ? errors.response.data : errors.message
-        );
+        setError('Identifiants invalides');
         setIsLoading(false);
       });
   };
@@ -76,7 +70,7 @@ const Login = () => {
         buttonText="Se connecter"
         handleLoginSubmission={handleLogin}
       />
-      {error && <p className="Login__Error">{error.response}</p>}
+      {error && <p className="Login__Error">{error}</p>}
       <HashLink smooth to="/">
         Retour à l'accueil
       </HashLink>

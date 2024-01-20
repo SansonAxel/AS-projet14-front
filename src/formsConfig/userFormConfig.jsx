@@ -37,6 +37,7 @@ export const fetchOrganizationsData = async () => {
         },
       }
     );
+    console.log('orga', response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching associations data:', error);
@@ -56,6 +57,7 @@ export const fetchStructuresData = async () => {
         },
       }
     );
+    console.log('structures ', response.data.structures);
     return response.data.structures;
   } catch (error) {
     console.error('Error fetching associations data:', error);
