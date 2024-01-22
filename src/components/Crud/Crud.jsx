@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid, frFR, GridActionsCellItem } from '@mui/x-data-grid';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import Snackbar from '@mui/material/Snackbar';
@@ -200,7 +200,6 @@ const Crud = ({ entityType }) => {
     const { columns, rowMapFunction } = config;
 
     let rows = [];
-
     if (Array.isArray(data)) {
       rows = data.map(rowMapFunction);
     } else if (Array.isArray(data.users)) {
@@ -272,6 +271,7 @@ const Crud = ({ entityType }) => {
       <ThemeProvider theme={theme}>
         <div className="List">
           <DataGrid
+            disableVirtualization
             rows={rows}
             columns={updatedColumns}
             initialState={{
@@ -319,7 +319,6 @@ const Crud = ({ entityType }) => {
             entityType={entityType}
             setSnackbar={setSnackbar}
           />
-
           <ModalDelete
             isOpenModalDelete={isOpenModalDelete}
             handleCloseModalDelete={handleCloseModalDelete}

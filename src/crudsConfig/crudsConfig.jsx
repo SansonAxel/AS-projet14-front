@@ -78,8 +78,8 @@ export const productConfig = {
   columns: [
     createColumn('id', 'ID', 'number'),
     createColumn('name', 'Produits'),
-    createColumn('weight', 'Poids', 'number'),
-    createColumn('price', 'Prix', 'string'),
+    createColumn('weight', 'Poids Kg', 'number'),
+    createColumn('price', 'Prix €', 'string'),
     createColumn('conservationType', 'Conservation', 'string'),
     createColumn('conditioning', 'Conditionnement', 'string'),
     createColumn('quantity', 'Quantité', 'number'),
@@ -105,7 +105,7 @@ export const structureConfig = {
     createColumn('id', 'ID', 'number'),
     createColumn('name', 'Nom', 'string'),
     createColumn('siret', 'N° SIRET', 'number'),
-    createColumn('status', 'Active', 'string'),
+    createColumn('status', 'Actif', 'string'),
   ],
   rowMapFunction: (element) => ({
     id: element.id,
@@ -124,9 +124,8 @@ export const userConfig = {
     createColumn('lastname', 'Nom', 'string'),
     createColumn('email', 'Email'),
     createColumn('phoneNumber', 'Téléphone', 'string'),
-    createColumn('roles', 'Roles', 'string'),
-    createColumn('status', 'Active', 'string'),
-    createColumn('organization', 'Association', 'string'),
+    createColumn('roles', 'Role', 'string'),
+    createColumn('status', 'Actif', 'string'),
   ],
   rowMapFunction: (element) => ({
     id: element.id,
@@ -136,6 +135,5 @@ export const userConfig = {
     phoneNumber: element.phoneNumber,
     roles: element.roles[0],
     status: element.status,
-    organization: element.organizations ? element.organizations.name : '',
   }),
 };

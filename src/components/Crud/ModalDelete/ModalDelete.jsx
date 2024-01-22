@@ -49,7 +49,6 @@ const ModalDelete = ({
         });
       }
     } catch (error) {
-      console.error(error);
       setSnackbar({ children: 'Echec de la suppression', severity: 'error' });
     }
   };

@@ -21,7 +21,6 @@ export const fetchBrandsData = async () => {
       );
       return response.data;
     } catch (error) {
-      console.error('Error fetching associations data:', error);
       return [];
     }
   }
@@ -43,10 +42,8 @@ export const fetchCategoriesData = async () => {
           },
         }
       );
-
       return response.data;
     } catch (error) {
-      console.error('Error fetching associations data:', error);
       return [];
     }
   }
@@ -150,7 +147,7 @@ const productFormConfig = [
   {
     name: 'expirationDate',
     id: 'product',
-    label: "Date d'expiration*",
+    label: "Date d'expiration (format AAAA-MM-JJ)*",
     type: 'text',
     initialValue: '',
     validation: Yup.string()

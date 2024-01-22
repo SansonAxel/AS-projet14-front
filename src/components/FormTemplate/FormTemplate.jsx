@@ -49,7 +49,7 @@ const FormTemplate = ({
 
     validationSchema,
     // Handle form submission
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       const convertedValues = formFields.reduce((acc, field) => {
         switch (field.valueType) {
           case 'number':
@@ -82,6 +82,7 @@ const FormTemplate = ({
         handlePatch(values);
       }
       handlePatch(convertedValues);
+      resetForm();
     },
   });
 

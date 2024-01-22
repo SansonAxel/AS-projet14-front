@@ -25,6 +25,7 @@ const ModalFormCreate = ({
   let mutation;
   let formFieldsConfig;
   const navigate = useNavigate();
+
   /* IIFE */
   (() => {
     switch (currentEntity) {
@@ -59,7 +60,6 @@ const ModalFormCreate = ({
         break;
     }
   })();
-
   const [create] = mutation;
 
   const handleSubmission = async (values) => {
