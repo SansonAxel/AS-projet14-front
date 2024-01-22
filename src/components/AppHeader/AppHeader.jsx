@@ -10,7 +10,6 @@ const AppHeader = () => {
   // Parse user information
   const userInformation = userString ? JSON.parse(userString) : null;
 
-  // Now you can access user properties like firstname, lastname, role, etc.
   const currentUserFirstname = userInformation ? userInformation.firstname : '';
   const currentUserLastname = userInformation ? userInformation.lastname : '';
   const currentUserRole = userInformation ? userInformation.roles[0] : '';

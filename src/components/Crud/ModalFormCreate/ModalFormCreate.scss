@@ -7,7 +7,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.3);
   z-index: 2;
   cursor: pointer;
   overflow-y: scroll;
@@ -19,11 +19,10 @@
     align-items: center;
     justify-content: center;
     margin: 10px;
-    // background-color: v.$white;
-    background: linear-gradient(v.$white, v.$light-grey);
+    background-color: v.$white;
+    border: 2px solid v.$purple;
     padding: 20px;
     overflow-y: auto;
-    border-radius: 15px;
 
     h2 {
       font-size: 1.5rem;
@@ -65,10 +64,11 @@
 @media screen and (min-width: 992px) {
   .ModalFormCreate {
     &__Content {
-      margin: 100px 200px;
+      margin: 100px auto;
+      width: 60%;
       &__CloseButton {
         top: 100px;
-        right: 210px;
+        right: 21%;
       }
     }
   }

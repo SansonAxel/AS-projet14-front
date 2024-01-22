@@ -1,5 +1,7 @@
+/* eslint-disable react/no-unescaped-entities */
 import PropTypes from 'prop-types';
 import './ModalDelete.scss';
+import { useNavigate } from 'react-router-dom';
 import { projectApi } from '../../../services/projectApi';
 
 const ModalDelete = ({
@@ -7,9 +9,11 @@ const ModalDelete = ({
   handleCloseModalDelete,
   refetch,
   deleteItemId,
-  currentEntityName,
   entityType,
+  setSnackbar,
 }) => {
+  const navigate = useNavigate();
+
   // Define the mutation hook directly in the component body
   const [deleteItem] = (() => {
     switch (entityType) {
@@ -26,7 +30,9 @@ const ModalDelete = ({
       case 'users':
         return projectApi.useDeleteUsersMutation();
       default:
-        console.error(`Invalid entityType: ${entityType}`);
+        navigate('/error', {
+          state: { error: `Type d'entité invalide: ${entityType}` },
+        });
         return [() => {}]; // Provide a dummy function to avoid errors
     }
   })();
@@ -36,9 +42,14 @@ const ModalDelete = ({
       const response = await deleteItem(deleteItemId);
       refetch();
       handleCloseModalDelete();
+      if (response.data) {
+        setSnackbar({
+          children: `Suppression réussie`,
+          severity: 'success',
+        });
+      }
     } catch (error) {
-      console.error('Erreur lors de la suppression :', error);
-      // Handle the error if needed
+      setSnackbar({ children: 'Echec de la suppression', severity: 'error' });
     }
   };
 
@@ -52,9 +63,8 @@ const ModalDelete = ({
       style={{ display: isOpenModalDelete ? 'block' : 'none' }}
     >
       <div className="ModalDelete__Content">
-        <p>
-          Supprimer l'élément ? <span>(cette action est irréversible)</span>
-        </p>
+        <p>Supprimer l'élément ?</p>
+        <span>(cette action est irréversible)</span>
         <div className="ModalDelete__Content__Buttons">
           <button
             type="button"
@@ -81,8 +91,8 @@ ModalDelete.propTypes = {
   handleCloseModalDelete: PropTypes.func.isRequired,
   refetch: PropTypes.func.isRequired,
   deleteItemId: PropTypes.number,
-  currentEntityName: PropTypes.string.isRequired,
   entityType: PropTypes.string.isRequired,
+  setSnackbar: PropTypes.func.isRequired,
 };
 
 ModalDelete.defaultProps = {

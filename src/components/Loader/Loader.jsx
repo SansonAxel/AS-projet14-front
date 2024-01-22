@@ -1,7 +1,13 @@
 import './Loader.scss';
 
 const Loader = () => {
-  <div className="Loader">Chargement</div>;
+  return (
+    <div className="Loader">
+      <span className="Loader__Spinner" />
+      <br />
+      <p className="Loader__Text">Chargement...</p>
+    </div>
+  );
 };
 
 export default Loader;

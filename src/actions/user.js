@@ -12,7 +12,8 @@ export const handleSuccessfulLogin = (
   lastname,
   role,
   organization,
-  structure
+  structure,
+  status
 ) => ({
   type: HANDLE_SUCCESSFUL_LOGIN,
   token,
@@ -21,6 +22,7 @@ export const handleSuccessfulLogin = (
   role,
   organization,
   structure,
+  status,
 });
 
 export const handleLogout = () => ({

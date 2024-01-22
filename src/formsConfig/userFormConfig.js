@@ -28,6 +28,7 @@ export const getRole = () => {
 
 export const fetchOrganizationsData = async () => {
   const token = getToken();
+
   try {
     const response = await axios.get(
       `http://localhost:8080/api/organizations`,
@@ -39,7 +40,6 @@ export const fetchOrganizationsData = async () => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error fetching associations data:', error);
     return [];
   }
 };
@@ -58,7 +58,6 @@ export const fetchStructuresData = async () => {
     );
     return response.data.structures;
   } catch (error) {
-    console.error('Error fetching associations data:', error);
     return [];
   }
 };
@@ -149,7 +148,7 @@ if (userRole === 'ROLE_SUPERADMIN') {
     id: 'user',
     label: 'Association',
     type: 'select',
-    options: associationsData.map((association) => ({
+    options: (associationsData || []).map((association) => ({
       value: association.id,
       label: association.name,
     })),

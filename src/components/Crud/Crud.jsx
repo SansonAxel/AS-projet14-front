@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid, frFR, GridActionsCellItem } from '@mui/x-data-grid';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import Snackbar from '@mui/material/Snackbar';
@@ -40,6 +41,8 @@ import {
   fetchUsers,
 } from '../../actions/entities';
 import { openModal } from '../../actions/modalActions';
+import Loader from '../Loader/Loader';
+import Error from '../Error/Error';
 
 const Crud = ({ entityType }) => {
   const theme = createTheme({
@@ -49,8 +52,7 @@ const Crud = ({ entityType }) => {
       },
     },
   });
-  /* DATAS */
-  // const [skip, setSkip] = useState(true);
+
   /* MODAL */
   const [isOpenModalFormCreate, setIsOpenModalFormCreate] = useState(false);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
@@ -59,6 +61,7 @@ const Crud = ({ entityType }) => {
   const [snackbar, setSnackbar] = React.useState(null);
 
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 800);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -72,7 +75,6 @@ const Crud = ({ entityType }) => {
     };
   }, []);
 
-  console.log(isMobileView);
   const getToken = () => {
     return Cookies.get('token');
   };
@@ -136,7 +138,9 @@ const Crud = ({ entityType }) => {
         dispatch(fetchUsers(id));
         break;
       default:
-        console.error(`Invalid entityType: ${entityType}`);
+        navigate('/error', {
+          state: { error: `Type d'entité invalide: ${entityType}` },
+        });
         break;
     }
   };
@@ -176,9 +180,10 @@ const Crud = ({ entityType }) => {
       config = userConfig;
       entityName = 'utilisateur';
       break;
-
     default:
-      console.error(`Invalid entityType: ${entityType}`);
+      navigate('/error', {
+        state: { error: `Type d'entité invalide: ${entityType}` },
+      });
       return null;
   }
 
@@ -187,16 +192,14 @@ const Crud = ({ entityType }) => {
   });
   const currentEntityName = entityName;
   let content;
-
   if (isLoading) {
-    content = <>Chargement...</>;
+    content = <Loader />;
   } else if (error) {
     content = <>Erreur lors du chargement des données</>;
   } else {
     const { columns, rowMapFunction } = config;
 
     let rows = [];
-
     if (Array.isArray(data)) {
       rows = data.map(rowMapFunction);
     } else if (Array.isArray(data.users)) {
@@ -213,7 +216,9 @@ const Crud = ({ entityType }) => {
           (column) =>
             column.field !== 'brand' &&
             column.field !== 'category' &&
-            column.field !== 'price'
+            column.field !== 'price' &&
+            column.field !== 'conditioning' &&
+            column.field !== 'conservationType'
         )
       : [...columns];
 
@@ -232,7 +237,7 @@ const Crud = ({ entityType }) => {
       updatedColumns.push({
         field: 'actions',
         type: 'actions',
-        headerName: 'Actions',
+        headerName: '',
         width: 100,
         cellClassName: 'actions',
         getActions: ({ id }) => {
@@ -266,11 +271,12 @@ const Crud = ({ entityType }) => {
       <ThemeProvider theme={theme}>
         <div className="List">
           <DataGrid
+            disableVirtualization
             rows={rows}
             columns={updatedColumns}
             initialState={{
               pagination: {
-                paginationModel: { page: 0, pageSize: 15 },
+                paginationModel: { page: 0, pageSize: 10 },
               },
               columns: {
                 columnVisibilityModel: {
@@ -278,7 +284,7 @@ const Crud = ({ entityType }) => {
                 },
               },
             }}
-            pageSizeOptions={[15, 30, 60]}
+            pageSizeOptions={[10, 30, 60]}
             slots={{
               toolbar: Toolbar,
             }}
@@ -288,6 +294,7 @@ const Crud = ({ entityType }) => {
               },
             }}
             localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+            sx={{ '&, [class^=MuiDataGrid]': { border: 'none' } }}
           />
           {!!snackbar && (
             <Snackbar
@@ -303,18 +310,15 @@ const Crud = ({ entityType }) => {
             isOpenModalFormCreate={isOpenModalFormCreate}
             handleCloseModalFormCreate={handleCloseModalFormCreate}
             refetch={refetch}
-            currentEntityName={currentEntityName}
             entityType={entityType}
             setSnackbar={setSnackbar}
           />
           <ModalFormPatch
             isOpenModal={isOpenModal}
             refetch={refetch}
-            currentEntityName={currentEntityName}
             entityType={entityType}
             setSnackbar={setSnackbar}
           />
-
           <ModalDelete
             isOpenModalDelete={isOpenModalDelete}
             handleCloseModalDelete={handleCloseModalDelete}
@@ -322,6 +326,7 @@ const Crud = ({ entityType }) => {
             deleteItemId={deleteItemId}
             currentEntityName={currentEntityName}
             entityType={entityType}
+            setSnackbar={setSnackbar}
           />
         </div>
       </ThemeProvider>
@@ -330,7 +335,11 @@ const Crud = ({ entityType }) => {
 
   return (
     <Page>
-      <div className="Crud">{content}</div>
+      {error && error.data && error.data.code === 401 ? (
+        <Error errorType={401} errorMessage="Veuillez vous reconnecter" />
+      ) : (
+        <div className="Crud">{content}</div>
+      )}
     </Page>
   );
 };
