@@ -15,11 +15,13 @@ const FormTemplate = ({
   handlePatch,
   dataObject,
 }) => {
+  // When used, returns a boolean if a nested object is modified
   function isModifyingNestedObject(field, values) {
     return field.name in values && typeof values[field.name] === 'string';
   }
 
-  function shouldPatch(convertedValues) {
+  // When used, returns a boolean if a nested object should be patched
+  function needsNestedPatch(convertedValues) {
     return Object.values(convertedValues).some(
       (value) => typeof value === 'object' && value !== null && 'id' in value
     );
@@ -35,14 +37,7 @@ const FormTemplate = ({
   const formik = useFormik({
     initialValues: dataObject
       ? formFields.reduce((accumulator, field) => {
-          if (field.extractId && dataObject[field.name]) {
-            // Si le champ nécessite l'extraction de l'id
-            accumulator[field.name] =
-              dataObject[field.name].id || field.initialValue || '';
-          } else {
-            accumulator[field.name] =
-              dataObject[field.name] || field.initialValue || '';
-          }
+          accumulator[field.name] = dataObject[field.name] || '';
           return accumulator;
         }, {})
       : {},
@@ -78,7 +73,7 @@ const FormTemplate = ({
       // Handle form submission with the updated 'status' value
       handleLoginSubmission(values);
       handleSubmission(convertedValues);
-      if (shouldPatch(convertedValues)) {
+      if (needsNestedPatch(convertedValues)) {
         handlePatch(values);
       }
       handlePatch(convertedValues);
@@ -124,15 +119,7 @@ const FormTemplate = ({
             >
               {field.label}
             </label>
-            {/* Use a checkbox input for 'checkbox' type, textarea for 'textarea', select for 'select', otherwise use a text input */}
-            {field.type === 'checkbox' && (
-              <input
-                {...commonProps}
-                className="Form__Element__Checkbox"
-                type="checkbox"
-                checked={formik.values[field.name]}
-              />
-            )}
+            {/* Use a textarea for 'textarea', select for 'select', otherwise use a text input */}
             {field.type === 'textarea' && (
               <textarea
                 {...commonProps}
@@ -159,16 +146,14 @@ const FormTemplate = ({
               </select>
             )}
 
-            {field.type !== 'checkbox' &&
-              field.type !== 'textarea' &&
-              field.type !== 'select' && (
-                <input
-                  {...commonProps}
-                  className="Form__Element__Input"
-                  type={field.type}
-                  value={formik.values[field.name]}
-                />
-              )}
+            {field.type !== 'textarea' && field.type !== 'select' && (
+              <input
+                {...commonProps}
+                className="Form__Element__Input"
+                type={field.type}
+                value={formik.values[field.name]}
+              />
+            )}
             {/* Display validation error if the field has been touched and there's an error */}
             {formik.touched[field.name] && formik.errors[field.name] && (
               <div className="Form__Element__Error">

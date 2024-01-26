@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
 import './ModalFormPatch.scss';
-import { useLocation, useNavigate } from 'react-router-dom';
 import FormTemplate from '../../FormTemplate/FormTemplate';
 import { closeModal } from '../../../actions/modalActions';
 import { projectApi } from '../../../services/projectApi';
@@ -14,13 +13,15 @@ import productFormConfig from '../../../formsConfig/productFormConfig';
 import structureFormConfig from '../../../formsConfig/structureFormConfig';
 import userFormConfig from '../../../formsConfig/userFormConfig';
 
-const ModalFormPatch = ({ isOpenModal, refetch, entityType, setSnackbar }) => {
-  const location = useLocation();
-  const currentEntity = location.pathname.split('/')[1];
+const ModalFormPatch = ({
+  isOpenModal,
+  refetch,
+  currentEntity,
+  setSnackbar,
+}) => {
   let mutation;
   let entity;
   let formFieldsConfig;
-  const navigate = useNavigate();
   /* IIFE */
   (() => {
     switch (currentEntity) {
@@ -44,7 +45,7 @@ const ModalFormPatch = ({ isOpenModal, refetch, entityType, setSnackbar }) => {
         entity = 'product';
         formFieldsConfig = productFormConfig;
         break;
-      case 'structures':
+      case 'antennes':
         mutation = projectApi.useUpdateStructuresMutation();
         entity = 'structure';
         formFieldsConfig = structureFormConfig;
@@ -55,14 +56,11 @@ const ModalFormPatch = ({ isOpenModal, refetch, entityType, setSnackbar }) => {
         formFieldsConfig = userFormConfig;
         break;
       default:
-        navigate('/error', {
-          state: { error: `Type d'entité invalide: ${entityType}` },
-        });
         break;
     }
   })();
   const entityFormFields = formFieldsConfig;
-  const [update, { isLoading: isUpdating }] = mutation;
+  const [update] = mutation;
   const dataObject = useSelector((state) => state.entities[entity]);
   const dispatch = useDispatch();
   const handlePatch = async (values) => {
@@ -74,10 +72,12 @@ const ModalFormPatch = ({ isOpenModal, refetch, entityType, setSnackbar }) => {
       });
       refetch();
       dispatch(closeModal());
-      setSnackbar({
-        children: `Modification réussie`,
-        severity: 'success',
-      });
+      if (response.data.message === 'Update successfull') {
+        setSnackbar({
+          children: `Modification réussie`,
+          severity: 'success',
+        });
+      }
     } catch (error) {
       setSnackbar({ children: 'Echec de la modification', severity: 'error' });
     }
@@ -114,7 +114,7 @@ const ModalFormPatch = ({ isOpenModal, refetch, entityType, setSnackbar }) => {
 ModalFormPatch.propTypes = {
   isOpenModal: PropTypes.bool.isRequired,
   refetch: PropTypes.func.isRequired,
-  entityType: PropTypes.string.isRequired,
+  currentEntity: PropTypes.string.isRequired,
   setSnackbar: PropTypes.func.isRequired,
 };
 

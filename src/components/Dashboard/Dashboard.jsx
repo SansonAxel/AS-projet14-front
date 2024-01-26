@@ -24,8 +24,8 @@ const Dashboard = () => {
   return (
     <Page>
       <div className="Dashboard">
-        {(currentUserFirstname, currentUserLastname)}, bienvenue sur votre
-        espace {slicedRoleName}.
+        {currentUserFirstname} {currentUserLastname}, bienvenue sur votre espace{' '}
+        {slicedRoleName}.
       </div>
     </Page>
   );

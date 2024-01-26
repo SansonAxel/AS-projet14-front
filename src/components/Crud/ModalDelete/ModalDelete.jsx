@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import PropTypes from 'prop-types';
 import './ModalDelete.scss';
-import { useNavigate } from 'react-router-dom';
 import { projectApi } from '../../../services/projectApi';
 
 const ModalDelete = ({
@@ -9,31 +8,26 @@ const ModalDelete = ({
   handleCloseModalDelete,
   refetch,
   deleteItemId,
-  entityType,
+  currentEntity,
   setSnackbar,
 }) => {
-  const navigate = useNavigate();
-
   // Define the mutation hook directly in the component body
   const [deleteItem] = (() => {
-    switch (entityType) {
-      case 'brands':
+    switch (currentEntity) {
+      case 'marques':
         return projectApi.useDeleteBrandsMutation();
       case 'categories':
         return projectApi.useDeleteCategoriesMutation();
-      case 'organizations':
+      case 'associations':
         return projectApi.useDeleteOrganizationsMutation();
-      case 'products':
+      case 'produits':
         return projectApi.useDeleteProductsMutation();
-      case 'structures':
+      case 'antennes':
         return projectApi.useDeleteStructuresMutation();
-      case 'users':
+      case 'utilisateurs':
         return projectApi.useDeleteUsersMutation();
       default:
-        navigate('/error', {
-          state: { error: `Type d'entité invalide: ${entityType}` },
-        });
-        return [() => {}]; // Provide a dummy function to avoid errors
+        return [() => {}];
     }
   })();
 
@@ -91,7 +85,7 @@ ModalDelete.propTypes = {
   handleCloseModalDelete: PropTypes.func.isRequired,
   refetch: PropTypes.func.isRequired,
   deleteItemId: PropTypes.number,
-  entityType: PropTypes.string.isRequired,
+  currentEntity: PropTypes.string.isRequired,
   setSnackbar: PropTypes.func.isRequired,
 };
 

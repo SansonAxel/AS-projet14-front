@@ -51,11 +51,16 @@ const Login = () => {
           )
         );
         setUserStatus(status);
+        const expirationDate = new Date();
+        expirationDate.setHours(expirationDate.getHours() + 1);
 
         if (status === true) {
-          Cookies.set('token', token, { expires: 7, secure: true });
+          Cookies.set('token', token, {
+            expires: expirationDate,
+            secure: true,
+          });
           Cookies.set('user', JSON.stringify(userInformation), {
-            expires: 7,
+            expires: expirationDate,
             secure: true,
           });
           setTimeout(() => {

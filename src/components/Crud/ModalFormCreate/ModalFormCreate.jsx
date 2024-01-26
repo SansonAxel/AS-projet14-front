@@ -16,15 +16,12 @@ const ModalFormCreate = ({
   isOpenModalFormCreate,
   handleCloseModalFormCreate,
   refetch,
-  entityType,
   setSnackbar,
 }) => {
   const location = useLocation();
   const currentEntity = location.pathname.split('/')[1];
-  // Define the mutation hook directly in the component body
   let mutation;
   let formFieldsConfig;
-  const navigate = useNavigate();
 
   /* IIFE */
   (() => {
@@ -45,7 +42,7 @@ const ModalFormCreate = ({
         mutation = projectApi.useAddProductsMutation();
         formFieldsConfig = productFormConfig;
         break;
-      case 'structures':
+      case 'antennes':
         mutation = projectApi.useAddStructuresMutation();
         formFieldsConfig = structureFormConfig;
         break;
@@ -54,9 +51,6 @@ const ModalFormCreate = ({
         formFieldsConfig = userFormConfig;
         break;
       default:
-        navigate('/error', {
-          state: { error: `Type d'entité invalide: ${entityType}` },
-        });
         break;
     }
   })();
@@ -113,7 +107,6 @@ ModalFormCreate.propTypes = {
   isOpenModalFormCreate: PropTypes.bool.isRequired,
   handleCloseModalFormCreate: PropTypes.func.isRequired,
   refetch: PropTypes.func.isRequired,
-  entityType: PropTypes.string.isRequired,
   setSnackbar: PropTypes.func.isRequired,
 };
 export default ModalFormCreate;

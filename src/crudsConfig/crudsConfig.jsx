@@ -105,7 +105,10 @@ export const structureConfig = {
     createColumn('id', 'ID', 'number'),
     createColumn('name', 'Nom', 'string'),
     createColumn('siret', 'N° SIRET', 'number'),
-    createColumn('status', 'Actif', 'string'),
+    createColumn('status', 'Active', 'singleSelect', [
+      { value: false, label: 'inactive' },
+      { value: true, label: 'active' },
+    ]),
   ],
   rowMapFunction: (element) => ({
     id: element.id,
@@ -125,7 +128,10 @@ export const userConfig = {
     createColumn('email', 'Email'),
     createColumn('phoneNumber', 'Téléphone', 'string'),
     createColumn('roles', 'Role', 'string'),
-    createColumn('status', 'Actif', 'string'),
+    createColumn('status', 'Actif', 'singleSelect', [
+      { value: false, label: 'inactif' },
+      { value: true, label: 'actif' },
+    ]),
   ],
   rowMapFunction: (element) => ({
     id: element.id,
@@ -133,7 +139,25 @@ export const userConfig = {
     lastname: element.lastname,
     email: element.email,
     phoneNumber: element.phoneNumber,
-    roles: element.roles[0],
+    roles: Array.isArray(element.roles)
+      ? element.roles
+          .filter((role) => role !== 'ROLE_USER')
+          .map((role) => {
+            switch (role) {
+              case 'ROLE_SUPERADMIN':
+                return 'Superadmin';
+              case 'ROLE_ADMIN':
+                return 'Admin';
+              case 'ROLE_MANAGER':
+                return 'Manager';
+              case 'ROLE_LOGISTICIAN':
+                return 'Logisticien';
+              default:
+                return role;
+            }
+          })
+          .join(' ')
+      : element.roles,
     status: element.status,
   }),
 };

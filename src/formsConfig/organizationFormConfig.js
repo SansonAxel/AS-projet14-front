@@ -29,7 +29,7 @@ const organizationFormConfig = [
     type: 'text',
     initialValue: '',
     validation: Yup.string()
-      .max(20, 'Ne doit pas dépasser 20 caractères')
+      .max(10, 'Ne doit pas dépasser 10 caractères')
       .required('Champ requis'),
   },
   {
@@ -48,8 +48,10 @@ const organizationFormConfig = [
     label: 'Numéro de SIREN*',
     type: 'text',
     initialValue: '',
-    validation: Yup.string()
-      .max(9, 'Ne doit pas dépasser 9 caractères')
+    validation: Yup.number()
+      .typeError('Doit être un nombre')
+      .min(99999999, 'Doit contenir 9 chiffres')
+      .max(999999999, 'Doit contenir 9 chiffres')
       .required('Champ requis'),
   },
   {

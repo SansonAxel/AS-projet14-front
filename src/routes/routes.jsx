@@ -51,13 +51,13 @@ const commonRoutes = [
   {
     name: 'Catégories',
     path: '/categories',
-    element: <Crud entityType="categories" />,
+    element: <Crud />,
     isPrivate: true,
   },
   {
     name: 'Marques',
     path: '/marques',
-    element: <Crud entityType="brands" />,
+    element: <Crud />,
     isPrivate: true,
   },
 ];
@@ -67,39 +67,39 @@ const roleSpecificRoutes = {
     {
       name: 'Associations',
       path: '/associations',
-      element: <Crud entityType="organizations" />,
+      element: <Crud />,
       isPrivate: true,
     },
     {
       name: 'Antennes',
-      path: '/structures',
-      element: <Crud entityType="structures" />,
+      path: '/antennes',
+      element: <Crud />,
       isPrivate: true,
     },
     {
       name: 'Utilisateurs',
       path: '/utilisateurs',
-      element: <Crud entityType="users" />,
+      element: <Crud />,
       isPrivate: true,
     },
     {
       name: 'Produits',
       path: '/produits',
-      element: <Crud entityType="products" />,
+      element: <Crud />,
       isPrivate: true,
     },
   ],
   ROLE_ADMIN: [
     {
       name: 'Antennes',
-      path: '/structures',
-      element: <Crud entityType="structures" />,
+      path: '/antennes',
+      element: <Crud />,
       isPrivate: true,
     },
     {
       name: 'Utilisateurs',
       path: '/utilisateurs',
-      element: <Crud entityType="users" />,
+      element: <Crud />,
       isPrivate: true,
     },
   ],
@@ -107,13 +107,13 @@ const roleSpecificRoutes = {
     {
       name: 'Utilisateurs',
       path: '/utilisateurs',
-      element: <Crud entityType="users" />,
+      element: <Crud />,
       isPrivate: true,
     },
     {
       name: 'Produits',
       path: '/produits',
-      element: <Crud entityType="products" />,
+      element: <Crud />,
       isPrivate: true,
     },
   ],
@@ -121,7 +121,7 @@ const roleSpecificRoutes = {
     {
       name: 'Produits',
       path: '/produits',
-      element: <Crud entityType="products" />,
+      element: <Crud />,
       isPrivate: true,
     },
   ],

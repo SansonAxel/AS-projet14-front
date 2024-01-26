@@ -41,6 +41,7 @@ const baseURL = 'http://localhost:8080/api/';
 
 export const projectApi = createApi({
   reducerPath: 'projectApi',
+  refetchOnFocus: true,
   baseQuery: fetchBaseQuery({
     baseUrl: baseURL,
     prepareHeaders: (headers) => {
@@ -51,7 +52,6 @@ export const projectApi = createApi({
       return headers;
     },
   }),
-  refetchOnMountOrArgChange: 3,
   endpoints: (builder) => ({
     /* BRANDS */
     getBrands: builder.query({

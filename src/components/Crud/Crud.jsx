@@ -3,14 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DataGrid, frFR, GridActionsCellItem } from '@mui/x-data-grid';
-import { Link, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import PropTypes from 'prop-types';
 
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
@@ -20,7 +19,6 @@ import './Crud.scss';
 import Page from '../Page/Page';
 import Toolbar from './Toolbar/Toolbar';
 
-import { projectApi } from '../../services/projectApi';
 import {
   userConfig,
   productConfig,
@@ -40,11 +38,10 @@ import {
   fetchStructures,
   fetchUsers,
 } from '../../actions/entities';
-import { openModal } from '../../actions/modalActions';
 import Loader from '../Loader/Loader';
 import Error from '../Error/Error';
 
-const Crud = ({ entityType }) => {
+const Crud = () => {
   const theme = createTheme({
     palette: {
       primary: {
@@ -52,7 +49,8 @@ const Crud = ({ entityType }) => {
       },
     },
   });
-
+  const location = useLocation();
+  const currentEntity = location.pathname.split('/')[1];
   /* MODAL */
   const [isOpenModalFormCreate, setIsOpenModalFormCreate] = useState(false);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
@@ -61,7 +59,6 @@ const Crud = ({ entityType }) => {
   const [snackbar, setSnackbar] = React.useState(null);
 
   const [isMobileView, setIsMobileView] = useState(window.innerWidth < 800);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -74,10 +71,6 @@ const Crud = ({ entityType }) => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  const getToken = () => {
-    return Cookies.get('token');
-  };
 
   const userCookie = Cookies.get('user');
 
@@ -117,80 +110,56 @@ const Crud = ({ entityType }) => {
   const handleCloseSnackbar = () => setSnackbar(null);
 
   const handleOpenModalPatch = (id) => {
-    switch (entityType) {
-      case 'brands':
+    switch (currentEntity) {
+      case 'marques':
         dispatch(fetchBrands(id));
         break;
       case 'categories':
         dispatch(fetchCategories(id));
         break;
-      case 'organizations':
+      case 'associations':
         dispatch(fetchOrganizations(id));
-        dispatch(openModal());
         break;
-      case 'products':
+      case 'produits':
         dispatch(fetchProducts(id));
         break;
-      case 'structures':
+      case 'antennes':
         dispatch(fetchStructures(id));
         break;
-      case 'users':
+      case 'utilisateurs':
         dispatch(fetchUsers(id));
         break;
       default:
-        navigate('/error', {
-          state: { error: `Type d'entité invalide: ${entityType}` },
-        });
         break;
     }
   };
 
-  let query;
   let config;
-  let entityName;
 
-  switch (entityType) {
-    case 'brands':
-      query = projectApi.useGetBrandsQuery;
+  switch (currentEntity) {
+    case 'marques':
       config = brandConfig;
-      entityName = 'marque';
       break;
     case 'categories':
-      query = projectApi.useGetCategoriesQuery;
       config = categoryConfig;
-      entityName = 'catégorie';
       break;
-    case 'organizations':
-      query = projectApi.useGetOrganizationsQuery;
+    case 'associations':
       config = organizationConfig;
-      entityName = 'association';
       break;
-    case 'products':
-      query = projectApi.useGetProductsQuery;
+    case 'produits':
       config = productConfig;
-      entityName = 'produit';
       break;
-    case 'structures':
-      query = projectApi.useGetStructuresQuery;
+    case 'antennes':
       config = structureConfig;
-      entityName = 'antenne';
       break;
-    case 'users':
-      query = projectApi.useGetUsersQuery;
+    case 'utilisateurs':
       config = userConfig;
-      entityName = 'utilisateur';
       break;
     default:
-      navigate('/error', {
-        state: { error: `Type d'entité invalide: ${entityType}` },
-      });
       return null;
   }
 
-  const { data, error, isLoading, refetch } = query({
-    refetchOnMountOrArgChange: true,
-  });
-  const currentEntityName = entityName;
+  const { data, error, isLoading, refetch } = config.query({});
   let content;
   if (isLoading) {
     content = <Loader />;
@@ -198,7 +167,6 @@ const Crud = ({ entityType }) => {
     content = <>Erreur lors du chargement des données</>;
   } else {
     const { columns, rowMapFunction } = config;
-
     let rows = [];
     if (Array.isArray(data)) {
       rows = data.map(rowMapFunction);
@@ -210,7 +178,7 @@ const Crud = ({ entityType }) => {
       rows = data.products.map(rowMapFunction);
     }
 
-    // Condition pour masquer la colonne "actions" en vue mobile
+    // Condition pour masquer des colonnes en vue mobile
     const updatedColumns = isMobileView
       ? columns.filter(
           (column) =>
@@ -218,20 +186,25 @@ const Crud = ({ entityType }) => {
             column.field !== 'category' &&
             column.field !== 'price' &&
             column.field !== 'conditioning' &&
-            column.field !== 'conservationType'
+            column.field !== 'conservationType' &&
+            column.field !== 'email' &&
+            column.field !== 'phoneNumber'
         )
       : [...columns];
 
+    const isSuperAdmin = role === 'ROLE_SUPERADMIN';
     const isManager = role === 'ROLE_MANAGER';
     const isLogistician = role === 'ROLE_LOGISTICIAN';
-    const isMarqueEntity = currentEntityName === 'marque';
-    const isCategorieEntity = currentEntityName === 'catégorie';
+    const isMarqueEntity = currentEntity === 'marques';
+    const isCategorieEntity = currentEntity === 'categories';
+    const isStructureEntity = currentEntity === 'antennes';
 
     const forbiddenEditOrDelete =
       (isManager && isMarqueEntity) ||
       (isLogistician && isMarqueEntity) ||
       (isManager && isCategorieEntity) ||
-      (isLogistician && isCategorieEntity);
+      (isLogistician && isCategorieEntity) ||
+      (isSuperAdmin && isStructureEntity);
 
     if (!forbiddenEditOrDelete) {
       updatedColumns.push({
@@ -269,66 +242,65 @@ const Crud = ({ entityType }) => {
 
     content = (
       <ThemeProvider theme={theme}>
-        <div className="List">
-          <DataGrid
-            disableVirtualization
-            rows={rows}
-            columns={updatedColumns}
-            initialState={{
-              pagination: {
-                paginationModel: { page: 0, pageSize: 10 },
+        <DataGrid
+          rows={rows}
+          columns={updatedColumns}
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 10 },
+            },
+            columns: {
+              columnVisibilityModel: {
+                id: false,
               },
-              columns: {
-                columnVisibilityModel: {
-                  id: false,
-                },
-              },
-            }}
-            pageSizeOptions={[10, 30, 60]}
-            slots={{
-              toolbar: Toolbar,
-            }}
-            slotProps={{
-              toolbar: {
-                handleOpenModalFormCreate,
-              },
-            }}
-            localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
-            sx={{ '&, [class^=MuiDataGrid]': { border: 'none' } }}
-          />
-          {!!snackbar && (
-            <Snackbar
-              open
-              anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-              onClose={handleCloseSnackbar}
-              autoHideDuration={6000}
-            >
-              <Alert {...snackbar} onClose={handleCloseSnackbar} />
-            </Snackbar>
-          )}
-          <ModalFormCreate
-            isOpenModalFormCreate={isOpenModalFormCreate}
-            handleCloseModalFormCreate={handleCloseModalFormCreate}
-            refetch={refetch}
-            entityType={entityType}
-            setSnackbar={setSnackbar}
-          />
-          <ModalFormPatch
-            isOpenModal={isOpenModal}
-            refetch={refetch}
-            entityType={entityType}
-            setSnackbar={setSnackbar}
-          />
-          <ModalDelete
-            isOpenModalDelete={isOpenModalDelete}
-            handleCloseModalDelete={handleCloseModalDelete}
-            refetch={refetch}
-            deleteItemId={deleteItemId}
-            currentEntityName={currentEntityName}
-            entityType={entityType}
-            setSnackbar={setSnackbar}
-          />
-        </div>
+            },
+          }}
+          pageSizeOptions={[10, 30, 60]}
+          slots={{
+            toolbar: Toolbar,
+          }}
+          slotProps={{
+            toolbar: {
+              handleOpenModalFormCreate,
+              refetch,
+              currentEntity,
+              role,
+            },
+          }}
+          localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+          sx={{ '&, [class^=MuiDataGrid]': { border: 'none' } }}
+        />
+        {!!snackbar && (
+          <Snackbar
+            open
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            onClose={handleCloseSnackbar}
+            autoHideDuration={6000}
+          >
+            <Alert {...snackbar} onClose={handleCloseSnackbar} />
+          </Snackbar>
+        )}
+        <ModalFormCreate
+          isOpenModalFormCreate={isOpenModalFormCreate}
+          handleCloseModalFormCreate={handleCloseModalFormCreate}
+          refetch={refetch}
+          currentEntity={currentEntity}
+          setSnackbar={setSnackbar}
+        />
+        <ModalFormPatch
+          isOpenModal={isOpenModal}
+          refetch={refetch}
+          currentEntity={currentEntity}
+          setSnackbar={setSnackbar}
+        />
+        <ModalDelete
+          isOpenModalDelete={isOpenModalDelete}
+          handleCloseModalDelete={handleCloseModalDelete}
+          refetch={refetch}
+          deleteItemId={deleteItemId}
+          currentEntity={currentEntity}
+          setSnackbar={setSnackbar}
+        />
       </ThemeProvider>
     );
   }
@@ -342,14 +314,6 @@ const Crud = ({ entityType }) => {
       )}
     </Page>
   );
-};
-
-Crud.propTypes = {
-  entityType: PropTypes.string,
-};
-
-Crud.defaultProps = {
-  entityType: '',
 };
 
 export default Crud;

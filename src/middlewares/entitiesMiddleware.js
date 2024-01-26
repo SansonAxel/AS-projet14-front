@@ -62,7 +62,6 @@ const entitiesMiddleware = (store) => (next) => (action) => {
         })
         .then((response) => {
           store.dispatch(saveOrganizations(response.data));
-          // store.dispatch(openModal());
         })
         .catch((error) => {
           console.error('Erreur de la requête :', error);

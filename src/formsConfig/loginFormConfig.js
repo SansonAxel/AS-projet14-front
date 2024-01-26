@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 export const loginFormConfig = [
   {
     name: 'email',
+    id: 'login',
     label: 'Adresse email',
     type: 'email',
     initialValue: '',
@@ -12,6 +13,7 @@ export const loginFormConfig = [
   },
   {
     name: 'password',
+    id: 'password',
     label: 'Mot de passe',
     type: 'password',
     initialValue: '',

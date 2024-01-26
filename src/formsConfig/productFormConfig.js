@@ -97,9 +97,13 @@ const productFormConfig = [
     name: 'price',
     id: 'product',
     label: 'Prix*',
-    type: 'text',
+    type: 'number',
     initialValue: null,
-    validation: Yup.string().max(100, 'Trop long').required('Champ requis'),
+    validation: Yup.number()
+      .typeError('Doit être un nombre')
+      .min(0, 'Vous devez définir un prix')
+      .max(999, 'Le prix est trop important')
+      .required('Champ requis'),
   },
   {
     name: 'conservationType',
@@ -121,7 +125,9 @@ const productFormConfig = [
     label: 'Poids *',
     type: 'number',
     initialValue: null,
-    validation: Yup.number().max(9999, 'Trop long').required('Champ requis'),
+    validation: Yup.number()
+      .max(9999, 'Le poids est trop important')
+      .required('Champ requis'),
   },
   {
     name: 'conditioning',

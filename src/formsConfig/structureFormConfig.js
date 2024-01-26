@@ -17,8 +17,10 @@ const structureFormConfig = [
     label: 'Numéro de SIRET*',
     type: 'text',
     initialValue: '',
-    validation: Yup.string()
-      .max(9, 'Ne doit pas dépasser 9 caractères')
+    validation: Yup.number()
+      .typeError('Doit être un nombre')
+      .min(99999999, 'Doit contenir 9 chiffres')
+      .max(999999999, 'Doit contenir 9 chiffres')
       .required('Champ requis'),
   },
   {
