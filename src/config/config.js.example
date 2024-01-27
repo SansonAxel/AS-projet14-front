@@ -1,0 +1,9 @@
+// Copy this file and rename it exactly like this : config.js
+// Change the apiUrl to match yours
+// This will define your baseURL for each API request of your project
+
+const config = {
+  apiUrl: 'https://example.com/api',
+};
+
+export default config;

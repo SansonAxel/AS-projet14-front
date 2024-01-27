@@ -15,6 +15,9 @@ import {
   saveUsers,
 } from '../actions/entities';
 import { openModal } from '../actions/modalActions';
+import config from '../config/config';
+
+const baseURL = config.apiUrl;
 
 const entitiesMiddleware = (store) => (next) => (action) => {
   const token = Cookies.get('token');
@@ -23,7 +26,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
   switch (action.type) {
     case FETCH_BRANDS:
       axios
-        .get(`http://localhost:8080/api/brands/${id}`, {
+        .get(`${baseURL}/brands/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -39,7 +42,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_CATEGORIES:
       axios
-        .get(`http://localhost:8080/api/categories/${id}`, {
+        .get(`${baseURL}/categories/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -55,13 +58,14 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_ORGANIZATIONS:
       axios
-        .get(`http://localhost:8080/api/organizations/${id}`, {
+        .get(`${baseURL}/organizations/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
           store.dispatch(saveOrganizations(response.data));
+          store.dispatch(openModal());
         })
         .catch((error) => {
           console.error('Erreur de la requête :', error);
@@ -70,7 +74,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_PRODUCTS:
       axios
-        .get(`http://localhost:8080/api/products/${id}`, {
+        .get(`${baseURL}/products/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -86,7 +90,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_STRUCTURES:
       axios
-        .get(`http://localhost:8080/api/structures/${id}`, {
+        .get(`${baseURL}/structures/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -102,7 +106,7 @@ const entitiesMiddleware = (store) => (next) => (action) => {
       break;
     case FETCH_USERS:
       axios
-        .get(`http://localhost:8080/api/users/${id}`, {
+        .get(`${baseURL}/users/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

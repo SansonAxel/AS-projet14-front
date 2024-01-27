@@ -30,7 +30,6 @@ export const saveCategories = (category) => ({
   category,
 });
 export const fetchCategories = (id) => ({
-  // Correction ici
   type: FETCH_CATEGORIES,
   payload: id,
 });

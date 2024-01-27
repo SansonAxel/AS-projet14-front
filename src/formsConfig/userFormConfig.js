@@ -1,12 +1,14 @@
 import * as Yup from 'yup';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import config from '../config/config';
 
 export const getToken = () => {
   return Cookies.get('token');
 };
 
 const userCookie = Cookies.get('user');
+const baseURL = config.apiUrl;
 
 export const getOrganizationId = () => {
   if (userCookie) {
@@ -30,14 +32,11 @@ export const fetchOrganizationsData = async () => {
   const token = getToken();
 
   try {
-    const response = await axios.get(
-      `http://localhost:8080/api/organizations`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const response = await axios.get(`${baseURL}/organizations`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     return [];
@@ -49,7 +48,7 @@ export const fetchStructuresData = async () => {
   const id = getOrganizationId();
   try {
     const response = await axios.get(
-      `http://localhost:8080/api/organizations/${id}/structures`,
+      `${baseURL}/organizations/${id}/structures`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

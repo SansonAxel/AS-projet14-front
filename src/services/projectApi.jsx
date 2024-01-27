@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import Cookies from 'js-cookie';
+import config from '../config/config';
 
 export const getToken = () => {
   return Cookies.get('token');
@@ -36,8 +37,7 @@ export const getStructureId = () => {
   return null;
 };
 
-const baseURL = 'http://localhost:8080/api/';
-// https://sansonaxel-server.eddi.cloud/api/
+const baseURL = config.apiUrl;
 
 export const projectApi = createApi({
   reducerPath: 'projectApi',

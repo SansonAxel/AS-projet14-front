@@ -11,6 +11,7 @@ import FormTemplate from '../FormTemplate/FormTemplate';
 import { loginFormConfig } from '../../formsConfig/loginFormConfig';
 import { handleSuccessfulLogin } from '../../actions/user';
 import Loader from '../Loader/Loader';
+import config from '../../config/config';
 
 const Login = () => {
   const [error, setError] = useState(null);
@@ -18,6 +19,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [userStatus, setUserStatus] = useState(null);
+  const baseURL = config.apiUrl;
 
   const handleLogin = ({ email, password }) => {
     setIsLoading(true);
@@ -26,8 +28,7 @@ const Login = () => {
       password,
     };
     axios
-      .post('http://localhost:8080/api/login_check', payload)
-      // https://sansonaxel-server.eddi.cloud/api/login_check
+      .post(`${baseURL}/login_check`, payload)
       .then((response) => {
         const { token, userInformation } = response.data;
         const {

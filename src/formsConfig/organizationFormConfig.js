@@ -25,7 +25,7 @@ const organizationFormConfig = [
   {
     name: 'phoneNumber',
     id: 'organization',
-    label: 'Numéro de téléphone',
+    label: 'Numéro de téléphone*',
     type: 'text',
     initialValue: '',
     validation: Yup.string()
@@ -74,7 +74,7 @@ const organizationFormConfig = [
       { value: 1, label: 'En attente' },
       { value: 2, label: 'Actif' },
     ],
-    validation: Yup.number(),
+    validation: Yup.number().isRequired,
     valueType: 'number',
   },
 ];

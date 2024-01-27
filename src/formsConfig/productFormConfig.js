@@ -1,24 +1,23 @@
 import * as Yup from 'yup';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import config from '../config/config';
 
 export const getToken = () => {
   return Cookies.get('token');
 };
 
-export const fetchBrandsData = async () => {
+const baseURL = config.apiUrl;
+
+const fetchBrandsData = async () => {
   const token = getToken();
   if (token) {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/brands`,
-        // https://sansonaxel-server.eddi.cloud/api/brands
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${baseURL}/brands`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data;
     } catch (error) {
       return [];
@@ -29,19 +28,15 @@ export const fetchBrandsData = async () => {
 
 const brandsData = await fetchBrandsData();
 
-export const fetchCategoriesData = async () => {
+const fetchCategoriesData = async () => {
   const token = getToken();
   if (token) {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/categories`,
-        // https://sansonaxel-server.eddi.cloud/api/brands
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${baseURL}/categories`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data;
     } catch (error) {
       return [];
@@ -75,7 +70,6 @@ const productFormConfig = [
       }))
       .sort((a, b) => a.label.localeCompare(b.label)),
     valueType: 'object',
-    // validation: Yup.number().required('Veuillez choisir une marque'),
     extractId: true,
   },
   {
@@ -90,19 +84,16 @@ const productFormConfig = [
       }))
       .sort((a, b) => a.label.localeCompare(b.label)),
     valueType: 'object',
-    // validation: Yup.number().required('Veuillez choisir une catégorie'),
     extractId: true,
   },
   {
     name: 'price',
     id: 'product',
     label: 'Prix*',
-    type: 'number',
+    type: 'text',
     initialValue: null,
-    validation: Yup.number()
-      .typeError('Doit être un nombre')
-      .min(0, 'Vous devez définir un prix')
-      .max(999, 'Le prix est trop important')
+    validation: Yup.string()
+      .max(5, 'Le prix est trop important')
       .required('Champ requis'),
   },
   {
