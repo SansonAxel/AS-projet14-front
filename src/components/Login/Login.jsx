@@ -59,10 +59,12 @@ const Login = () => {
           Cookies.set('token', token, {
             expires: expirationDate,
             secure: true,
+            sameSite: 'strict',
           });
           Cookies.set('user', JSON.stringify(userInformation), {
             expires: expirationDate,
             secure: true,
+            sameSite: 'strict',
           });
           setTimeout(() => {
             setIsLoading(false);
