@@ -61,7 +61,7 @@ const ModalFormCreate = ({
       const response = await create(values).unwrap();
       handleCloseModalFormCreate();
       refetch();
-      if (response.message === 'creation successfull') {
+      if (response.message === 'Creation successful') {
         setSnackbar({
           children: `Ajout réussi`,
           severity: 'success',

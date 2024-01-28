@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import config from '../config/config';
+import forbiddenMails from '../datas/forbiddenMails';
 
 export const getToken = () => {
   return Cookies.get('token');
@@ -61,6 +62,13 @@ export const fetchStructuresData = async () => {
   }
 };
 
+const passwordValidationSchema = Yup.string()
+  .required('Champ requis')
+  .matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~])[A-Za-z\d!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]{14,}$/,
+    'Doit contenir au moins 14 caractères, 1 Majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial'
+  );
+
 const userFormConfig = [
   {
     name: 'firstname',
@@ -90,7 +98,16 @@ const userFormConfig = [
     initialValue: '',
     validation: Yup.string()
       .email('Adresse mail non valide')
-      .max(180, 'Ne doit pas dépasser 180 caractères')
+      .test(
+        'forbidden-mail-domaine',
+        'Domaine de messagerie non autorisé',
+        (value) => {
+          if (!value) return true;
+          const domain = value.split('@')[1];
+          return !forbiddenMails.includes(domain);
+        }
+      )
+      .max(320, 'Ne doit pas dépasser 180 caractères')
       .required('Champ requis'),
   },
   {
@@ -107,11 +124,9 @@ const userFormConfig = [
     label: 'Mot de passe*',
     type: 'password',
     initialValue: '',
-    validation: Yup.string()
-      .min(8, 'Doit faire 8 caractères minimum')
-      .max(255, 'Ne doit pas dépasser 255 caractères')
-      .required('Champ requis'),
+    validation: passwordValidationSchema,
   },
+
   {
     name: 'roles',
     id: 'user',

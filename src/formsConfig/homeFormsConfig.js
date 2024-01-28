@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import forbiddenMails from '../datas/forbiddenMails';
 
 // ====================================================
 //                      *CONTACT
@@ -32,6 +33,15 @@ export const formFieldsInformations = [
     initialValue: '',
     validation: Yup.string()
       .email('Adresse mail non valide')
+      .test(
+        'forbidden-mail-domaine',
+        'Domaine de messagerie non autorisé',
+        (value) => {
+          if (!value) return true;
+          const domain = value.split('@')[1];
+          return !forbiddenMails.includes(domain);
+        }
+      )
       .max(320, 'Ne doit pas dépasser 320 caractères')
       .required('Champ requis'),
   },
@@ -100,6 +110,15 @@ export const formFieldsRegistration = [
     initialValue: '',
     validation: Yup.string()
       .email('Adresse mail non valide')
+      .test(
+        'forbidden-mail-domaine',
+        'Domaine de messagerie non autorisé',
+        (value) => {
+          if (!value) return true;
+          const domain = value.split('@')[1];
+          return !forbiddenMails.includes(domain);
+        }
+      )
       .max(320, 'Ne doit pas dépasser 320 caractères')
       .required('Champ requis'),
   },
